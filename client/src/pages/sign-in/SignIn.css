@@ -90,11 +90,12 @@ button:hover {
   color: #333;
 }
 
-.signup-link a {
-  color: #ff1493; /* Pink */
+.signup-link button {
+  color: #fff; /* Pink */
   text-decoration: none;
+  width: 100px;
 }
 
-.signup-link a:hover {
+.signup-link button:hover {
   text-decoration: underline;
 }

@@ -116,7 +116,8 @@ const SignIn = () => {
         </form>
         <div className="signup-link">
           <p>
-            Don't have an account? <a href="/signup">Sign Up</a>
+            Do not have an account?
+            <button onClick={useNavigate("/sign-up")}>Sign up</button>
           </p>
         </div>
       </div>
