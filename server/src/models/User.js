@@ -4,12 +4,21 @@ import validateAllowedFields from "../util/validateAllowedFields.js";
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  name: { type: String, required: true },
-  lastname: { type: String, required: true },
-  birthdate: { type: Date, required: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  birthdate: { type: Date, required: false },
   gender: { type: String, required: true },
   bio: { type: String, default: "" },
   profile_picture: { type: String, default: "" },
+  location: { type: String, default: "" },
+  min_age_preference: { type: Number, default: 18 },
+  max_age_preference: { type: Number, default: 99 },
+  preferred_gender: {
+    type: String,
+    enum: ["male", "female", "non-binary", "other"],
+    default: "other",
+  },
+  max_distance_preference: { type: Number, default: 50 },
   created_at: { type: Date, default: Date.now },
   hobbies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hobby" }],
 });
@@ -22,12 +31,17 @@ export const validateUser = (userObject) => {
     "email",
     "password",
     "confirmPassword",
-    "name",
-    "lastname",
+    "firstName",
+    "lastName",
     "birthdate",
     "gender",
     "bio",
     "profile_picture",
+    "location",
+    "min_age_preference",
+    "max_age_preference",
+    "preferred_gender",
+    "max_distance_preference",
     "hobbies",
   ];
 
@@ -37,35 +51,32 @@ export const validateUser = (userObject) => {
     errorList.push(validatedKeysMessage);
   }
 
-  if (userObject.email == null) {
-    errorList.push("email is a required field");
+  if (!userObject.email) {
+    errorList.push("Email is a required field");
   }
 
-  if (userObject.password == null) {
-    errorList.push("password is a required field");
+  if (!userObject.password) {
+    errorList.push("Password is a required field");
   }
 
-  if (
-    userObject.confirmPassword == null ||
-    userObject.confirmPassword !== userObject.password
-  ) {
-    errorList.push("password and confirmPassword do not match");
+  if (userObject.password !== userObject.confirmPassword) {
+    errorList.push("Password and Confirm Password do not match");
   }
 
-  if (userObject.name == null) {
-    errorList.push("name is a required field");
+  if (!userObject.firstName) {
+    errorList.push("First Name is a required field");
   }
 
-  if (userObject.lastname == null) {
-    errorList.push("lastname is a required field");
+  if (!userObject.lastName) {
+    errorList.push("Last Name is a required field");
   }
 
-  if (userObject.birthdate == null) {
-    errorList.push("birthdate is a required field");
+  if (userObject.birthdate && isNaN(Date.parse(userObject.birthdate))) {
+    errorList.push("Birthdate must be a valid Date");
   }
 
-  if (userObject.gender == null) {
-    errorList.push("gender is a required field");
+  if (!userObject.gender) {
+    errorList.push("Gender is a required field");
   }
 
   return errorList;
