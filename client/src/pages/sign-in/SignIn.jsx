@@ -23,7 +23,7 @@ const SignIn = () => {
     error: fetchError,
     performFetch,
     cancelFetch,
-  } = useFetch("/signin", onReceived);
+  } = useFetch("/user/sign-in", onReceived);
 
   useEffect(() => {
     return () => cancelFetch();
@@ -108,7 +108,7 @@ const SignIn = () => {
             </div>
           </div>
           {error && <div className="error">{error}</div>}
-          {fetchError && <div className="error">{fetchError}</div>}
+          {fetchError && <div className="error">{fetchError.toString()}</div>}
           {isLoading && <div className="loading">Loading...</div>}
           <button type="submit" disabled={isLoading}>
             Sign In
@@ -117,7 +117,7 @@ const SignIn = () => {
         <div className="signup-link">
           <p>
             Do not have an account?
-            <button onClick={useNavigate("/sign-up")}>Sign up</button>
+            <button onClick={() => navigate("/sign-up")}>Sign up</button>
           </p>
         </div>
       </div>
