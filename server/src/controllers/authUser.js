@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import { logError } from "../util/logging.js";
 import jwt from "jsonwebtoken";
-import { compare } from "bcrypt";
+import { hash, compare } from "bcrypt";
 
 export const authUser = async (req, res) => {
   try {
@@ -11,15 +11,17 @@ export const authUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ success: false, message: "No such user" });
+      return res.status(400).json({ success: false, msg: "No such user" });
     }
 
     // Compare provided password with the hashed password in the database
-    const isPasswordMatch = await compare(password, user.password);
+    const saltRound = 10;
+    const hashedPassword = await hash(password, saltRound);
+    const isPasswordMatch = await compare(hashedPassword, user.password);
     if (!isPasswordMatch) {
       return res
         .status(400)
-        .json({ success: false, message: "Incorrect password" });
+        .json({ success: false, msg: "Incorrect password" });
     }
 
     // Create JWT token
@@ -29,6 +31,6 @@ export const authUser = async (req, res) => {
     res.status(200).json({ success: true, token });
   } catch (err) {
     logError("Server error", err);
-    return res.status(500).json({ success: false, message: "Server error" });
+    return res.status(500).json({ success: false, msg: "Server error" });
   }
 };
