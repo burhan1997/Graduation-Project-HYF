@@ -30,7 +30,7 @@ const CreateProfile = () => {
     error: fetchError,
     performFetch,
     cancelFetch,
-  } = useFetch(`/users/${userId}`, onReceived);
+  } = useFetch(`/user/${userId}`, onReceived);
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
