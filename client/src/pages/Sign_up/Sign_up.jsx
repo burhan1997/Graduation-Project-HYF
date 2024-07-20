@@ -25,7 +25,7 @@ const SignUp = () => {
     error: fetchError,
     performFetch,
     cancelFetch,
-  } = useFetch("/signup", onReceived);
+  } = useFetch("/user/sign-up", onReceived);
 
   useEffect(() => {
     return () => cancelFetch();
@@ -55,8 +55,15 @@ const SignUp = () => {
 
     const { email, password, confirmPassword } = formData;
 
-    if (!validateEmail(email) || !validatePassword(password)) {
-      setError("Invalid email or password.");
+    if (!validateEmail(email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError(
+        "Password has to be at least 8 characters long and must include uppercase, lowercase, numbers, and special characters.",
+      );
       return;
     }
 
@@ -79,7 +86,7 @@ const SignUp = () => {
 
   return (
     <div className="container poppins-light">
-      <div className="sign-in-up-form ">
+      <div className="sign-in-up-form">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -134,13 +141,17 @@ const SignUp = () => {
           {error && <div className="error">{error}</div>}
           {fetchError && <div className="error">{fetchError}</div>}
           {isLoading && <div className="loading">Loading...</div>}
-          <button type="submit" className="form-button" disabled={isLoading}>
+          <button
+            type="submit"
+            className="form-button poppins-regular"
+            disabled={isLoading}
+          >
             Sign Up
           </button>
           <div className="signin-link">
             <p>Already have an account?</p>
             <button
-              className="form-button"
+              className="form-button poppins-regular"
               onClick={() => navigate("/sign-in")}
             >
               Sign In
