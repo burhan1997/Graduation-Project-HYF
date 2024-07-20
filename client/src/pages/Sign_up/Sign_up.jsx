@@ -17,7 +17,7 @@ const SignUp = () => {
 
   const onReceived = (data) => {
     localStorage.setItem("token", data.token);
-    navigate("/create_profile");
+    navigate("/create-profile");
   };
 
   const {
