@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import "./Create-profile.css";
 import { FormContext } from "../context/FormContext";
-import { token } from "../config/token";
+import { token } from "../config/Token";
 import { FormItem } from "./FormItem";
 import { jwtDecode } from "jwt-decode";
 

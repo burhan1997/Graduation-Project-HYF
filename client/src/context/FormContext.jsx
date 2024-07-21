@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useFetch from "../hooks/useFetch";
-import { token } from "../config/token";
+import { token } from "../config/Token";
 import { jwtDecode } from "jwt-decode";
-import { createFieldConfig } from "../config/createFieldConfig";
+import { createFieldConfig } from "../config/CreateFieldConfig";
 
 export const FormContext = createContext();
 
