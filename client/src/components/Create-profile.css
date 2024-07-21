@@ -4,12 +4,12 @@
 }
 
 .Profile-form {
+  display: flex;
   background-color: white;
   margin-top: 100px;
   margin-right: 400px;
   margin-left: 550px;
   margin-bottom: 200px;
-  display: flex;
   flex-direction: column;
   width: 50%;
   height: 1600px;
@@ -56,12 +56,22 @@
 }
 
 .label-div {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  gap: 8px;
+}
+.label-horizontal {
+  display: flex;
+  flex-direction: row;
   background-color: white;
   font-size: 20px;
   margin-bottom: 10px;
   margin-right: 10px;
 }
-
 .bio {
   background-color: white;
   margin-bottom: 10px;
@@ -81,26 +91,22 @@
   background-color: white;
 }
 
-.Hobbies-div {
+.Hobbies-div,
+.Gender-div,
+.Languages-div,
+.Preferredgender-div {
+  display: flex;
   background-color: white;
-  font-size: 19px;
+  justify-content: flex-start;
 }
 
-.Hobbies {
-  background-color: white;
-  margin-right: 75px;
-  font-size: 20px;
-}
-
-.Languages-div {
+.Hobbies,
+.Gender,
+.Languages,
+.Preferredgender {
   background-color: white;
   font-size: 20px;
-}
-
-.Languages {
-  background-color: white;
-  font-size: 20px;
-  margin-right: 75px;
+  width: 100%;
 }
 
 .save-button {

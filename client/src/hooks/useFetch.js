@@ -38,28 +38,34 @@ const useFetch = (route, onReceived) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Add any args given to the function to the fetch function
-  const performFetch = (options) => {
+  const performFetch = async (options = {}) => {
     setError(null);
     setIsLoading(true);
 
-    const baseOptions = {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+
+    //authenticating the user
+    const headers = {
+      "Content-Type": "application/json",
+      ...options.headers,
+      ...(options.method &&
+        ["POST", "PUT", "DELETE"].includes(options.method) &&
+        token && { Authorization: `Bearer ${token}` }),
     };
 
-    const fetchData = async () => {
+    const baseOptions = {
+      method: options.method || "GET",
+      headers,
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    };
+
+    try {
       // We add the /api subsection here to make it a single point of change if our configuration changes
       const url = `${process.env.BASE_SERVER_URL}/api${route}`;
-
-      const res = await fetch(url, { ...baseOptions, ...options, signal });
-
+      const res = await fetch(url, { ...baseOptions, signal });
       if (!res.ok) {
-        setError(
-          `Fetch for ${url} returned an invalid status (${
-            res.status
-          }). Received: ${JSON.stringify(res)}`,
+        throw new Error(
+          `Fetch for ${url} returned an invalid status (${res.status}). Received: ${JSON.stringify(res)}`,
         );
       }
 
@@ -68,21 +74,16 @@ const useFetch = (route, onReceived) => {
       if (jsonResult.success === true) {
         onReceived(jsonResult);
       } else {
-        setError(
+        throw new Error(
           jsonResult.msg ||
-            `The result from our API did not have an error message. Received: ${JSON.stringify(
-              jsonResult,
-            )}`,
+            `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`,
         );
       }
-
-      setIsLoading(false);
-    };
-
-    fetchData().catch((error) => {
+    } catch (error) {
       setError(error);
+    } finally {
       setIsLoading(false);
-    });
+    }
   };
 
   return { isLoading, error, performFetch, cancelFetch };

@@ -15,6 +15,24 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id", id);
+    const user = await User.findById(id);
+    if (!user) {
+      res.status(404).json({ success: false, msg: "User not found" });
+      return;
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    logError(error);
+    res
+      .status(500)
+      .json({ success: false, msg: "Unable to get user, try again later" });
+  }
+};
+
 export const createUser = async (req, res) => {
   try {
     const { user } = req.body;
