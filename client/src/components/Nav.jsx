@@ -18,6 +18,9 @@ const Nav = () => {
       <Link to="/create-profile" data-testid={TEST_ID.linkToCreateProfile}>
         <li>create profile</li>
       </Link>
+      <Link to="/sign-up">
+        <li>Sign up</li>
+      </Link>
     </ul>
   );
 };

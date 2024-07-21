@@ -1,27 +1,35 @@
 .container {
+  height: 100vh;
+  background-color: #e8b931;
+}
+
+.sign-in-up-form {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #fff;
-}
-
-.sign-in-form {
+  flex-direction: column;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
 }
 
-.sign-in-form h1 {
+.sign-in-up-form h1 {
   margin-bottom: 20px;
   font-size: 24px;
   text-align: center;
-  color: #ff1493;
+  color: inherit;
+  color: #ff4781;
 }
 
+.signin-link {
+  text-align: center;
+}
+.signin-link p {
+  margin: 10px 0 5px;
+}
 .form-group {
   margin-bottom: 15px;
 }
@@ -29,14 +37,13 @@
 .form-group label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold;
-  color: #ff1493;
 }
 
 .form-group input {
   width: 380px;
   padding: 10px;
-  border: 1px solid #ff1493;
+  max-width: 100%; /* changed this one to make all form inputs be the same width */
+  border: 1px solid #ff4781;
   border-radius: 4px;
 }
 
@@ -71,7 +78,7 @@
   text-align: center;
 }
 
-button {
+.form-button {
   width: 100%;
   padding: 10px;
   background-color: #ff1493;
@@ -82,7 +89,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.form-button:hover {
   background-color: #ff4781;
 }
 
@@ -98,8 +105,13 @@ button:hover {
 .signup-link button {
   color: #fff;
   text-decoration: none;
+  width: 100px;
 }
 
 .signup-link button:hover {
   text-decoration: underline;
+}
+
+.logo {
+  width: 16vw;
 }
