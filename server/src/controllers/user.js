@@ -64,7 +64,6 @@ export const createUser = async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
     });
-
     // Save the user to MongoDB
     await newUser.save();
 
