@@ -14,6 +14,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 450px;
+  overflow: none;
 }
 
 .sign-in-up-form h1 {
@@ -110,8 +111,4 @@
 
 .signup-link button:hover {
   text-decoration: underline;
-}
-
-.logo {
-  width: 16vw;
 }
