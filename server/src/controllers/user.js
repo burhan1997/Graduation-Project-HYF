@@ -1,20 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
-import mongoose from "mongoose";
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY;
-
+const JWT_SECRET_KEY = process.env.JWT_SECRET;
 // Function that converts the given string id to ObjectId
-const toObjectId = (id) => {
-  try {
-    return mongoose.Types.ObjectId(id);
-  } catch (error) {
-    return null;
-  }
-};
 
 export const createUser = async (req, res) => {
   try {
@@ -35,7 +28,6 @@ export const createUser = async (req, res) => {
         .json({ success: false, msg: validationErrorMessage(errorList) });
       return;
     }
-
     // Check if user already exists
     let existingUser = await User.findOne({ email: user.email });
     if (existingUser) {
@@ -43,9 +35,6 @@ export const createUser = async (req, res) => {
         .status(400)
         .json({ success: false, msg: "User already exists" });
     }
-
-    // Convert hobbies to ObjectId array
-    const hobbyIds = user.hobbies.map(toObjectId).filter((id) => id !== null);
 
     // Password hashing
     const salt = await bcrypt.genSalt(10);
@@ -57,26 +46,19 @@ export const createUser = async (req, res) => {
       password: hashedPassword,
       firstName: user.firstName,
       lastName: user.lastName,
-      birthdate: user.birthdate,
-      gender: user.gender,
-      bio: user.bio,
-      profile_picture: user.profile_picture,
-      location: user.location,
-      min_age_preference: user.min_age_preference,
-      max_age_preference: user.max_age_preference,
-      preferred_gender: user.preferred_gender,
-      max_distance_preference: user.max_distance_preference,
-      hobbies: hobbyIds, // Converted ObjectId array
     });
 
     // Save the user to MongoDB
     await newUser.save();
 
     // Create JWT token synchronously
-    const token = jwt.sign({ user: { id: newUser._id } }, JWT_SECRET, {
+    if (!JWT_SECRET_KEY) {
+      logError("JWT_SECRET is not defined");
+    }
+
+    const token = jwt.sign({ user: { id: newUser._id } }, JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
-
     // Return success response with token
     res.status(201).json({ success: true, token });
   } catch (error) {

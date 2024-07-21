@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  birthdate: { type: Date, required: false },
-  gender: { type: String, required: true },
+  birthday: { type: Date },
+  gender: { type: String },
   bio: { type: String, default: "" },
   profile_picture: { type: String, default: "" },
   location: { type: String, default: "" },
@@ -33,7 +33,7 @@ export const validateUser = (userObject) => {
     "confirmPassword",
     "firstName",
     "lastName",
-    "birthdate",
+    "birthday",
     "gender",
     "bio",
     "profile_picture",
@@ -59,24 +59,12 @@ export const validateUser = (userObject) => {
     errorList.push("Password is a required field");
   }
 
-  if (userObject.password !== userObject.confirmPassword) {
-    errorList.push("Password and Confirm Password do not match");
-  }
-
   if (!userObject.firstName) {
     errorList.push("First Name is a required field");
   }
 
   if (!userObject.lastName) {
     errorList.push("Last Name is a required field");
-  }
-
-  if (userObject.birthdate && isNaN(Date.parse(userObject.birthdate))) {
-    errorList.push("Birthdate must be a valid Date");
-  }
-
-  if (!userObject.gender) {
-    errorList.push("Gender is a required field");
   }
 
   return errorList;
