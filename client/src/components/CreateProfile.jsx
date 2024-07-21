@@ -19,8 +19,8 @@ const CreateProfile = () => {
     setFormData({
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
-      birthdate: user?.birthdate
-        ? new Date(user.birthdate).toISOString().split("T")[0]
+      birthday: user?.birthday
+        ? new Date(user.birthday).toISOString().split("T")[0]
         : "",
       gender: user?.gender || "",
       bio: user?.bio || "",
@@ -34,7 +34,7 @@ const CreateProfile = () => {
   };
 
   const { performFetch: fetchUsers, error: fetchUserError } = useFetch(
-    `/users/${userId}`,
+    `/user/${userId}`,
     onReceivedUser,
   );
 
@@ -54,8 +54,7 @@ const CreateProfile = () => {
     error: fetchProfileError,
     performFetch: performProfileFetch,
     cancelFetch,
-  } = useFetch(`/users/update/${userId}`, onReceivedProfile);
-
+  } = useFetch(`/user/update/${userId}`, onReceivedProfile);
 
   useEffect(() => {
     return () => cancelFetch();
