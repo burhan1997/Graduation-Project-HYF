@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Input from "./Input";
 
-export const Label = ({
+export const FormItem = ({
   inputClass,
   placeholder,
   isRequired,
@@ -26,6 +27,15 @@ export const Label = ({
         type === "number" || type === "date" ? "label-horizontal" : divClass
       }
     >
+      {(type === "image" || type === "file") && (
+        <img
+          className="pro-img"
+          src={
+            "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
+          }
+          alt="Avatar"
+        />
+      )}
       {(type === "number" || type === "date") && fieldLabel && (
         <span className="label-span">{fieldLabel}</span>
       )}
@@ -54,7 +64,7 @@ export const Label = ({
                 key={option}
                 className={`${name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}`}
               >
-                <input
+                <Input
                   type="checkbox"
                   name={name}
                   value={option}
@@ -68,7 +78,7 @@ export const Label = ({
         </>
       )}
       {(type === "text" || type === "date" || type === "number") && (
-        <input
+        <Input
           className={inputClass}
           type={type}
           name={name}
@@ -83,7 +93,7 @@ export const Label = ({
   );
 };
 
-Label.propTypes = {
+FormItem.propTypes = {
   labelClass: PropTypes.string,
   divClass: PropTypes.string,
   inputClass: PropTypes.string,

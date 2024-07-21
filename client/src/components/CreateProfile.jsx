@@ -1,49 +1,17 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import "./Create-profile.css";
-import { Label } from "./Label";
-import { formConfig } from "../config/formConfig";
 import { FormContext } from "../context/FormContext";
+import { token } from "../config/token";
+import { FormItem } from "./FormItem";
+import { jwtDecode } from "jwt-decode";
 
 const CreateProfile = () => {
-  const { formData, setFormData } = useContext(FormContext);
-
-  const token = localStorage.getItem("token");
+  const { formData, setFormData, fetchUserError } = useContext(FormContext);
+  const userId = token ? jwtDecode(token).user._id : null;
   const navigate = useNavigate();
-  const userId = token ? jwtDecode(token).user.id : null;
-
-  const onReceivedUser = (data) => {
-    const user = data.user;
-    setFormData({
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
-      birthday: user?.birthday
-        ? new Date(user.birthday).toISOString().split("T")[0]
-        : "",
-      gender: user?.gender || "",
-      bio: user?.bio || "",
-      hobbies: user?.hobbies || [],
-      languages: user?.languages || [],
-      minAge: user?.min_age_preference || 18,
-      maxAge: user?.max_age_preference || 99,
-      maxDistance: user?.max_distance_preference || 50,
-      preferredGender: user?.preferred_gender || "",
-    });
-  };
-
-  const { performFetch: fetchUsers, error: fetchUserError } = useFetch(
-    `/user/${userId}`,
-    onReceivedUser,
-  );
-
-  useEffect(() => {
-    if (userId) {
-      fetchUsers({ method: "GET" });
-    }
-  }, [userId]);
-
+  const location = useLocation();
   const onReceivedProfile = (data) => {
     localStorage.setItem("token", data.token);
     navigate("/profile");
@@ -96,20 +64,24 @@ const CreateProfile = () => {
     }
     performProfileFetch({
       method: "PUT",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
     });
   };
+  const currentTitle =
+    location.pathname === "/create-profile"
+      ? "Create your Profile"
+      : "Update your Profile";
+
   return (
     <form onSubmit={handleSubmit} className="Profile-form">
-      <span className="Profile-message">Create your Profile</span>
+      <span className="Profile-message">{currentTitle}</span>
       <span className="Profile-message2">Edit your info</span>
-      <img
-        className="pro-img"
-        src="https://img.freepik.com/free-vector/find-person-job-opportunity_24877-63457.jpg?t=st=1721404799~exp=1721408399~hmac=a69e5980601bdb8591f2910deb73711c70d79597d5e60b1f0b578a588416e67f&w=740"
-        alt="Avatar"
-      />
-      {formConfig.map((field, index) => (
-        <Label
+      {formData.map((field, index) => (
+        <FormItem
           key={index}
           type={field.type}
           name={field.name}
@@ -139,8 +111,12 @@ const CreateProfile = () => {
         >
           {isLoading ? "Submitting..." : "Submit"}
         </button>
-        {fetchProfileError && <div className="error">{fetchProfileError}</div>}
-        {fetchUserError && <div className="error">{fetchUserError}</div>}
+        {fetchProfileError && (
+          <div className="error">{fetchProfileError.toString()}</div>
+        )}
+        {fetchUserError && (
+          <div className="error">{fetchUserError.toString()}</div>
+        )}
       </div>
     </form>
   );
