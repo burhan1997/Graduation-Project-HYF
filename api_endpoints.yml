@@ -3,7 +3,7 @@ api:
   base_url: https://localhost:8080/api
 
 endpoints:
-  - path: /users
+  - path: /user
     method: GET
     description: Get list of users
     parameters:
@@ -16,7 +16,7 @@ endpoints:
         required: false
         description: Number of users per page
 
-  - path: /users
+  - path: /user
     method: POST
     description: Create a new user
     parameters:
@@ -33,7 +33,7 @@ endpoints:
         required: true
         description: Password for the new user
 
-  - path: /users/{id}
+  - path: /user/{id}
     method: GET
     description: Get details of a specific user
     parameters:
@@ -42,7 +42,7 @@ endpoints:
         required: true
         description: ID of the user
 
-  - path: /users/{id}
+  - path: /user/{id}
     method: PUT
     description: Update details of a specific user
     parameters:
@@ -59,7 +59,7 @@ endpoints:
         required: false
         description: New password for the user
 
-  - path: /users/{id}
+  - path: /{id}
     method: DELETE
     description: Delete a specific user
     parameters:
