@@ -56,6 +56,7 @@ const CreateProfile = () => {
     cancelFetch,
   } = useFetch(`/users/update/${userId}`, onReceivedProfile);
 
+
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
