@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
+import { FaEye } from "react-icons/fa";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -59,9 +60,7 @@ const SignIn = () => {
       setError("Invalid email or password.");
       return;
     }
-
     setError("");
-
     performFetch({
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -103,7 +102,7 @@ const SignIn = () => {
                 className={`eye-icon ${showPassword ? "show" : ""}`}
                 onClick={togglePasswordVisibility}
               >
-                👁
+                <FaEye />
               </span>
             </div>
           </div>

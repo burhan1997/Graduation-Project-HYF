@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import bcrypt from "bcryptjs";
+import { hash, genSalt } from "bcrypt";
 import jwt from "jsonwebtoken";
 import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
@@ -54,8 +54,8 @@ export const createUser = async (req, res) => {
     }
 
     // Password hashing
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(user.password, salt);
+    const salt = await genSalt(10);
+    const hashedPassword = await hash(user.password, salt);
 
     // Create new user document
     const newUser = new User({
@@ -130,24 +130,17 @@ export const updateUser = async (req, res) => {
     return;
   }
 
-  const errorList = validateUser(user);
-  if (errorList.length > 0) {
-    res
-      .status(400)
-      .json({ success: false, msg: validationErrorMessage(errorList) });
-  } else {
-    const updatedUser = await User.findByIdAndUpdate(id, user, {
-      new: true,
-      runValidators: true,
-    });
+  const updatedUser = await User.findByIdAndUpdate(id, user, {
+    new: true,
+    runValidators: true,
+  });
 
-    if (!updatedUser) {
-      res.status(404).json({ success: false, msg: "User not found" });
-      return;
-    }
-
-    res.status(200).json({ success: true, user: updatedUser });
+  if (!updatedUser) {
+    res.status(404).json({ success: false, msg: "User not found" });
+    return;
   }
+
+  res.status(200).json({ success: true, user: updatedUser });
 };
 
 export { validateUser };

@@ -30,7 +30,6 @@ export const validateUser = (userObject) => {
   const allowedKeys = [
     "email",
     "password",
-    "confirmPassword",
     "firstName",
     "lastName",
     "birthday",

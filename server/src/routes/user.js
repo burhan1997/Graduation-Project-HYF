@@ -11,8 +11,8 @@ import { authUser } from "../controllers/authUser.js";
 const userRouter = express.Router();
 
 userRouter.get("/", getUsers);
+userRouter.post("/sign-up", createUser);
 userRouter.get("/:id", getUser);
-userRouter.post("/create", createUser);
 userRouter.put("/update/:id", updateUser);
 userRouter.post("/sign-in", authUser);
 
