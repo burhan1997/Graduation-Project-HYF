@@ -7,7 +7,6 @@ import UserList from "./pages/User/UserList";
 import SignIn from "./pages/Sign-in/SignIn";
 import CreateProfile from "./components/CreateProfile";
 import SignUp from "./pages/Sign_up/Sign_up";
-import TermsAndConditions from "./pages/TermsAndConditions";
 import "./index.css";
 
 const App = () => {
