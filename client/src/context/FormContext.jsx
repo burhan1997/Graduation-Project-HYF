@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import useFetch from "../hooks/useFetch";
 import { jwtDecode } from "jwt-decode"; // Correct import statement for jwt-decode
 import { createFieldConfig } from "../config/CreateFieldConfig";
-import { getToken } from "../config/getToken";
+import { getToken } from "../config/GetToken";
 
 export const FormContext = createContext();
 
