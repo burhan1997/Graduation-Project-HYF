@@ -134,3 +134,13 @@
 .sign-up-button:hover {
   background-color: #ee9bd7;
 }
+
+.form-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  color: #666666;
+}
+.terms {
+  display: flex;
+  gap: 10px;
+}

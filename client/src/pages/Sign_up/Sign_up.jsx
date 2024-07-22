@@ -7,6 +7,7 @@ import "../../../public/index.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,7 +28,7 @@ const SignUp = () => {
     error: fetchError,
     performFetch,
     cancelFetch,
-  } = useFetch("/user/sign-up", onReceived);
+  } = useFetch("/user/create", onReceived);
 
   useEffect(() => {
     return () => cancelFetch();
@@ -91,12 +92,22 @@ const SignUp = () => {
       setError("Passwords do not match.");
       return;
     }
-
+    if (!termsAccepted) {
+      setError("You must accept the Terms and Conditions to sign up.");
+      return;
+    }
     setError("");
-
+    const body = {
+      user: {
+        firstName,
+        lastName,
+        email,
+        password,
+      },
+    };
     performFetch({
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(body),
     });
   };
 
@@ -104,6 +115,9 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleTermsChange = () => {
+    setTermsAccepted(!termsAccepted);
+  };
   return (
     <div className="container poppins-light">
       <div className="sign-in-up-form">
@@ -181,13 +195,25 @@ const SignUp = () => {
                 </span>
               </div>
             </div>
+            <div className="terms">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                checked={termsAccepted}
+                onChange={handleTermsChange}
+              />
+              <label htmlFor="terms">
+                I accept the <a href="/terms">Terms and Conditions</a>
+              </label>
+            </div>
             {error && <div className="error">{error}</div>}
-            {fetchError && <div className="error">{fetchError}</div>}
+            {fetchError && <div className="error">{fetchError.toString()}</div>}
             {isLoading && <div className="loading">Loading...</div>}
             <button
               type="submit"
               className="form-button sign-up-button poppins-regular"
-              disabled={isLoading}
+              disabled={isLoading || !termsAccepted}
             >
               Sign Up
             </button>
