@@ -231,7 +231,7 @@ const SignUp = () => {
             </div>
 
             {error && <div className="error">{error}</div>}
-            {fetchError && <div className="error">{fetchError.toString}</div>}
+            {fetchError && <div className="error">{fetchError.toString()}</div>}
             {isLoading && <div className="loading">Loading...</div>}
             <button
               type="submit"
