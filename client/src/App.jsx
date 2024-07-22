@@ -5,7 +5,10 @@ import Home from "./pages/Home/Home";
 import CreateUser from "./pages/User/CreateUser";
 import UserList from "./pages/User/UserList";
 import SignIn from "./pages/sign-in/SignIn";
+import CreateProfile from "./components/CreateProfile";
 import SignUp from "./pages/Sign_up/Sign_up";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import "./index.css";
 
 const App = () => {
   return (
@@ -16,6 +19,7 @@ const App = () => {
         <Route path="/user" element={<UserList />} />
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/nav" element={<Nav />} />
       </Routes>

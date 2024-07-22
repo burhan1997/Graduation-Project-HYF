@@ -1,5 +1,4 @@
 .container {
-  height: 100vh;
   background-color: #e8b931;
 }
 
@@ -10,19 +9,28 @@
   flex-direction: column;
   background-color: #fff;
   padding: 20px;
+  margin: 0.5em;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 450px;
   overflow: none;
+
+.form-container {
+  display: inline-block;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+
 }
 
 .sign-in-up-form h1 {
   margin-bottom: 20px;
   font-size: 24px;
-  text-align: center;
+
   color: inherit;
   color: #ff4781;
+  text-align: center;
 }
 
 .signin-link {
@@ -32,7 +40,11 @@
   margin: 10px 0 5px;
 }
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1.3vw;
+  justify-content: center;
 }
 
 .form-group label {
@@ -41,25 +53,28 @@
 }
 
 .form-group input {
-  width: 380px;
+  display: flex;
+  justify-content: center;
+  /* max-width: 550px; */
   padding: 10px;
-  max-width: 100%; /* changed this one to make all form inputs be the same width */
   border: 1px solid #ff4781;
   border-radius: 4px;
+  max-width: 100%;
 }
 
 .password-container {
   display: flex;
   align-items: center;
   position: relative;
+  width: 100%;
 }
 
 .password-container .eye-icon {
   position: absolute;
-  right: 10px;
   cursor: pointer;
   font-size: 20px;
   color: #ff1493; /* Pink */
+  right: 10px;
 }
 
 .password-container .eye-icon.show {
@@ -71,6 +86,9 @@
   color: red;
   margin-bottom: 15px;
   text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .loading {
@@ -81,6 +99,7 @@
 
 .form-button {
   width: 100%;
+  margin-top: 0.5vw;
   padding: 10px;
   background-color: #ff1493;
   border: none;
@@ -88,18 +107,18 @@
   color: #fff;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 0.9vw;
 }
 
 .form-button:hover {
   background-color: #ff4781;
 }
 
-.signup-link {
-  margin-top: 15px;
+.sign-in-up-link {
   text-align: center;
 }
 
-.signup-link p {
+.sign-in-up-link p {
   color: #333;
 }
 
@@ -109,6 +128,11 @@
   width: 100px;
 }
 
-.signup-link button:hover {
-  text-decoration: underline;
+/* .sign-up-button {
+  background-color: rgb(224, 252, 65);
+  color: black !important;
+  transition: background-color 0.3s ease-in-out;
 }
+.sign-up-button:hover {
+  background-color: #ee9bd7;
+} */
