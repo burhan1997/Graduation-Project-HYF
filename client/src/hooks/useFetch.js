@@ -45,7 +45,7 @@ const useFetch = (route, onReceived) => {
         const jsonResult = await res.json();
 
         if (!res.ok) {
-          setError(`Error received: ${jsonResult.msg}`);
+          setError(`${jsonResult.msg}`);
         } else if (jsonResult.success === true) {
           onReceived(jsonResult);
         } else {
@@ -73,5 +73,4 @@ const useFetch = (route, onReceived) => {
   };
   return { isLoading, error, performFetch, cancelFetch };
 };
-
 export default useFetch;
