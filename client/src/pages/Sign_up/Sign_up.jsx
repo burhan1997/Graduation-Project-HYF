@@ -3,17 +3,18 @@ import { useNavigate } from "react-router-dom";
 import "./Sign_up.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
+import Modal from "../../components/Modal";
 import "../../../public/index.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [termsAccepted, setTermsAccepted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
+    terms: false,
   });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,17 +29,27 @@ const SignUp = () => {
     error: fetchError,
     performFetch,
     cancelFetch,
-  } = useFetch("/user/create", onReceived);
+  } = useFetch("/user/sign-up", onReceived);
 
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInputChange = (target) => {
     const { name, value } = target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: checked,
     }));
   };
 
@@ -61,7 +72,8 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { firstName, lastName, email, password, confirmPassword } = formData;
+    const { firstName, lastName, email, password, confirmPassword, terms } =
+      formData;
 
     if (!validateName(firstName)) {
       setError(
@@ -92,11 +104,13 @@ const SignUp = () => {
       setError("Passwords do not match.");
       return;
     }
-    if (!termsAccepted) {
-      setError("You must accept the Terms and Conditions to sign up.");
+    if (!terms) {
+      setError("You must agree to the terms and conditions.");
       return;
     }
+
     setError("");
+
     const body = {
       user: {
         firstName,
@@ -109,15 +123,19 @@ const SignUp = () => {
       method: "POST",
       body: JSON.stringify(body),
     });
+    performFetch({
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleTermsChange = () => {
-    setTermsAccepted(!termsAccepted);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="container poppins-light">
       <div className="sign-in-up-form">
@@ -195,25 +213,30 @@ const SignUp = () => {
                 </span>
               </div>
             </div>
-            <div className="terms">
+            <div className="form-group">
               <input
                 type="checkbox"
                 id="terms"
                 name="terms"
-                checked={termsAccepted}
-                onChange={handleTermsChange}
+                checked={formData.terms}
+                onChange={handleCheckboxChange}
+                required
               />
               <label htmlFor="terms">
-                I accept the <a href="/terms">Terms and Conditions</a>
+                I agree to the{" "}
+                <a href="#terms-and-conditions" onClick={openModal}>
+                  Terms and Conditions
+                </a>
               </label>
             </div>
+
             {error && <div className="error">{error}</div>}
-            {fetchError && <div className="error">{fetchError.toString()}</div>}
+            {fetchError && <div className="error">{fetchError.toString}</div>}
             {isLoading && <div className="loading">Loading...</div>}
             <button
               type="submit"
               className="form-button sign-up-button poppins-regular"
-              disabled={isLoading || !termsAccepted}
+              disabled={isLoading}
             >
               Sign Up
             </button>
@@ -229,6 +252,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
