@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import { logError } from "../util/logging.js";
 import jwt from "jsonwebtoken";
-import { hash, compare } from "bcrypt";
+import { compare } from "bcrypt";
 
 export const authUser = async (req, res) => {
   try {
@@ -15,9 +15,8 @@ export const authUser = async (req, res) => {
     }
 
     // Compare provided password with the hashed password in the database
-    const saltRound = 10;
-    const hashedPassword = await hash(password, saltRound);
-    const isPasswordMatch = await compare(hashedPassword, user.password);
+
+    const isPasswordMatch = await compare(password, user.password);
     if (!isPasswordMatch) {
       return res
         .status(400)
