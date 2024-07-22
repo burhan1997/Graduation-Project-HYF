@@ -12,15 +12,16 @@
   margin: 0.5em;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  min-width: 13em;
-}
+  width: 100%;
+  max-width: 450px;
+  overflow: none;
 
 .form-container {
   display: inline-block;
   align-items: center;
   flex-direction: column;
   width: 90%;
+
 }
 
 .sign-in-up-form h1 {
@@ -126,6 +127,7 @@
   text-decoration: none;
   width: 100px;
 }
+
 /* .sign-up-button {
   background-color: rgb(224, 252, 65);
   color: black !important;
