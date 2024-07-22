@@ -14,16 +14,6 @@ import { useState } from "react";
  * cancelFetch - this function will cancel the fetch, call it when your component is unmounted
  */
 const useFetch = (route, onReceived) => {
-  /**
-   * We use the AbortController which is supported by all modern browsers to handle cancellations
-   * For more info: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
-   */
-  const controller = new AbortController();
-  const signal = controller.signal;
-  const cancelFetch = () => {
-    controller.abort();
-  };
-
   if (route.includes("api/")) {
     /**
      * We add this check here to provide a better error message if you accidentally add the api part
@@ -36,9 +26,13 @@ const useFetch = (route, onReceived) => {
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [controller, setController] = useState(null);
 
-  // Add any args given to the function to the fetch function
   const performFetch = (options) => {
+    const newController = new AbortController();
+    setController(newController);
+    const signal = newController.signal;
+
     setError(null);
     setIsLoading(true);
 
@@ -57,9 +51,7 @@ const useFetch = (route, onReceived) => {
 
       if (!res.ok) {
         setError(
-          `Fetch for ${url} returned an invalid status (${
-            res.status
-          }). Received: ${JSON.stringify(res)}`,
+          `Fetch for ${url} returned an invalid status (${res.status}). Received: ${JSON.stringify(res)}`,
         );
       }
 
@@ -70,9 +62,7 @@ const useFetch = (route, onReceived) => {
       } else {
         setError(
           jsonResult.msg ||
-            `The result from our API did not have an error message. Received: ${JSON.stringify(
-              jsonResult,
-            )}`,
+            `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`,
         );
       }
 
@@ -80,9 +70,19 @@ const useFetch = (route, onReceived) => {
     };
 
     fetchData().catch((error) => {
-      setError(error);
-      setIsLoading(false);
+      if (error.name === "AbortError") {
+        setError("Fetch aborted");
+      } else {
+        setError(error);
+        setIsLoading(false);
+      }
     });
+  };
+
+  const cancelFetch = () => {
+    if (controller) {
+      controller.abort();
+    }
   };
 
   return { isLoading, error, performFetch, cancelFetch };
