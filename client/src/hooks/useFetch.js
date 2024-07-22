@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 /**
  * Our useFetch hook should be used for all communication with the server.
  *
@@ -23,69 +22,54 @@ const useFetch = (route, onReceived) => {
       "when using the useFetch hook, the route should not include the /api/ part",
     );
   }
-
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [controller, setController] = useState(null);
-
   const performFetch = (options) => {
     const newController = new AbortController();
     setController(newController);
     const signal = newController.signal;
-
     setError(null);
     setIsLoading(true);
-
     const baseOptions = {
       method: "GET",
       headers: {
         "content-type": "application/json",
       },
     };
-
     const fetchData = async () => {
       // We add the /api subsection here to make it a single point of change if our configuration changes
       const url = `${process.env.BASE_SERVER_URL}/api${route}`;
-
-      const res = await fetch(url, { ...baseOptions, ...options, signal });
-
-      if (!res.ok) {
-        setError(
-          `Fetch for ${url} returned an invalid status (${res.status}). Received: ${JSON.stringify(res)}`,
-        );
-      }
-
-      const jsonResult = await res.json();
-
-      if (jsonResult.success === true) {
-        onReceived(jsonResult);
-      } else {
-        setError(
-          jsonResult.msg ||
-            `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`,
-        );
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchData().catch((error) => {
-      if (error.name === "AbortError") {
-        setError("Fetch aborted");
-      } else {
-        setError(error);
+      try {
+        const res = await fetch(url, { ...baseOptions, ...options, signal });
+        const jsonResult = await res.json();
+        if (!res.ok) {
+          setError(`${jsonResult.msg}`);
+        } else if (jsonResult.success === true) {
+          onReceived(jsonResult);
+        } else {
+          setError(
+            jsonResult.msg ||
+              `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`,
+          );
+        }
+      } catch (error) {
+        if (error.name === "AbortError") {
+          setError("Fetch aborted");
+        } else {
+          setError(error);
+        }
+      } finally {
         setIsLoading(false);
       }
-    });
+    };
+    fetchData();
   };
-
   const cancelFetch = () => {
     if (controller) {
       controller.abort();
     }
   };
-
   return { isLoading, error, performFetch, cancelFetch };
 };
-
 export default useFetch;

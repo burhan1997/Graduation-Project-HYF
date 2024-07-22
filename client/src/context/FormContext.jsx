@@ -1,24 +1,28 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useFetch from "../hooks/useFetch";
-import { token } from "../config/Token";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Correct import statement for jwt-decode
 import { createFieldConfig } from "../config/CreateFieldConfig";
+import { getToken } from "../config/Token";
 
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const userId = token ? jwtDecode(token).user._id : null;
   const [formData, setFormData] = useState([]);
-
+  const [userId, setUserId] = useState(null);
   // Define the order of fields
   const desiredOrder = [
     "profile_picture",
-    "firstname",
-    "lastname",
+    "firstName",
+    "lastName",
+    "location",
     "bio",
     "birthday",
     "gender",
+    "preferred_gender",
+    "min_age_preference",
+    "max_age_preference",
+    "max_distance_preference",
     "hobbies",
     "languages",
   ];
@@ -31,10 +35,11 @@ export const FormProvider = ({ children }) => {
       .map(([key, value]) => createFieldConfig(key, value))
       .filter((config) => config !== null);
 
-    // Sort fields based on desiredOrder
+    // Create a map for quick lookup
     const sortedFormData = desiredOrder
       .map((name) => fieldConfigs.find((field) => field.name === name))
       .filter((field) => field !== undefined); // Remove undefined fields
+    // Remove undefined fields
 
     setFormData(sortedFormData);
   };
@@ -45,13 +50,20 @@ export const FormProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if (userId) {
+    const token = getToken();
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+
+      const newUserId = decodedToken.id;
+      setUserId(newUserId); // Update userId in state
+      // Fetch user data if userId is available
       fetchUsers({
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
     }
-  }, [userId]);
+  }, [userId]); // Re-run effect if fetchUsers changes
 
   return (
     <FormContext.Provider value={{ formData, setFormData, fetchUserError }}>
