@@ -126,21 +126,11 @@
   text-decoration: none;
   width: 100px;
 }
-.sign-up-button {
+/* .sign-up-button {
   background-color: rgb(224, 252, 65);
   color: black !important;
   transition: background-color 0.3s ease-in-out;
 }
 .sign-up-button:hover {
   background-color: #ee9bd7;
-}
-
-.form-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-  color: #666666;
-}
-.terms {
-  display: flex;
-  gap: 10px;
-}
+} */
