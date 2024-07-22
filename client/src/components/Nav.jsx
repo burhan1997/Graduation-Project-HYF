@@ -15,6 +15,9 @@ const Nav = () => {
       <Link to="/sign-in" data-testid={TEST_ID.linkToSignIn}>
         <li>Log in</li>
       </Link>
+      <Link to="/create-profile" data-testid={TEST_ID.linkToCreateProfile}>
+        <li>create profile</li>
+      </Link>
       <Link to="/sign-up">
         <li>Sign up</li>
       </Link>
