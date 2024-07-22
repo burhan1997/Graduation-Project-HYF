@@ -3,12 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import "./Create-profile.css";
 import { FormContext } from "../context/FormContext";
-import { token } from "../config/Token";
+import { getToken } from "../config/GetToken";
 import { FormItem } from "./FormItem";
 import { jwtDecode } from "jwt-decode";
 
 const CreateProfile = () => {
   const { formData, setFormData, fetchUserError } = useContext(FormContext);
+  const token = getToken();
   const userId = token ? jwtDecode(token).user._id : null;
   const navigate = useNavigate();
   const location = useLocation();
