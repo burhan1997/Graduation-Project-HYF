@@ -213,7 +213,7 @@ const SignUp = () => {
                 </span>
               </div>
             </div>
-            <div className="form-group">
+            <div className="terms">
               <input
                 type="checkbox"
                 id="terms"
