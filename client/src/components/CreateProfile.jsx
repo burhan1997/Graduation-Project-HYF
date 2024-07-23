@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import "./Create-profile.css";
-import { FormContext } from "../context/FormContext";
-import { getToken } from "../config/GetToken";
+import "./CreateProfile.css";
+import { FormContext } from "../context/formContext";
+import { getToken } from "../config/getToken";
 import { FormItem } from "./FormItem";
 import { jwtDecode } from "jwt-decode";
 

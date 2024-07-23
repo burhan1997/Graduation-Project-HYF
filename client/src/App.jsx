@@ -6,7 +6,7 @@ import CreateUser from "./pages/user/CreateUser";
 import UserList from "./pages/user/UserList";
 import SignIn from "./pages/sign-in/SignIn";
 import CreateProfile from "./components/CreateProfile";
-import SignUp from "./pages/sign_up/Sign_up";
+import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
 
 const App = () => {
