@@ -31,12 +31,6 @@
   text-align: center;
 }
 
-.signin-link {
-  text-align: center;
-}
-.signin-link p {
-  margin: 10px 0 5px;
-}
 .form-group {
   display: flex;
   flex-direction: column;
@@ -117,13 +111,20 @@
 }
 
 .sign-in-up-link p {
-  color: #333;
+  color: black;
+  margin: 1.2vw 0;
 }
 
 .signup-link button {
   color: #fff;
   text-decoration: none;
   width: 100px;
+}
+.terms {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 /* .sign-up-button {
   background-color: rgb(224, 252, 65);
