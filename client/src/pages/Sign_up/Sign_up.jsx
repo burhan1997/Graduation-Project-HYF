@@ -241,13 +241,13 @@ const SignUp = () => {
               Sign Up
             </button>
             <div className="sign-in-up-link">
-              <p className="sign-in-up-text">Already have an account?</p>
-              <button
-                className="form-button poppins-regular"
+              <p className="sign-in-up-text">Already have an account? </p>
+              <span
+                className="sign-in-text"
                 onClick={() => navigate("/sign-in")}
               >
                 Sign In
-              </button>
+              </span>
             </div>
           </form>
         </div>
