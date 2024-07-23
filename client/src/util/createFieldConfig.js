@@ -1,5 +1,5 @@
 const fieldTypes = {
-  text: ["firstname", "lastname", "location"],
+  text: ["firstName", "lastName", "location"],
   image: ["profile_picture"],
   textarea: ["bio"],
   date: ["birthday"],

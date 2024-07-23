@@ -5,7 +5,7 @@ import Home from "./pages/Home/Home";
 import CreateUser from "./pages/User/CreateUser";
 import UserList from "./pages/User/UserList";
 import SignIn from "./pages/Sign-in/SignIn";
-import CreateProfile from "./components/CreateProfile";
+import { UpdateProfileForm } from "./components/forms/UpdateProfileForm";
 import SignUp from "./pages/Sign_up/Sign_up";
 import "./index.css";
 
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/user" element={<UserList />} />
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/create-profile" element={<CreateProfile />} />
+        <Route path="/create-profile" element={<UpdateProfileForm />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/nav" element={<Nav />} />
       </Routes>
