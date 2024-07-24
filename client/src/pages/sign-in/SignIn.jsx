@@ -5,8 +5,9 @@ import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import { FaEye } from "react-icons/fa";
 import { FormContext } from "../../context/formContext";
+
 const SignIn = () => {
-  const { profileCreated } = useContext(FormContext);
+  const { profileCreated, isSignIn, setIsSignIn } = useContext(FormContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -17,6 +18,7 @@ const SignIn = () => {
 
   const onReceived = (data) => {
     localStorage.setItem("token", data.token);
+    setIsSignIn(true);
     profileCreated ? navigate("/profile") : navigate("/create-profile");
   };
 
@@ -112,7 +114,12 @@ const SignIn = () => {
           {error && <div className="error">{error}</div>}
           {fetchError && <div className="error">{fetchError.toString()}</div>}
           {isLoading && <div className="loading">Loading...</div>}
-          <button type="submit" disabled={isLoading}>
+          <button
+            type="submit"
+            disabled={isLoading}
+            style={{ pointerEvents: isSignIn ? "none" : "auto" }}
+            /* className={`button ${isSignIn ? "disabled" : ""}`} */
+          >
             Sign In
           </button>
         </form>

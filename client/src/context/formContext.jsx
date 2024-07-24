@@ -11,6 +11,7 @@ export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState([]);
   const [userId, setUserId] = useState(null);
   const [profileCreated, setProfileCreated] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
   // Define the order of fields
   const desiredOrder = [
     "profile_picture",
@@ -74,6 +75,8 @@ export const FormProvider = ({ children }) => {
         fetchUserError,
         profileCreated,
         setProfileCreated,
+        isSignIn,
+        setIsSignIn,
       }}
     >
       {children}
