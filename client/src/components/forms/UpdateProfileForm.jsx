@@ -3,7 +3,7 @@ import { useUser } from "../../hooks/useUser";
 import { FormContext } from "../../context/formContext";
 import { useLocation } from "react-router-dom";
 import { FormItem } from "./FormItem";
-import "./Update-profile.css";
+import "./UpdateProfile.css";
 import { useFields } from "../../hooks/useFields";
 import { useDefaultValues } from "../../hooks/useDefaultValues";
 

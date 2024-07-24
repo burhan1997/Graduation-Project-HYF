@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Input from "../Input";
-import "./Form-item.css";
+import "./FormItem.css";
 
 export const FormItem = ({ field, register, watch }) => {
   const { type, placeholder, name, fieldLabel, options } = field;
