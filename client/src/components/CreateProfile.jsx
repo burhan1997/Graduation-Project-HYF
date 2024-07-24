@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import "./CreateProfile.css";
@@ -8,9 +8,17 @@ import { FormItem } from "./FormItem";
 import { jwtDecode } from "jwt-decode";
 
 const CreateProfile = () => {
-  const { formData, setFormData, fetchUserError } = useContext(FormContext);
-  const token = getToken();
-  const userId = token ? jwtDecode(token).user._id : null;
+  const { formData, setFormData, fetchUserError, setProfileCreated } =
+    useContext(FormContext);
+  const [error, setError] = useState("");
+  let userId, token;
+  try {
+    token = getToken();
+    userId = jwtDecode(token)._id;
+  } catch (err) {
+    setError(err);
+  }
+
   const navigate = useNavigate();
   const location = useLocation();
   const onReceivedProfile = (data) => {
@@ -60,6 +68,7 @@ const CreateProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setProfileCreated(true);
     if (!userId) {
       return;
     }
@@ -118,6 +127,7 @@ const CreateProfile = () => {
         {fetchUserError && (
           <div className="error">{fetchUserError.toString()}</div>
         )}
+        {error && <div>{error.toString()}</div>}
       </div>
     </form>
   );

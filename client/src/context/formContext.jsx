@@ -10,6 +10,7 @@ export const FormContext = createContext();
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [profileCreated, setProfileCreated] = useState(false);
   // Define the order of fields
   const desiredOrder = [
     "profile_picture",
@@ -66,7 +67,15 @@ export const FormProvider = ({ children }) => {
   }, [userId]); // Re-run effect if fetchUsers changes
 
   return (
-    <FormContext.Provider value={{ formData, setFormData, fetchUserError }}>
+    <FormContext.Provider
+      value={{
+        formData,
+        setFormData,
+        fetchUserError,
+        profileCreated,
+        setProfileCreated,
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

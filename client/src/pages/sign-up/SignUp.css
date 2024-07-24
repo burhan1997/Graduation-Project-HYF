@@ -105,7 +105,7 @@
 .form-button:hover {
   background-color: #ff4781;
 }
-
+/* 
 .sign-in-up-link {
   text-align: center;
 }
@@ -119,7 +119,8 @@
   color: #fff;
   text-decoration: none;
   width: 100px;
-}
+} */
+
 .terms {
   display: flex;
   gap: 15px;
@@ -134,3 +135,22 @@
 .sign-up-button:hover {
   background-color: #ee9bd7;
 } */
+
+.sign-in-up-link {
+  text-align: center;
+}
+
+.sign-in-up-link p {
+  display: inline;
+  color: #333;
+}
+
+.sign-in-text {
+  color: #ff1493;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sign-in-text:hover {
+  color: #ff4781;
+}
