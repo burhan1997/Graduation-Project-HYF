@@ -4,8 +4,7 @@ import "./SignIn.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import { FaEye } from "react-icons/fa";
-import { FormContext } from "../../context/FormContext";
-
+import { FormContext } from "../../context/formContext";
 const SignIn = () => {
   const { profileCreated } = useContext(FormContext);
   const navigate = useNavigate();
