@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
+import { FaEye } from "react-icons/fa";
 import { FormContext } from "../../context/FormContext";
 
 const SignIn = () => {
@@ -105,7 +106,7 @@ const SignIn = () => {
                 className={`eye-icon ${showPassword ? "show" : ""}`}
                 onClick={togglePasswordVisibility}
               >
-                👁
+                <FaEye />
               </span>
             </div>
           </div>

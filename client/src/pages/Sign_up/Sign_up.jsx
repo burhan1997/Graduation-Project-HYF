@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sign_up.css";
+import { FaEye } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
@@ -190,7 +191,7 @@ const SignUp = () => {
                   className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  👁
+                  <FaEye />
                 </span>
               </div>
             </div>
@@ -209,7 +210,7 @@ const SignUp = () => {
                   className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  👁
+                  <FaEye />
                 </span>
               </div>
             </div>
