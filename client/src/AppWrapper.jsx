@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router } from "react-router-dom";
-import { FormProvider } from "./context/FormContext";
+import { FormProvider } from "./context/formContext";
 
 /**
  * This component wraps our App with the providers we do not want to have in our tests
