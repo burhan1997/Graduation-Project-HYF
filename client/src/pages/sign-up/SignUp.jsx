@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Sign_up.css";
-import { FaEye } from "react-icons/fa";
+import "./SignUp.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
@@ -191,7 +190,7 @@ const SignUp = () => {
                   className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  <FaEye />
+                  👁
                 </span>
               </div>
             </div>
@@ -210,11 +209,11 @@ const SignUp = () => {
                   className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  <FaEye />
+                  👁
                 </span>
               </div>
             </div>
-            <div className="form-group">
+            <div className="terms">
               <input
                 type="checkbox"
                 id="terms"
@@ -242,13 +241,13 @@ const SignUp = () => {
               Sign Up
             </button>
             <div className="sign-in-up-link">
-              <p className="sign-in-up-text">Already have an account? </p>
-              <span
-                className="sign-in-text"
+              <p className="sign-in-up-text">Already have an account?</p>
+              <button
+                className="form-button poppins-regular"
                 onClick={() => navigate("/sign-in")}
               >
                 Sign In
-              </span>
+              </button>
             </div>
           </form>
         </div>
