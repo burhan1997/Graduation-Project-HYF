@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Sign_up.css";
+import { FaEye } from "react-icons/fa";
+import "./SignUp.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
@@ -190,7 +191,7 @@ const SignUp = () => {
                   className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  👁
+                  <FaEye />
                 </span>
               </div>
             </div>
@@ -209,11 +210,11 @@ const SignUp = () => {
                   className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  👁
+                  <FaEye />
                 </span>
               </div>
             </div>
-            <div className="form-group">
+            <div className="terms">
               <input
                 type="checkbox"
                 id="terms"
@@ -231,7 +232,7 @@ const SignUp = () => {
             </div>
 
             {error && <div className="error">{error}</div>}
-            {fetchError && <div className="error">{fetchError.toString}</div>}
+            {fetchError && <div className="error">{fetchError.toString()}</div>}
             {isLoading && <div className="loading">Loading...</div>}
             <button
               type="submit"
@@ -241,13 +242,13 @@ const SignUp = () => {
               Sign Up
             </button>
             <div className="sign-in-up-link">
-              <p className="sign-in-up-text">Already have an account?</p>
-              <button
-                className="form-button poppins-regular"
+              <p className="sign-in-up-text">Already have an account? </p>
+              <span
+                className="sign-in-text"
                 onClick={() => navigate("/sign-in")}
               >
                 Sign In
-              </button>
+              </span>
             </div>
           </form>
         </div>

@@ -31,12 +31,6 @@
   text-align: center;
 }
 
-.signin-link {
-  text-align: center;
-}
-.signin-link p {
-  margin: 10px 0 5px;
-}
 .form-group {
   display: flex;
   flex-direction: column;
@@ -111,19 +105,27 @@
 .form-button:hover {
   background-color: #ff4781;
 }
-
+/* 
 .sign-in-up-link {
   text-align: center;
 }
 
 .sign-in-up-link p {
-  color: #333;
+  color: black;
+  margin: 1.2vw 0;
 }
 
 .signup-link button {
   color: #fff;
   text-decoration: none;
   width: 100px;
+} */
+
+.terms {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 /* .sign-up-button {
   background-color: rgb(224, 252, 65);
@@ -133,3 +135,22 @@
 .sign-up-button:hover {
   background-color: #ee9bd7;
 } */
+
+.sign-in-up-link {
+  text-align: center;
+}
+
+.sign-in-up-link p {
+  display: inline;
+  color: #333;
+}
+
+.sign-in-text {
+  color: #ff1493;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sign-in-text:hover {
+  color: #ff4781;
+}

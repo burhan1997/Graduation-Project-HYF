@@ -28,7 +28,7 @@ export const authUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user._id, // Only include essential data
+        _id: user._id, // Only include essential data
         username: user.username,
         email: user.email,
       },
