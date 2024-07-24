@@ -67,12 +67,13 @@
   font-size: 20px;
   color: #ff1493; /* Pink */
   right: 10px;
+  top: 17%;
 }
 
-.password-container .eye-icon.show {
+/* .password-container .eye-icon.show {
   color: #ffa500; /* Yellow */
-  text-decoration: line-through; /* Slash effect */
-}
+/* text-decoration: line-through; /* Slash effect */
+/* } */
 
 .error {
   color: red;

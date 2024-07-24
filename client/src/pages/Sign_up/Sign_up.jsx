@@ -5,6 +5,8 @@ import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import "../../../public/index.css";
+import { PiEyeClosed } from "react-icons/pi";
+import { FaEye } from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -186,11 +188,8 @@ const SignUp = () => {
                   onChange={handleInputChange}
                   required
                 />
-                <span
-                  className={`eye-icon ${showPassword ? "show" : ""}`}
-                  onClick={togglePasswordVisibility}
-                >
-                  👁
+                <span className="eye-icon" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEye /> : <PiEyeClosed />}
                 </span>
               </div>
             </div>
@@ -206,10 +205,11 @@ const SignUp = () => {
                   required
                 />
                 <span
-                  className={`eye-icon ${showPassword ? "show" : ""}`}
+                  className="eye-icon"
+                  // className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  👁
+                  {showPassword ? <FaEye /> : <PiEyeClosed />}
                 </span>
               </div>
             </div>
