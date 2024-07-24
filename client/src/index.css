@@ -1,21 +1,23 @@
 * {
-  background: #febe10;
+  /* background: #febe10; */
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
-body {
+/* body {
   display: flex;
   justify-content: center;
   align-items: center;
 
   margin: 0;
-}
+} */
 
 form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   background-color: white;
-  height: 100%;
+}
+span {
+  background-color: white;
 }
 body header {
   display: flex;

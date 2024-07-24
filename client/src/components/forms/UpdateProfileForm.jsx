@@ -9,6 +9,7 @@ import { useDefaultValues } from "../../hooks/useDefaultValues";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
+
   const [fields, setFields] = useState();
   const {
     reset,
@@ -18,6 +19,7 @@ export const UpdateProfileForm = () => {
     isLoading,
     formState,
     register,
+    updateUserError,
   } = useContext(FormContext);
 
   const location = useLocation();
@@ -51,9 +53,9 @@ export const UpdateProfileForm = () => {
     const id = user._id;
     const method = "PUT";
     const pathName = `/user/update/${id}`;
-    const updatedUser = { ...user, ...data };
+    // const updatedUser = { ...user, ...data };
     const body = {
-      user: updatedUser,
+      user: data,
     };
     onSubmit(body, method, pathName);
   };
@@ -80,6 +82,11 @@ export const UpdateProfileForm = () => {
           >
             Submit
           </button>
+        </div>
+        <div>
+          {updateUserError && (
+            <div className="error">{updateUserError.toString()}</div>
+          )}
         </div>
       </form>
     </div>

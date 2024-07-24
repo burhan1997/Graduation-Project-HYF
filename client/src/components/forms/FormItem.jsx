@@ -47,7 +47,7 @@ export const FormItem = ({ field, register, watch }) => {
             {options?.map((option) => (
               <div key={option} className="options-label">
                 <label key={option}>{option} </label>
-                <Input
+                <input
                   type={type}
                   className={"options-input"}
                   checked={isChecked(option)}
