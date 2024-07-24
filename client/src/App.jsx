@@ -7,7 +7,6 @@ import UserList from "./pages/User/UserList";
 import SignIn from "./pages/Sign-in/SignIn";
 import { UpdateProfileForm } from "./components/forms/UpdateProfileForm";
 import SignUp from "./pages/Sign_up/Sign_up";
-import "./index.css";
 
 const App = () => {
   return (

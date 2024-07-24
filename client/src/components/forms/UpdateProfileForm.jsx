@@ -1,74 +1,85 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useUser } from "../../hooks/useUser";
-import { FormContext } from "../../context/FormContext";
-import { useContext } from "react";
+import { FormContext } from "../../context/xformContext";
 import { useLocation } from "react-router-dom";
 import { FormItem } from "./FormItem";
 import "./Update-profile.css";
-import { useEffect } from "react";
-import { convertUserToFormData } from "../../util/convertUserToFormData";
+import { useFields } from "../../hooks/useFields";
+import { useDefaultValues } from "../../hooks/useDefaultValues";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
-  const { reset, handleSubmit, formState } = useContext(FormContext);
+  const [fields, setFields] = useState();
+  const {
+    reset,
+    watch,
+    onSubmit,
+    handleSubmit,
+    isLoading,
+    formState,
+    register,
+  } = useContext(FormContext);
+
+  const location = useLocation();
+  const pathName =
+    location.pathname === "/create-profile" ? "Create" : "Update";
+
+  const getDefaults = (user) => {
+    const fields = useFields();
+    setFields(fields);
+    const defaultValues = useDefaultValues(user, fields);
+    return defaultValues;
+  };
 
   useEffect(() => {
-    if (!user) return;
-    const sortedFormData = convertUserToFormData(user);
-    reset(sortedFormData);
-  }, [user]);
+    if (user) {
+      const defaultValues = getDefaults(user);
+      reset(defaultValues);
+    }
+  }, [user, reset]);
 
   const data = formState.defaultValues;
   if (!data) {
-    return <p>Loading...</p>;
+    return <p>Default data loading...</p>;
   }
-  //console.log("data",data)
 
   if (userError) {
     return <p>No user we found. You can sign in or sign up</p>;
   }
 
-  const location = useLocation();
-
-  const pathName =
-    location.pathname === "/create-profile" ? "Create" : "Update";
-
-  const handleChange = (e) => {
-    e?.preventDefault();
-    // console.log("e",e.target);
+  const onSave = (data) => {
+    const id = user._id;
+    const method = "PUT";
+    const pathName = `/user/update/${id}`;
+    const updatedUser = { ...user, ...data };
+    const body = {
+      user: updatedUser,
+    };
+    onSubmit(body, method, pathName);
   };
-
-  //console.log("form Values",formData);
-  //console.log("register values",register)
-  //console.log("formState",formState);
   return (
-    <div onSubmit={handleSubmit} className="Profile-form">
+    <div className="Profile-form">
       <header>
         <h1>{pathName} Profile</h1>
-        {/* <div>{loading&&<p>Loading ...</p>}</div> */}
       </header>
-      <form>
-        {data?.map((field) => (
+      <form onSubmit={handleSubmit(onSave)}>
+        {fields?.map((field, index) => (
           <FormItem
-            key={field.name}
+            key={index}
             field={field}
-            handleChange={handleChange}
-            register
+            watch={watch}
+            register={register}
+            defaultValue={formState.defaultValues[field.name]}
           />
         ))}
         <div className="submit">
           <button
             type="submit"
             className="Profile-form-button"
-            // disabled={isLoading}
+            disabled={isLoading}
           >
-            {/* {isLoading ? "Submitting..." : "Submit"} */}
             Submit
           </button>
-
-          {/* {fetchUserError && (
-            <div className="error">{fetchUserError.toString()}</div>
-          )} */}
         </div>
       </form>
     </div>

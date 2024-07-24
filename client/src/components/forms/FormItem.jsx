@@ -1,129 +1,90 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Input from "../Input";
+import "./Form-item.css";
 
-export const FormItem = ({
-  field,
-  //isRequired,
-  handleChange,
-}) => {
-  // Convert values to strings
-  //console.log("field",field);
+export const FormItem = ({ field, register, watch }) => {
   const { type, placeholder, name, fieldLabel, options } = field;
-  const value = field?.name;
+  const newObje = watch();
 
-  /// console.log("value",value);
-  //console.log("label",fieldLabel);
+  const isChecked = (option) => {
+    const newArray = newObje?.[name];
 
-  return (
-    <div className={"Profile-form-input"}>
-      {type === "image" && (
-        <img
-          className="pro-img"
-          src={
-            "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-          }
-          alt="Avatar"
-        />
-      )}
-      <Input
-        type={type}
-        name={name}
-        value={value}
-        onChange={handleChange}
-        placeholder={placeholder}
-      />
-      {options && (
-        <div className={"label-div"}>
-          <label>{fieldLabel}</label>
-          <div
-            className={`${name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}-div`}
-          >
-            {options.map((option) => (
-              <label key={option}>
+    if (Array.isArray(newArray)) {
+      return newArray.includes(option);
+    } else {
+      return newObje?.[name] === option;
+    }
+  };
+  const renderField = () => {
+    switch (type) {
+      case "text":
+      case "number":
+      case "date":
+        return (
+          <Input
+            id={name}
+            type={type}
+            placeholder={placeholder}
+            {...register(name)}
+          />
+        );
+      case "textarea":
+        return (
+          <textarea
+            id={name}
+            className={name}
+            placeholder={placeholder}
+            {...register(name)}
+          />
+        );
+      case "image":
+        return <img className="pro-img" alt={name} />;
+      case "checkbox":
+      case "radio":
+        return (
+          <div className="options">
+            {options?.map((option) => (
+              <div key={option} className="options-label">
+                <label key={option}>{option} </label>
                 <Input
                   type={type}
-                  name={name}
+                  className={"options-input"}
+                  checked={isChecked(option)}
                   value={option}
-                  checked={field[name]?.includes(option) || false}
-                  onChange={handleChange}
+                  {...register(name)}
                 />
-                {option}
-              </label>
+              </div>
             ))}
           </div>
-        </div>
-      )}
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div
+      className={
+        field.type == "number"
+          ? "Profile-form-input label-horizontal"
+          : "Profile-form-input"
+      }
+    >
+      {fieldLabel && <label htmlFor={name}>{fieldLabel}</label>}
+      {renderField()}
     </div>
-
-    //   {(type === "image" || type === "file") && (
-    //     <img
-    //       className="pro-img"
-    //       src={
-    //         "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-    //       }
-    //       alt="Avatar"
-    //     />
-    //   )}
-    //   {( type === "number" || type === "date") && fieldLabel && (
-    //     <span className="label-span">{fieldLabel}</span>
-    //   )}
-    //   {type === "textarea" && (
-    //     <Input
-    //     type="textarea"
-    //       className={className}
-    //       name={name}
-    //       value={""}
-    //       onChange={handleChange}
-
-    //       placeholder={placeholder}
-    //     />
-    //   )}
-    //   {(type === "checkbox" || type === "radio") && options && (
-    //     <>
-    //       <label
-    //         className={`${name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}`}
-    //       >
-    //         {fieldLabel && fieldLabel}
-    //       </label>
-    //       <div
-    //         className={`${name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}-div`}
-    //       >
-    //         {options.map((option) => (
-    //           <label
-    //             key={option}
-    //             className={`${name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}`}
-    //           >
-    //             <Input
-    //               type={type}
-    //               name={name}
-    //               value={option}
-    //               checked={field[name]?.includes(option) || false}
-    //               onChange={handleChange}
-    //             />
-    //             {option}
-    //           </label>
-    //         ))}
-    //       </div>
-    //     </>
-    //   )}
-    //   {(type === "text" || type === "date" || type === "number") && (
-    //     <Input
-    //       className={className}
-    //       type={type}
-    //       name={name}
-    //       value={value}
-    //       onChange={handleChange}
-    //       required={isRequired}
-    //       placeholder={placeholder}
-    //     />
-    //   )}
-    //  {/* {label && <span>{label}</span>} */}
-    // </div>
   );
 };
 
 FormItem.propTypes = {
-  field: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  field: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    fieldLabel: PropTypes.string,
+    options: PropTypes.array,
+  }).isRequired,
+  register: PropTypes.func.isRequired,
+  watch: PropTypes.func.isRequired,
 };

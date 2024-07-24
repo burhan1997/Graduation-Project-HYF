@@ -1,23 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Input = ({ name, value, onChange, ...rest }) => {
+const Input = React.forwardRef(({ type, placeholder, name, ...rest }, ref) => {
   return (
     <input
-      {...rest}
+      type={type}
+      placeholder={placeholder}
       name={name}
-      value={value}
-      onChange={(e) => onChange(e.target)}
+      ref={ref}
+      {...rest}
     />
   );
-};
+});
+
+Input.displayName = "Input";
 
 Input.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 export default Input;

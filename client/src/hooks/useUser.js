@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { logError } from "../util/logging";
 import useFetch from "./useFetch";
 import { jwtDecode } from "jwt-decode";
-import { getToken } from "../config/GetToken";
+import { getToken } from "../config/getToken";
 
 export const useUser = () => {
   let token = getToken();
