@@ -4,6 +4,7 @@ import "./Nav.css";
 import "../../public/index.css";
 import TEST_ID from "./Nav.testid";
 import { FormContext } from "../context/formContext";
+import { images } from "../../public/assets/images";
 
 const Nav = () => {
   const { isSignIn, setIsSignIn } = useContext(FormContext);
@@ -15,11 +16,7 @@ const Nav = () => {
   }
   return (
     <div className="nav">
-      <img
-        src="/E0B013B3-F191-4CAA-8258-C20AFD106E21.png"
-        alt="Logo"
-        className="logo"
-      />
+      <img src={images.LogoPurple} alt="Logo" className="logo" />
       <ul className="ul-text poppins-bold">
         <Link to="/" data-testid={TEST_ID.linkToHome}>
           <li>Home</li>
