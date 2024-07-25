@@ -15,12 +15,13 @@ const userSchema = new mongoose.Schema({
   max_age_preference: { type: Number, default: 99 },
   preferred_gender: {
     type: String,
-    enum: ["male", "female", "non-binary", "other"],
+    enum: ["Male", "Female", "Non-binary"],
     default: "other",
   },
   max_distance_preference: { type: Number, default: 50 },
   created_at: { type: Date, default: Date.now },
-  hobbies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hobby" }],
+  hobbies: { type: [String], default: [] }, // Hobbies as array of strings
+  languages: { type: [String], default: [] }, // Languages as array of strings
 });
 
 const User = mongoose.model("User", userSchema);

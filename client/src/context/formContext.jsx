@@ -1,78 +1,68 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 import useFetch from "../hooks/useFetch";
-import { jwtDecode } from "jwt-decode"; // Correct import statement for jwt-decode
-import { createFieldConfig } from "../config/createFieldConfig";
 import { getToken } from "../config/getToken";
+import { useUser } from "../hooks/useUser";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const [formData, setFormData] = useState([]);
-  const [userId, setUserId] = useState(null);
+  const [userPathName, setUserPathName] = useState("");
+  const { setUser } = useUser();
+  //form info
+  const [schema, setSchema] = useState();
+  const { register, watch, reset, formState, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+  });
+  //check profile created
   const [profileCreated, setProfileCreated] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
-  // Define the order of fields
-  const desiredOrder = [
-    "profile_picture",
-    "firstName",
-    "lastName",
-    "location",
-    "bio",
-    "birthday",
-    "gender",
-    "preferred_gender",
-    "min_age_preference",
-    "max_age_preference",
-    "max_distance_preference",
-    "hobbies",
-    "languages",
-  ];
-
-  const onReceivedUser = (data) => {
-    const user = data.user;
-
-    // Create field configurations
-    const fieldConfigs = Object.entries(user)
-      .map(([key, value]) => createFieldConfig(key, value))
-      .filter((config) => config !== null);
-
-    // Create a map for quick lookup
-    const sortedFormData = desiredOrder
-      .map((name) => fieldConfigs.find((field) => field.name === name))
-      .filter((field) => field !== undefined); // Remove undefined fields
-    // Remove undefined fields
-
-    setFormData(sortedFormData);
-  };
-
-  const { performFetch: fetchUsers, error: fetchUserError } = useFetch(
-    `/user/${userId}`,
-    onReceivedUser,
-  );
 
   useEffect(() => {
+    return () => cancelFetch();
+  }, [cancelFetch]);
+
+  const onReceived = (data) => {
+    if (data?.success) {
+      setUser(data.user);
+    }
+  };
+  //fetch modal
+  const {
+    isLoading,
+    error: updateUserError,
+    performFetch,
+    cancelFetch,
+  } = useFetch(userPathName, onReceived);
+
+  const onSubmit = (data, method) => {
     const token = getToken();
 
-    if (token) {
-      const decodedToken = jwtDecode(token);
-
-      const newUserId = decodedToken.id;
-      setUserId(newUserId); // Update userId in state
-      // Fetch user data if userId is available
-      fetchUsers({
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    }
-  }, [userId]); // Re-run effect if fetchUsers changes
+    performFetch({
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+  };
 
   return (
     <FormContext.Provider
       value={{
-        formData,
-        setFormData,
-        fetchUserError,
+        formState,
+        watch,
+        register,
+        reset,
+        onSubmit,
+        handleSubmit,
+        isLoading,
+        updateUserError,
+        setUserPathName,
+        setSchema,
         profileCreated,
         setProfileCreated,
         isSignIn,
