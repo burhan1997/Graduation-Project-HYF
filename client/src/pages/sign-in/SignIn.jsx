@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import { PiEyeClosed } from "react-icons/pi";
 import { FaEye } from "react-icons/fa";
-
+import { FormContext } from "../../context/formContext";
 const SignIn = () => {
+  const { profileCreated } = useContext(FormContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -17,7 +18,7 @@ const SignIn = () => {
 
   const onReceived = (data) => {
     localStorage.setItem("token", data.token);
-    navigate("/profile");
+    profileCreated ? navigate("/profile") : navigate("/create-profile");
   };
 
   const {
@@ -61,7 +62,9 @@ const SignIn = () => {
       setError("Invalid email or password.");
       return;
     }
+
     setError("");
+
     performFetch({
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -112,8 +115,10 @@ const SignIn = () => {
           </button>
         </form>
         <div className="signup-link">
-          <p> Do not have an account?</p>
-          <button onClick={() => navigate("/sign-up")}>Sign up</button>
+          <p> Do not have an account? </p>
+          <span className="sign-up-text" onClick={() => navigate("/sign-up")}>
+            Sign up
+          </span>
         </div>
       </div>
     </div>

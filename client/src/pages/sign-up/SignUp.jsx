@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Signup.css";
+import { FaEye } from "react-icons/fa";
+import "./SignUp.css";
 import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import "../../../public/index.css";
 import { PiEyeClosed } from "react-icons/pi";
-import { FaEye } from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();

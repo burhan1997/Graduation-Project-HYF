@@ -2,14 +2,15 @@ import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useFetch from "../hooks/useFetch";
 import { jwtDecode } from "jwt-decode"; // Correct import statement for jwt-decode
-import { createFieldConfig } from "../config/CreateFieldConfig";
-import { getToken } from "../config/GetToken";
+import { createFieldConfig } from "../config/createFieldConfig";
+import { getToken } from "../config/getToken";
 
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [profileCreated, setProfileCreated] = useState(false);
   // Define the order of fields
   const desiredOrder = [
     "profile_picture",
@@ -66,7 +67,15 @@ export const FormProvider = ({ children }) => {
   }, [userId]); // Re-run effect if fetchUsers changes
 
   return (
-    <FormContext.Provider value={{ formData, setFormData, fetchUserError }}>
+    <FormContext.Provider
+      value={{
+        formData,
+        setFormData,
+        fetchUserError,
+        profileCreated,
+        setProfileCreated,
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

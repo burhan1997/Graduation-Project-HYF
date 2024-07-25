@@ -1,0 +1,91 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.about-us {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.about-us-header {
+  margin-bottom: 20px;
+}
+
+.about-us-header h1 {
+  font-size: 2.5em;
+  color: #ff4781;
+}
+
+.about-us-content {
+  margin-bottom: 20px;
+}
+
+.about-us-description {
+  font-size: 1.2em;
+  color: #555;
+  margin: 20px 0;
+}
+
+.about-us-images {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.about-us-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-footer {
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.footer-logo {
+  width: 55px;
+  height: auto;
+  margin-bottom: 10px;
+}
+.footer-slogan {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.footer-contact {
+  margin-bottom: 20px;
+}
+
+.footer-contact p {
+  margin: 5px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.footer-social-media {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icon {
+  color: #1a73e8;
+  font-size: 2em;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.social-icon:hover {
+  color: #0d47a1;
+}

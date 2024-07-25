@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 dotenv.config();
 import { hash, genSalt } from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -72,7 +73,7 @@ export const createUser = async (req, res) => {
       logError("JWT_SECRET is not defined");
     }
 
-    const token = jwt.sign({ user: { id: newUser._id } }, JWT_SECRET_KEY, {
+    const token = jwt.sign({ user: { _id: newUser._id } }, JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
     // Return success response with token
@@ -100,6 +101,13 @@ export const getUsers = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ success: false, msg: "User ID is required" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, msg: "Invalid User ID" });
+  }
   const { user } = req.body;
   const token =
     req.headers.authorization && req.headers.authorization.split(" ")[1];
