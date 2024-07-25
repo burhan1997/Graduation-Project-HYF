@@ -15,7 +15,7 @@ export const FormProvider = ({ children }) => {
   });
   const [userPathName, setUserPathName] = useState("");
   const { setUser } = useUser();
-
+  const [isSignIn, setIsSignIn] = useState(false);
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
@@ -59,6 +59,10 @@ export const FormProvider = ({ children }) => {
         updateUserError,
         setUserPathName,
         setSchema,
+        profileCreated,
+        setProfileCreated,
+        isSignIn,
+        setIsSignIn,
       }}
     >
       {children}

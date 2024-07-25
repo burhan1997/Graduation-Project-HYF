@@ -52,12 +52,13 @@
   cursor: pointer;
   font-size: 20px;
   color: #ff1493; /* Pink */
+  top: 17%;
 }
 
-.password-container .eye-icon.show {
-  color: #ffa500; /* Yellow */
-  text-decoration: line-through; /* Slash effect */
-}
+/* .password-container .eye-icon.show {
+  color: #ffa500; 
+  text-decoration: line-through; 
+} */
 
 .error {
   color: red;
@@ -84,6 +85,13 @@ button {
 
 button:hover {
   background-color: #ff4781;
+}
+
+.button.disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  pointer-events: none; /* Prevents clicking */
+  color: #666666;
 }
 
 /* .signup-link {
