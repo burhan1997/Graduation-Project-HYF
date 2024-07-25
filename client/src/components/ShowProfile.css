@@ -1,0 +1,33 @@
+.Profile-display {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.Profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.Profile-details {
+  width: 100%;
+}
+
+.Profile-field {
+  margin: 10px 0;
+}
+
+.Profile-field strong {
+  margin-right: 10px;
+}

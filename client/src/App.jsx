@@ -8,6 +8,7 @@ import SignIn from "./pages/sign-in/SignIn";
 import CreateProfile from "./components/CreateProfile";
 import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
+import ShowProfile from "./components/ShowProfile";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/nav" element={<Nav />} />
+        <Route path="show/profile" element={<ShowProfile />} />
       </Routes>
     </>
   );
