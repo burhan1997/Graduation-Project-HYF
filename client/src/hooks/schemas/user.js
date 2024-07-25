@@ -2,7 +2,7 @@ export const userFields = [
   {
     name: "profile_picture",
     type: "image",
-    placeholder: "Profile Picture",
+    placeholder: "Please enter a URL",
     fieldLabel: "Profile Picture",
   },
   {

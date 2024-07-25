@@ -48,7 +48,21 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
           />
         );
       case "image":
-        return <img className="pro-img" alt={name} />;
+        if (isEdit) {
+          return (
+            <input type="text" placeholder={placeholder} {...register(name)} />
+          );
+        } else {
+          return (
+            <img
+              src={newObje[name]}
+              {...register(name)}
+              className="pro-img"
+              alt={"Profile picture is not available"}
+            />
+          );
+        }
+
       case "checkbox":
       case "radio":
         if (isEdit) {

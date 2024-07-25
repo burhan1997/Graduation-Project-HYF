@@ -17,8 +17,8 @@ label[type="text"] {
 }
 .pro-img {
   width: 250px;
-  margin-bottom: 20px;
   border-radius: 50px;
+  object-fit: cover;
 }
 
 .label-div {
