@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Input from "../Input";
 import "./FormItem.css";
+import { formatDate } from "../../util/formatData";
 
-export const FormItem = ({ field, register, watch }) => {
+export const FormItem = ({ field, register, watch, isEdit }) => {
   const { type, placeholder, name, fieldLabel, options } = field;
+
   const newObje = watch();
 
   const isChecked = (option) => {
@@ -16,17 +17,24 @@ export const FormItem = ({ field, register, watch }) => {
       return newObje?.[name] === option;
     }
   };
+
   const renderField = () => {
     switch (type) {
       case "text":
       case "number":
       case "date":
         return (
-          <Input
+          <input
             id={name}
             type={type}
             placeholder={placeholder}
             {...register(name)}
+            value={
+              type === "date" && !isEdit
+                ? formatDate(newObje[name])
+                : newObje[name]
+            }
+            readOnly={!isEdit}
           />
         );
       case "textarea":
@@ -36,41 +44,54 @@ export const FormItem = ({ field, register, watch }) => {
             className={name}
             placeholder={placeholder}
             {...register(name)}
+            readOnly={!isEdit}
           />
         );
       case "image":
         return <img className="pro-img" alt={name} />;
       case "checkbox":
       case "radio":
-        return (
-          <div className="options">
-            {options?.map((option) => (
-              <div key={option} className="options-label">
-                <label key={option}>{option} </label>
-                <input
-                  type={type}
-                  className={"options-input"}
-                  checked={isChecked(option)}
-                  value={option}
-                  {...register(name)}
-                />
+        if (isEdit) {
+          return (
+            <div className="options">
+              {options?.map((option) => (
+                <div key={option} className="options-label">
+                  <span key={option}>{option} </span>
+                  <input
+                    type={type}
+                    className={"options-input"}
+                    checked={isChecked(option)}
+                    value={option}
+                    {...register(name)}
+                    disabled={!isEdit}
+                  />
+                </div>
+              ))}
+            </div>
+          );
+        } else {
+          const defaultValue = newObje?.[name];
+          if (Array.isArray(defaultValue)) {
+            return (
+              <div className="default-values">
+                {defaultValue.map((value) => (
+                  <span key={value} className="default-value">
+                    {value}
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
-        );
+            );
+          } else {
+            return <span className="default-value">{defaultValue}</span>;
+          }
+        }
       default:
         return null;
     }
   };
 
   return (
-    <div
-      className={
-        field.type == "number"
-          ? "Profile-form-input label-horizontal"
-          : "Profile-form-input"
-      }
-    >
+    <div className={"Profile-form-input"}>
       {fieldLabel && <label htmlFor={name}>{fieldLabel}</label>}
       {renderField()}
     </div>
@@ -87,4 +108,5 @@ FormItem.propTypes = {
   }).isRequired,
   register: PropTypes.func.isRequired,
   watch: PropTypes.func.isRequired,
+  isEdit: PropTypes.bool.isRequired,
 };

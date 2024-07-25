@@ -155,7 +155,7 @@ export const updateUser = async (req, res) => {
     return;
   }
 
-  res.status(200).json({ success: true, user: updatedUser });
+  res.status(200).json({ success: true, updatedUser });
 };
 
 export { validateUser };

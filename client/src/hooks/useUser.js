@@ -50,5 +50,5 @@ export const useUser = () => {
     }
   }, [userId]);
 
-  return { user, loading, userError, fetchUserError };
+  return { user, loading, userError, fetchUserError, setUser };
 };

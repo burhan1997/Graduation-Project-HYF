@@ -9,6 +9,7 @@ import { useDefaultValues } from "../../hooks/useDefaultValues";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
+  const [isEdit, setIsEdit] = useState(true);
 
   const [fields, setFields] = useState();
   const {
@@ -20,26 +21,27 @@ export const UpdateProfileForm = () => {
     formState,
     register,
     updateUserError,
+    setUserPathName,
   } = useContext(FormContext);
 
   const location = useLocation();
   const pathName =
     location.pathname === "/create-profile" ? "Create" : "Update";
 
-  const getDefaults = (user) => {
-    const fields = useFields();
-    setFields(fields);
-    const defaultValues = useDefaultValues(user, fields);
-    return defaultValues;
-  };
-
   useEffect(() => {
     if (user) {
-      const defaultValues = getDefaults(user);
+      const fields = useFields();
+      setFields(fields["user"]);
+      const defaultValues = useDefaultValues(user, fields["user"]);
+
       reset(defaultValues);
+      const id = user._id;
+      const pathName = `/user/update/${id}`;
+      setUserPathName(pathName);
     }
   }, [user, reset]);
 
+  //console.log("updated user", user);
   const data = formState.defaultValues;
   if (!data) {
     return <p>Default data loading...</p>;
@@ -50,39 +52,45 @@ export const UpdateProfileForm = () => {
   }
 
   const onSave = (data) => {
-    const id = user._id;
     const method = "PUT";
-    const pathName = `/user/update/${id}`;
-    // const updatedUser = { ...user, ...data };
     const body = {
       user: data,
     };
-    onSubmit(body, method, pathName);
+    onSubmit(body, method);
+    setIsEdit(false);
   };
+
   return (
     <div className="Profile-form">
       <header>
         <h1>{pathName} Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
-        {fields?.map((field, index) => (
+        {Object.values(fields || {})?.map((field, index) => (
           <FormItem
             key={index}
             field={field}
             watch={watch}
+            isEdit={isEdit}
             register={register}
             defaultValue={formState.defaultValues[field.name]}
           />
         ))}
-        <div className="submit">
-          <button
-            type="submit"
-            className="Profile-form-button"
-            disabled={isLoading}
-          >
-            Submit
-          </button>
-        </div>
+        {isEdit ? (
+          <div className="Button-group">
+            <button onClick={() => setIsEdit(false)}>Cancel</button>
+            <button
+              type="submit"
+              className="Profile-form-button"
+              disabled={isLoading}
+            >
+              {isLoading ? <p>Loading ...</p> : <p>Save</p>}
+            </button>
+          </div>
+        ) : (
+          <button onClick={() => setIsEdit(true)}>Edit</button>
+        )}
+
         <div>
           {updateUserError && (
             <div className="error">{updateUserError.toString()}</div>

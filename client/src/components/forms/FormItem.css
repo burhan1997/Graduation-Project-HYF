@@ -1,6 +1,7 @@
 .Profile-form-input {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 1rem;
   border: 1px solid #ff1493;
   border-radius: 5px;
@@ -8,8 +9,12 @@
   font-size: 20px;
   background-color: white;
   padding: 0.5rem;
+  min-height: 80px;
 }
 
+label[type="text"] {
+  background-color: rgb(214, 21, 21);
+}
 .pro-img {
   width: 250px;
   margin-bottom: 20px;
@@ -25,19 +30,22 @@
   margin-right: 10px;
   gap: 8px;
 }
-.label-horizontal {
+.label-vertical {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: white;
   font-size: 20px;
   margin-bottom: 10px;
   margin-right: 10px;
 }
+.Profile-form-input input {
+  width: 50%;
+}
 .bio {
   background-color: white;
-  border: 1px solid #ff1493;
+  border: 1px solid #dd0277;
   border-radius: 10px;
-  width: 100%;
+  width: 50%;
   height: 150px;
   font-size: 20px;
   padding: 0.5rem;
@@ -49,23 +57,6 @@
   background-color: white;
 }
 
-.Hobbies-div,
-.Gender-div,
-.Languages-div,
-.Preferred_gender-div {
-  display: flex;
-  background-color: white;
-  justify-content: flex-start;
-}
-
-.Hobbies,
-.Gender,
-.Languages,
-.Preferred_gender {
-  background-color: rgb(190, 28, 28);
-  font-size: 20px;
-  width: 100%;
-}
 .options {
   display: flex;
   flex-direction: row;
@@ -85,7 +76,7 @@
 .label-horizontal {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .options-label label {
   font-weight: normal;
@@ -103,4 +94,51 @@ input[type="number"] {
   width: 80px;
   height: 100%;
   justify-content: center;
+}
+/* isEdit false */
+
+.Profile-form-input input[readonly],
+.Profile-form-input textarea[readonly],
+.Profile-form-input input[disabled],
+.Profile-form-input textarea[disabled] {
+  pointer-events: none;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+.Profile-form-input input[readonly]:focus,
+.Profile-form-input textarea[readonly]:focus,
+.Profile-form-input input[disabled]:focus,
+.Profile-form-input textarea[disabled]:focus {
+  outline: none;
+  box-shadow: none;
+}
+.Button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 20px;
+}
+.default-values {
+  display: flex;
+
+  gap: 1rem;
+
+  font-size: 20px;
+  margin-top: 20px;
+}
+@media screen and (max-width: 600px) {
+  .Profile-form-input {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .bio {
+    width: 100%;
+  }
+  .label-vertical {
+    flex-direction: column;
+  }
 }

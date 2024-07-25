@@ -3,20 +3,23 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import useFetch from "../hooks/useFetch";
 import { getToken } from "../config/getToken";
+import { useUser } from "../hooks/useUser";
 
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const { register, watch, reset, formState, handleSubmit } = useForm();
-  const [pathName, setPathName] = useState("");
+  const [userPathName, setUserPathName] = useState("");
+  const { setUser } = useUser();
 
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
 
   const onReceived = (data) => {
-    localStorage.setItem("token", data.token);
-    // navigate("/profile");
+    if (data?.success) {
+      setUser(data.user);
+    }
   };
 
   const {
@@ -24,11 +27,10 @@ export const FormProvider = ({ children }) => {
     error: updateUserError,
     performFetch,
     cancelFetch,
-  } = useFetch(pathName, onReceived);
+  } = useFetch(userPathName, onReceived);
 
-  const onSubmit = (data, method, pathName) => {
+  const onSubmit = (data, method) => {
     const token = getToken();
-    setPathName(pathName);
 
     performFetch({
       method: method,
@@ -51,6 +53,7 @@ export const FormProvider = ({ children }) => {
         handleSubmit,
         isLoading,
         updateUserError,
+        setUserPathName,
       }}
     >
       {children}
