@@ -51,7 +51,6 @@ const ShowProfile = () => {
     performFetch: performProfileFetch,
     cancelFetch,
   } = useFetch(`/user/${userId}`, onReceivedProfile);
-
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
