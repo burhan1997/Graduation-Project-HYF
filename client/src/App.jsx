@@ -6,6 +6,7 @@ import CreateUser from "./pages/user/CreateUser";
 import UserList from "./pages/user/UserList";
 import SignIn from "./pages/sign-in/SignIn";
 import CreateProfile from "./components/CreateProfile";
+import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
 
@@ -15,12 +16,12 @@ const App = () => {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/user" element={<UserList />} />
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/nav" element={<Nav />} />
       </Routes>
     </>
   );
