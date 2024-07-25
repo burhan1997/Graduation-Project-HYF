@@ -4,11 +4,15 @@ import { useForm } from "react-hook-form";
 import useFetch from "../hooks/useFetch";
 import { getToken } from "../config/getToken";
 import { useUser } from "../hooks/useUser";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const { register, watch, reset, formState, handleSubmit } = useForm();
+  const [schema, setSchema] = useState();
+  const { register, watch, reset, formState, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+  });
   const [userPathName, setUserPathName] = useState("");
   const { setUser } = useUser();
 
@@ -54,6 +58,7 @@ export const FormProvider = ({ children }) => {
         isLoading,
         updateUserError,
         setUserPathName,
+        setSchema,
       }}
     >
       {children}

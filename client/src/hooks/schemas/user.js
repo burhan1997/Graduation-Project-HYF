@@ -1,3 +1,22 @@
+import * as yup from "yup";
+
+export const useUserSchema = () => {
+  return yup.object({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    location: yup.string(),
+    bio: yup.string(),
+    birthday: yup.date(),
+    gender: yup.string(),
+    preferred_gender: yup.string(),
+    min_age_preference: yup.number(),
+    max_age_preference: yup.number(),
+    max_distance_preference: yup.number(),
+    hobbies: yup.array(),
+    languages: yup.array(),
+  });
+};
+
 export const userFields = [
   {
     name: "profile_picture",

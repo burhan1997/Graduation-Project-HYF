@@ -6,7 +6,7 @@ import { FormItem } from "./FormItem";
 import "./UpdateProfile.css";
 import { useFields } from "../../hooks/useFields";
 import { useDefaultValues } from "../../hooks/useDefaultValues";
-
+import { useSchema } from "../../hooks/useSchema";
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
   const [isEdit, setIsEdit] = useState(true);
@@ -19,6 +19,7 @@ export const UpdateProfileForm = () => {
     handleSubmit,
     isLoading,
     formState,
+    setSchema,
     register,
     updateUserError,
     setUserPathName,
@@ -31,6 +32,8 @@ export const UpdateProfileForm = () => {
   useEffect(() => {
     if (user) {
       const fields = useFields();
+      const schema = useSchema();
+      setSchema(schema["user"]);
       setFields(fields["user"]);
       const defaultValues = useDefaultValues(user, fields["user"]);
 
