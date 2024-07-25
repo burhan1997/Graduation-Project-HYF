@@ -1,10 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Nav.css";
 import "../../public/index.css";
 import TEST_ID from "./Nav.testid";
+import { FormContext } from "../context/formContext";
 
 const Nav = () => {
+  const { isSignIn, setIsSignIn } = useContext(FormContext);
+  const navigate = useNavigate();
+  function handleSignOut() {
+    localStorage.removeItem("token");
+    setIsSignIn(false);
+    navigate("/");
+  }
   return (
     <div className="nav">
       <img
@@ -22,12 +30,23 @@ const Nav = () => {
         <Link to="/user" data-testid={TEST_ID.linkToUsers}>
           <li>Users</li>
         </Link>
-        <Link to="/sign-in" data-testid={TEST_ID.linkToSignIn}>
+        <Link
+          to="/sign-in"
+          data-testid={TEST_ID.linkToSignIn}
+          style={{ display: isSignIn ? "none" : "inline" }}
+        >
           <li>Sign in</li>
         </Link>
-        <Link to="/sign-up">
+        <Link to="/sign-up" style={{ display: isSignIn ? "none" : "inline" }}>
           <li>Sign up</li>
         </Link>
+
+        <li
+          onClick={handleSignOut}
+          style={{ display: isSignIn ? "inline" : "none", cursor: "ponter" }}
+        >
+          Sign out
+        </li>
       </ul>
       <ul className="ul-img">
         <Link to="/home">
