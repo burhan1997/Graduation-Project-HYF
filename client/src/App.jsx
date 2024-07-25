@@ -8,6 +8,7 @@ import SignIn from "./pages/sign-in/SignIn";
 import CreateProfile from "./components/CreateProfile";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
+import UserCard from "./components/user-card/UserCard";
 import "./index.css";
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/usercard" element={<UserCard />} />
       </Routes>
     </>
   );
