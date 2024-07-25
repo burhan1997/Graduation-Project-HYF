@@ -1,0 +1,13 @@
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.menu-list-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-x: auto;
+  /* TODO check height for UX*/
+  height: 90%;
+}

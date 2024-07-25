@@ -1,0 +1,13 @@
+.filter-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end !important;
+  margin-bottom: 1rem;
+  background-color: blue;
+  padding: 0.5rem;
+}
+.filter-form button {
+  margin-left: 1rem;
+  width: 5%;
+  min-width: 30px;
+}
