@@ -3,13 +3,15 @@ import { useUser } from "../../hooks/useUser";
 import { FormContext } from "../../context/formContext";
 import { useLocation } from "react-router-dom";
 import { FormItem } from "./FormItem";
-import "./UpdateProfile.css";
+import "./UpdateProfileForm.css";
 import { useFields } from "../../hooks/useFields";
 import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
+
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
   const [isEdit, setIsEdit] = useState(true);
+  const [info, setInfo] = useState();
 
   const [fields, setFields] = useState();
   const {
@@ -36,7 +38,6 @@ export const UpdateProfileForm = () => {
       setSchema(schema["user"]);
       setFields(fields["user"]);
       const defaultValues = useDefaultValues(user, fields["user"]);
-
       reset(defaultValues);
       const id = user._id;
       const pathName = `/user/update/${id}`;
@@ -44,7 +45,6 @@ export const UpdateProfileForm = () => {
     }
   }, [user, reset]);
 
-  //console.log("updated user", user);
   const data = formState.defaultValues;
   if (!data) {
     return <p>Default data loading...</p>;
@@ -60,8 +60,20 @@ export const UpdateProfileForm = () => {
       user: data,
     };
     onSubmit(body, method);
-    setIsEdit(false);
   };
+
+  if (isLoading) {
+    setTimeout(() => {
+      if (!updateUserError) {
+        setIsEdit(false);
+        setInfo("Profile updated successfully");
+      }
+    }, 1000);
+  }
+
+  setTimeout(() => {
+    setInfo("");
+  }, 3000);
 
   return (
     <div className="Profile-form">
@@ -79,6 +91,11 @@ export const UpdateProfileForm = () => {
             defaultValue={formState.defaultValues[field.name]}
           />
         ))}
+        {info && (
+          <div className="info">
+            <h3>{info}</h3>
+          </div>
+        )}
         {isEdit ? (
           <div className="Button-group">
             <button onClick={() => setIsEdit(false)}>Cancel</button>
@@ -93,7 +110,6 @@ export const UpdateProfileForm = () => {
         ) : (
           <button onClick={() => setIsEdit(true)}>Edit</button>
         )}
-
         <div>
           {updateUserError && (
             <div className="error">{updateUserError.toString()}</div>

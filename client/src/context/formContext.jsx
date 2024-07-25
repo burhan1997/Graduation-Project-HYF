@@ -9,13 +9,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
+  const [userPathName, setUserPathName] = useState("");
+  const { setUser } = useUser();
+  //form info
   const [schema, setSchema] = useState();
   const { register, watch, reset, formState, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
-  const [userPathName, setUserPathName] = useState("");
-  const { setUser } = useUser();
+  //check profile created
+  const [profileCreated, setProfileCreated] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
+
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
@@ -25,7 +29,7 @@ export const FormProvider = ({ children }) => {
       setUser(data.user);
     }
   };
-
+  //fetch modal
   const {
     isLoading,
     error: updateUserError,
