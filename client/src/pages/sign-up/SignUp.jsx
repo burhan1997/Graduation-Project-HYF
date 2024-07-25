@@ -6,6 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import "../../../public/index.css";
+import { PiEyeClosed } from "react-icons/pi";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -187,11 +188,8 @@ const SignUp = () => {
                   onChange={handleInputChange}
                   required
                 />
-                <span
-                  className={`eye-icon ${showPassword ? "show" : ""}`}
-                  onClick={togglePasswordVisibility}
-                >
-                  <FaEye />
+                <span className="eye-icon" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEye /> : <PiEyeClosed />}
                 </span>
               </div>
             </div>
@@ -207,10 +205,11 @@ const SignUp = () => {
                   required
                 />
                 <span
-                  className={`eye-icon ${showPassword ? "show" : ""}`}
+                  className="eye-icon"
+                  // className={`eye-icon ${showPassword ? "show" : ""}`}
                   onClick={togglePasswordVisibility}
                 >
-                  <FaEye />
+                  {showPassword ? <FaEye /> : <PiEyeClosed />}
                 </span>
               </div>
             </div>
@@ -242,13 +241,13 @@ const SignUp = () => {
               Sign Up
             </button>
             <div className="sign-in-up-link">
-              <p className="sign-in-up-text">Already have an account? </p>
-              <span
-                className="sign-in-text"
+              <p className="sign-in-up-text">Already have an account?</p>
+              <button
+                className="form-button poppins-regular"
                 onClick={() => navigate("/sign-in")}
               >
                 Sign In
-              </span>
+              </button>
             </div>
           </form>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import "./AboutUs.css";
+import { images } from "../../../public/assets/images";
 
 const AboutUs = () => {
   return (
@@ -25,33 +26,25 @@ const AboutUs = () => {
           </p>
           <div className="about-us-images">
             <img
-              src="/meeting1.jpg"
+              src={images.Meeting1}
               alt="People Meeting 1"
               className="about-us-image"
             />
             <img
-              src="/meeting2.jpg"
+              src={images.Meeting2}
               alt="People Meeting 2"
               className="about-us-image"
             />
             <img
-              src="/meeting3.jpg"
+              src={images.Meeting3}
               alt="People Meeting 3"
               className="about-us-image"
             />
           </div>
         </section>
         <footer className="about-us-footer">
-          <img
-            src="/E73D69DA-5294-4116-8045-D5196DA6295A.png"
-            alt="Logo"
-            className="footer-logo"
-          />
-          <img
-            src="/E0B013B3-F191-4CAA-8258-C20AFD106E21.png"
-            alt="Logo"
-            className="footer-logo"
-          />
+          <img src={images.LogoGreen} alt="Logo" className="footer-logo" />
+          <img src={images.LogoPurple} alt="Logo" className="footer-logo" />
 
           <div className="footer-slogan">Connecting People</div>
           <div className="footer-contact">
