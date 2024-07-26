@@ -24,7 +24,7 @@ const AboutUs = () => {
             to meet in person and share your experiences through reviews.
           </p>
           <button className="about-us-btn" onClick={() => navigate("/sign-in")}>
-            Log in
+            Sign in
           </button>
           <p className="about-us-description">
             What truly matters to us is creating a space where genuine support
