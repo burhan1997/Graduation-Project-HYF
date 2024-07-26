@@ -1,123 +1,89 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { FormContext } from "../context/formContext";
+import { useNavigate } from "react-router-dom";
+import { FormItem } from "./forms/FormItem";
+import "./forms/UpdateProfileForm.css";
+import { useFields } from "../hooks/useFields";
+import { useDefaultValues } from "../hooks/useDefaultValues";
+import { useSchema } from "../hooks/useSchema";
+import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import { getToken } from "../config/getToken";
-import { jwtDecode } from "jwt-decode";
-import "./ShowProfile.css";
 
-// const profileData = {
-//   firstName: 'John',
-//   lastName: 'Doe',
-//   birthday: '1990-01-01',
-//   gender: 'Male',
-//   bio: 'A short bio about John Doe.',
-//   hobbies: ['Reading', 'Traveling', 'Gaming'],
-//   languages: ['English', 'Spanish'],
-//   minAge: 25,
-//   maxAge: 35,
-//   maxDistance: 100,
-// };
+export const ShowProfile = () => {
+  const { reset, watch, formState, setSchema, register } =
+    useContext(FormContext);
+  const { id } = useParams();
+  const [user, setUser] = useState([]);
+  const [fields, setFields] = useState();
 
-const ShowProfile = () => {
-  // const [profileData, setProfileData] = useState();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     const userData = JSON.parse(localStorage.getItem('profileData')) || {
-  //       firstName: '',
-  //       lastName: '',
-  //       birthday: '',
-  //       gender: '',
-  //       bio: '',
-  //       hobbies: [],
-  //       languages: [],
-  //       minAge: 18,
-  //       maxAge: 99,
-  //       maxDistance: 50,
-  //     };
-  //     setProfileData(userData);
-  //   }
-  // }, []);
-  const token = getToken();
-  const userId = token ? jwtDecode(token).user._id : null;
-  let profileData;
-  const onReceivedProfile = (data) => {
-    profileData = data;
-  };
-  const {
-    isLoading,
-    error: fetchProfileError,
-    performFetch: performProfileFetch,
-    cancelFetch,
-  } = useFetch(`/user/${userId}`, onReceivedProfile);
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
 
-  if (!userId) {
-    return;
-  }
-  performProfileFetch({
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const onReceived = (data) => {
+    const user = data?.user;
+    if (data?.success) {
+      setUser(user);
+    }
+  };
 
-  if (isLoading) {
-    return <div>Loading profile...</div>;
+  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+    `/user/${id}`,
+    onReceived,
+  );
+
+  useEffect(() => {
+    performFetch({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }, [id]);
+
+  useEffect(() => {
+    if (user) {
+      const fields = useFields();
+      const schema = useSchema();
+      setSchema(schema["user"]);
+      setFields(fields["user"]);
+      const defaultValues = useDefaultValues(user, fields["user"]);
+      reset(defaultValues);
+    }
+  }, [user]);
+
+  const data = formState.defaultValues;
+  if (!data) {
+    return <p>loading...</p>;
+  }
+  if (error) {
+    return <p>No user we found. You can sign in or sign up</p>;
   }
 
   return (
-    <div className="Profile-display">
-      <h1>Profile</h1>
-      <div className="Profile-section">
-        <img
-          className="Profile-avatar"
-          src="https://img.freepik.com/free-vector/find-person-job-opportunity_24877-63457.jpg"
-          alt="Avatar"
-        />
-        <div className="Profile-details">
-          <div className="Profile-field">
-            <strong>First Name:</strong> {profileData.firstName}
-          </div>
-          <div className="Profile-field">
-            <strong>Last Name:</strong> {profileData.lastName}
-          </div>
-          <div className="Profile-field">
-            <strong>Birthday:</strong> {profileData.birthday}
-          </div>
-          <div className="Profile-field">
-            <strong>Gender:</strong> {profileData.gender}
-          </div>
-          <div className="Profile-field">
-            <strong>Bio:</strong> {profileData.bio}
-          </div>
-          <div className="Profile-field">
-            <strong>Hobbies:</strong> {profileData.hobbies.join(", ")}
-          </div>
-          <div className="Profile-field">
-            <strong>Languages:</strong> {profileData.languages.join(", ")}
-          </div>
-          <div className="Profile-field">
-            <strong>Min Age Preference:</strong> {profileData.minAge}
-          </div>
-          <div className="Profile-field">
-            <strong>Max Age Preference:</strong> {profileData.maxAge}
-          </div>
-          <div className="Profile-field">
-            <strong>Max Distance Preference (km):</strong>{" "}
-            {profileData.maxDistance}
-          </div>
-        </div>
+    <div className="Profile-form">
+      {isLoading && <div>Loading...</div>}
+      <div>
+        <button onClick={() => navigate(-1)}>Back</button>
       </div>
-      {fetchProfileError && (
-        <div className="error">{fetchProfileError.toString()}</div>
-      )}
+      <header>
+        <h1>{user?.firstName} Profile</h1>
+      </header>
+      <form>
+        {Object.values(fields || {})?.map((field, index) => (
+          <FormItem
+            key={index}
+            field={field}
+            watch={watch}
+            isEdit={false}
+            register={register}
+            defaultValue={formState.defaultValues[field.name]}
+          />
+        ))}
+        <div>{error && <div className="error">{error.toString()}</div>}</div>
+      </form>
     </div>
   );
 };
-
-export default ShowProfile;

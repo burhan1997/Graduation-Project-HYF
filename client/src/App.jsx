@@ -10,6 +10,7 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
 import UserCard from "./components/user-card/UserCard";
 import "./index.css";
+import { ShowProfile } from "./components/ShowProfile";
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
         <Route path="/create-profile" element={<UpdateProfileForm />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/usercard" element={<UserCard />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="/user/profile" element={<h1>Profile</h1>} />
+        <Route path="/user/:id" element={<ShowProfile />} />
       </Routes>
     </>
   );

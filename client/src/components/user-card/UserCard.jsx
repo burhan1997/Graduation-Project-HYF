@@ -16,6 +16,7 @@ const UserCard = () => {
         />
         <button
           className="usercard-button-2"
+          //TODO add id to /user/profile${id}
           onClick={() => navigate("/user/profile")}
         >
           View full profile
