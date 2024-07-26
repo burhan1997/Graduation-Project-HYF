@@ -3,11 +3,16 @@
   flex-direction: row;
   justify-content: flex-end !important;
   margin-bottom: 1rem;
-  background-color: blue;
   padding: 0.5rem;
 }
 .filter-form button {
   margin-left: 1rem;
   width: 5%;
-  min-width: 30px;
+  min-width: 40px;
+  color: #ff1493;
+  background-color: white;
+}
+.filter-form button:hover {
+  color: white;
+  background-color: #ff1493;
 }

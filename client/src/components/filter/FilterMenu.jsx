@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "./FilterMenu.css";
-import filterData from "./filterData.json";
+
 import { MenuList } from "./MenuList";
 import { GrClose } from "react-icons/gr";
 import PropTypes from "prop-types";
 
-export const FilterMenu = ({ onClose }) => {
-  const [selectedFilters, setSelectedFilters] = useState({});
-
-  const handleOptionChange = (event) => {
-    const { value, checked } = event.target;
-    setSelectedFilters((prevFilters) => {
-      const newFilters = { ...prevFilters, [value]: checked };
-      return newFilters;
-    });
-    //   console.log("value", value);
-  };
-
+export const FilterMenu = ({
+  onClose,
+  filterData,
+  selectedFilters,
+  handleOptionChange,
+}) => {
   return (
     <div className="menu-overlay" onClick={onClose}>
       <div className="menu-content" onClick={(e) => e.stopPropagation()}>
@@ -43,4 +37,7 @@ export const FilterMenu = ({ onClose }) => {
 
 FilterMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
+  filterData: PropTypes.object.isRequired,
+  selectedFilters: PropTypes.object.isRequired,
+  handleOptionChange: PropTypes.func.isRequired,
 };
