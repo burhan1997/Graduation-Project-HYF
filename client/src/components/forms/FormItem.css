@@ -97,24 +97,11 @@ input[type="number"] {
 }
 /* isEdit false */
 
-.Profile-form-input input[readonly],
-.Profile-form-input textarea[readonly],
-.Profile-form-input input[disabled],
-.Profile-form-input textarea[disabled] {
-  pointer-events: none;
-  border: none;
-  background-color: transparent;
-  outline: none;
-  box-shadow: none;
-}
-
-.Profile-form-input input[readonly]:focus,
+.Profile-form-input
+  textarea[readonly]
+  .Profile-form-input
+  input[readonly]:focus,
 .Profile-form-input textarea[readonly]:focus,
-.Profile-form-input input[disabled]:focus,
-.Profile-form-input textarea[disabled]:focus {
-  outline: none;
-  box-shadow: none;
-}
 .Button-group {
   display: flex;
   flex-direction: row;

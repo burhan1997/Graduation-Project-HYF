@@ -4,6 +4,7 @@
   align-items: center;
   height: 100vh;
   background-color: #fff;
+  flex-direction: column;
 }
 
 .sign-in-form {
@@ -72,7 +73,7 @@
   text-align: center;
 }
 
-button {
+.dark-pink-button {
   width: 100%;
   padding: 10px;
   background-color: #ff1493;
@@ -83,11 +84,11 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.dark-pink-button:hover {
   background-color: #ff4781;
 }
 
-.button.disabled {
+.dark-pink-button.disabled {
   background-color: #cccccc;
   cursor: not-allowed;
   pointer-events: none; /* Prevents clicking */
