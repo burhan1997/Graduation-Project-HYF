@@ -1,34 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import TEST_ID from "./Home.testid";
 import { FilterForm } from "../../components/filter/FilterForm";
-import useFetch from "../../hooks/useFetch";
+import { useUsers } from "../../hooks/useUsers";
 
 const Home = () => {
-  const [url, setUrl] = useState("/user");
-  const [filteredUser, setFilteredUser] = useState();
-
-  const onReceived = (data) => {
-    setFilteredUser(data.users);
-  };
-
-  useEffect(() => {
-    return () => cancelFetch();
-  }, [cancelFetch]);
-
-  const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    url,
-    onReceived,
-  );
-
-  useEffect(() => {
-    performFetch({
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }, [url]);
+  const { performFetch, onReceived, setUrl, isLoading, error, filteredUser } =
+    useUsers();
 
   return (
     <div data-testid={TEST_ID.container}>

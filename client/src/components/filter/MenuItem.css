@@ -9,6 +9,9 @@
 .menu-item::-webkit-scrollbar {
   height: 8px;
 }
+.menu-item label {
+  font-weight: normal;
+}
 
 .menu-list::-webkit-scrollbar-thumb {
   background-color: #ff1493;
