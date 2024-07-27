@@ -6,6 +6,7 @@ import Input from "../../components/Input";
 import { PiEyeClosed } from "react-icons/pi";
 import { FaEye } from "react-icons/fa";
 import { FormContext } from "../../context/formContext";
+import Footer from "../footer/Footer";
 
 const SignIn = () => {
   const { profileCreated, isSignIn, setIsSignIn } = useContext(FormContext);
@@ -113,6 +114,7 @@ const SignIn = () => {
           {fetchError && <div className="error">{fetchError.toString()}</div>}
           {isLoading && <div className="loading">Loading...</div>}
           <button
+            className="dark-pink-button"
             type="submit"
             disabled={isLoading}
             style={{ pointerEvents: isSignIn ? "none" : "auto" }}
@@ -128,6 +130,7 @@ const SignIn = () => {
           </span>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

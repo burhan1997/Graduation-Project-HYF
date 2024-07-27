@@ -2,7 +2,6 @@
   .nav {
     background-color: #e8b931;
     /* background-color: #e8b930; */
-    z-index: 2;
 
     padding: 4rem 2rem 0rem 2rem;
     display: flex;
@@ -33,9 +32,12 @@
 @media only screen and (max-width: 600px) {
   .nav {
     display: block;
-    position: absolute;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     bottom: 0;
     background-color: #424242;
+    position: fixed;
     /* background-color: #e8b930; */
     z-index: 2;
     width: 100%;
