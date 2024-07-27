@@ -26,5 +26,6 @@ export const useUsers = () => {
       },
     });
   }, [url]);
+
   return { isLoading, error, filteredUser, performFetch, setUrl };
 };

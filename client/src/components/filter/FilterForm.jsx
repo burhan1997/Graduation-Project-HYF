@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { FilterMenu } from "./FilterMenu";
 import filterData from "./filterData.json";
 import PropTypes from "prop-types";
 import "./FilterForm.css";
+import { getActiveFilters } from "../../util/getActiveFilters";
 
-export const FilterForm = ({ setUrl, performFetch, url }) => {
+export const FilterForm = ({ setUrl }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const handleOptionChange = (event) => {
     const { value, checked } = event.target;
+
     setSelectedFilters((prevFilters) => {
       const newFilters = { ...prevFilters, [value]: checked };
-      const getActiveFilters = (filters) => {
-        return Object.keys(filters).filter((key) => filters[key]);
-      };
+
       const userFilters = getActiveFilters(newFilters);
       const queryString = new URLSearchParams({
         filters: JSON.stringify(userFilters),
@@ -25,17 +25,6 @@ export const FilterForm = ({ setUrl, performFetch, url }) => {
       return newFilters;
     });
   };
-
-  useEffect(() => {
-    if (url) {
-      performFetch({
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    }
-  }, [url]);
 
   if (isOpen) {
     return (
