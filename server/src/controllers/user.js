@@ -96,14 +96,26 @@ export const createUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    // Fetch all users from MongoDB
-    const users = await User.find({});
+    const filters = req.query.filters;
+
+    const parsedFilters = filters ? JSON.parse(filters) : [];
+
+    const query = {};
+
+    if (parsedFilters.length > 0) {
+      query.$or = parsedFilters.map((filter) => ({
+        $or: [{ hobbies: filter }, { location: filter }],
+      }));
+    }
+
+    const users = await User.find(query);
     res.status(200).json({ success: true, users });
   } catch (error) {
     logError(error);
-    res
-      .status(500)
-      .json({ success: false, msg: "Unable to fetch users, try again later" });
+    res.status(500).json({
+      success: false,
+      msg: "Unable to fetch users, try again later",
+    });
   }
 };
 
