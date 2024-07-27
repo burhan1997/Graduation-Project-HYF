@@ -7,6 +7,7 @@ import Meeting1 from "./meeting1.jpg";
 import Meeting2 from "./meeting2.jpg";
 import Meeting3 from "./meeting3.jpg";
 import Settings from "./Settings.png";
+import MapView from "./mapView.jpg";
 
 export const images = {
   AccountCircle,
@@ -18,4 +19,5 @@ export const images = {
   Meeting2,
   Meeting3,
   Settings,
+  MapView,
 };

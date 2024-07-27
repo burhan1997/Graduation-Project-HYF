@@ -9,6 +9,7 @@ import CreateProfile from "./components/CreateProfile";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
 import UserCard from "./components/user-card/UserCard";
+import ShowProfile from "./pages/show-profile/ShowProfile";
 import "./index.css";
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/usercard" element={<UserCard />} />
+        <Route path="/profile" element={<ShowProfile />} />
       </Routes>
     </>
   );

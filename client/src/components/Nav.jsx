@@ -48,22 +48,22 @@ const Nav = () => {
       <ul className="ul-img">
         <Link to="/home">
           <li>
-            <img src="/Globe.png" className="li-img" alt="Map" />{" "}
+            <img src={images.Globe} className="li-img" alt="Map" />{" "}
           </li>
         </Link>
         <Link to="/inbox">
           <li>
-            <img src="/mail.png" className="li-img" alt="Messages" />{" "}
+            <img src={images.Mail} className="li-img" alt="Messages" />{" "}
           </li>
         </Link>
         <Link to="/settings">
           <li>
-            <img src="/settings.png" className="li-img" alt="Settings" />{" "}
+            <img src={images.Settings} className="li-img" alt="Settings" />{" "}
           </li>
         </Link>
         <Link to="/profile">
           <li>
-            <img src="/account_circle.png" className="li-img" alt="Profile" />
+            <img src={images.AccountCircle} className="li-img" alt="Profile" />
           </li>
         </Link>
       </ul>
