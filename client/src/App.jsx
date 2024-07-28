@@ -11,6 +11,7 @@ import SignUp from "./pages/sign-up/SignUp";
 import Map from "./components/Map";
 import UserCard from "./components/user-card/UserCard";
 import "./index.css";
+import { ShowProfile } from "./components/ShowProfile";
 
 const App = () => {
   return (
@@ -26,6 +27,9 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/map" element={<Map />} />
         <Route path="/usercard" element={<UserCard />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="/user/profile" element={<h1>Profile</h1>} />
+        <Route path="/user/:id" element={<ShowProfile />} />
       </Routes>
     </>
   );
