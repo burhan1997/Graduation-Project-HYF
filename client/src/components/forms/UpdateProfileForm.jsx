@@ -7,6 +7,7 @@ import "./UpdateProfileForm.css";
 import { useFields } from "../../hooks/useFields";
 import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
+import { useNavigate } from "react-router-dom";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
@@ -25,7 +26,9 @@ export const UpdateProfileForm = () => {
     register,
     updateUserError,
     setUserPathName,
+    isSuccessful,
   } = useContext(FormContext);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const pathName =
@@ -44,6 +47,13 @@ export const UpdateProfileForm = () => {
       setUserPathName(pathName);
     }
   }, [user, reset]);
+
+  useEffect(() => {
+    if (isSuccessful) {
+      setInfo("Lets go to the home page");
+      navigate("/");
+    }
+  }, [isSuccessful]);
 
   const data = formState.defaultValues;
   if (!data) {
