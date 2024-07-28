@@ -139,6 +139,19 @@ const Modal = ({ isOpen, onClose }) => {
             laws of the Netherlands. Any disputes arising from these Terms shall
             be resolved in the courts of the Netherlands.
           </p>
+
+          <p>13. Location Data</p>
+          <p>
+            By using Gezeligness, you agree to allow the app to access your
+            device&apos;s location data. This information is used to provide
+            location-based services, such as showing your current location on
+            the map and displaying nearby users and events. We do not share your
+            location data with third parties without your consent.
+          </p>
+          <p>
+            You can disable location services at any time through your device
+            settings, but this may limit the functionality of the app.
+          </p>
         </div>
         <button className="modal-button-2" onClick={onClose}>
           Close

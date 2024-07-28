@@ -47,6 +47,4 @@ export const FilterForm = ({ setUrl }) => {
 };
 FilterForm.propTypes = {
   setUrl: PropTypes.func.isRequired,
-  performFetch: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired,
 };
