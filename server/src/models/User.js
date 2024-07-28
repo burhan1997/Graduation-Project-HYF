@@ -10,7 +10,11 @@ const userSchema = new mongoose.Schema({
   gender: { type: String },
   bio: { type: String, default: "" },
   profile_picture: { type: String, default: "" },
-  location: { type: String, default: "" },
+  location: {
+    city: { type: String, required: true },
+    latitude: { type: Number, required: true },
+    longitude: { type: Number, required: true },
+  },
   min_age_preference: { type: Number, default: 18 },
   max_age_preference: { type: Number, default: 99 },
   preferred_gender: {
@@ -43,6 +47,7 @@ export const validateUser = (userObject) => {
     "preferred_gender",
     "max_distance_preference",
     "hobbies",
+    "languages",
   ];
 
   const validatedKeysMessage = validateAllowedFields(userObject, allowedKeys);
