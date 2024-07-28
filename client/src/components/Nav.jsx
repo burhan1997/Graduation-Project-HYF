@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Nav.css";
 import "../../public/index.css";
 import TEST_ID from "./Nav.testid";
-import { FormContext } from "../context/formContext";
 import { images } from "../../public/assets/images";
+import { UserContext } from "../context/userContext";
 
 const Nav = () => {
-  const { isSignIn, setIsSignIn } = useContext(FormContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   function handleSignOut() {
     localStorage.removeItem("token");
-    setIsSignIn(false);
-    navigate("/");
+    setUser(null);
+    navigate("/sign-in");
   }
   return (
     <div className="nav">
@@ -27,24 +27,33 @@ const Nav = () => {
         <Link to="/user" data-testid={TEST_ID.linkToUsers}>
           <li>Users</li>
         </Link>
-        <Link
-          to="/sign-in"
-          data-testid={TEST_ID.linkToSignIn}
-          style={{ display: isSignIn ? "none" : "inline" }}
-        >
-          <li>Sign in</li>
-        </Link>
-        <Link to="/sign-up" style={{ display: isSignIn ? "none" : "inline" }}>
-          <li>Sign up</li>
-        </Link>
+        {/* {user ? 
+        <p>user there is</p>  : <p>no user</p>
+        } */}
 
-        <li
-          onClick={handleSignOut}
-          style={{ display: isSignIn ? "inline" : "none", cursor: "ponter" }}
-        >
-          Sign out
-        </li>
+        {user ? (
+          <li
+            onClick={handleSignOut}
+            style={{ display: user ? "inline" : "none", cursor: "pointer" }}
+          >
+            Sign out
+          </li>
+        ) : (
+          <>
+            <Link
+              to="/sign-in"
+              data-testid={TEST_ID.linkToSignIn}
+              style={{ display: user ? "none" : "inline" }}
+            >
+              <li>Sign in</li>
+            </Link>
+            <Link to="/sign-up" style={{ display: user ? "none" : "inline" }}>
+              <li>Sign up</li>
+            </Link>
+          </>
+        )}
       </ul>
+
       <ul className="ul-img">
         <Link to="/home">
           <li>
