@@ -2,15 +2,16 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Home from "./pages/home/Home";
+import { UpdateProfileForm } from "./components/forms/UpdateProfileForm";
 import CreateUser from "./pages/user/CreateUser";
 import UserList from "./pages/user/UserList";
 import SignIn from "./pages/sign-in/SignIn";
-import CreateProfile from "./components/CreateProfile";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
+import Map from "./components/Map";
 import UserCard from "./components/user-card/UserCard";
-import ShowProfile from "./pages/show-profile/ShowProfile";
 import "./index.css";
+import { ShowProfile } from "./components/ShowProfile";
 
 const App = () => {
   return (
@@ -22,10 +23,14 @@ const App = () => {
         <Route path="/user" element={<UserList />} />
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/create-profile" element={<CreateProfile />} />
+        <Route path="/create-profile" element={<UpdateProfileForm />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/map" element={<Map />} />
         <Route path="/usercard" element={<UserCard />} />
         <Route path="/profile" element={<ShowProfile />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="/user/profile" element={<h1>Profile</h1>} />
+        <Route path="/user/:id" element={<ShowProfile />} />
       </Routes>
     </>
   );

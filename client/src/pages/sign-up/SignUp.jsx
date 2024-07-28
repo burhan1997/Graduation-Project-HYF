@@ -7,6 +7,7 @@ import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import "../../../public/index.css";
 import { PiEyeClosed } from "react-icons/pi";
+import Footer from "../footer/Footer";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -235,24 +236,28 @@ const SignUp = () => {
             {isLoading && <div className="loading">Loading...</div>}
             <button
               type="submit"
-              className="form-button sign-up-button poppins-regular"
+              className="dark-pink-button poppins-regular"
               disabled={isLoading}
             >
               Sign Up
             </button>
             <div className="sign-in-up-link">
-              <p className="sign-in-up-text">Already have an account?</p>
-              <button
-                className="form-button poppins-regular"
-                onClick={() => navigate("/sign-in")}
-              >
-                Sign In
-              </button>
+              {/* <p className="sign-in-up-text"></p> */}
+              <div className="signup-link poppins-regular">
+                <p> Already have an account? </p>
+                <span
+                  className="sign-in-up-text"
+                  onClick={() => navigate("/sign-in")}
+                >
+                  Sign in
+                </span>
+              </div>
             </div>
           </form>
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Footer />
     </div>
   );
 };

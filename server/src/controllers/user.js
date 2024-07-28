@@ -73,9 +73,17 @@ export const createUser = async (req, res) => {
       logError("JWT_SECRET is not defined");
     }
 
-    const token = jwt.sign({ user: { _id: newUser._id } }, JWT_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      {
+        _id: newUser._id, // Only include essential data
+        username: newUser.username,
+        email: newUser.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      },
+    );
     // Return success response with token
     res.status(201).json({ success: true, token });
   } catch (error) {
@@ -88,14 +96,26 @@ export const createUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    // Fetch all users from MongoDB
-    const users = await User.find({});
+    const filters = req.query.filters;
+
+    const parsedFilters = filters ? JSON.parse(filters) : [];
+
+    const query = {};
+
+    if (parsedFilters.length > 0) {
+      query.$or = parsedFilters.map((filter) => ({
+        $or: [{ hobbies: filter }, { location: filter }],
+      }));
+    }
+
+    const users = await User.find(query);
     res.status(200).json({ success: true, users });
   } catch (error) {
     logError(error);
-    res
-      .status(500)
-      .json({ success: false, msg: "Unable to fetch users, try again later" });
+    res.status(500).json({
+      success: false,
+      msg: "Unable to fetch users, try again later",
+    });
   }
 };
 
@@ -116,7 +136,6 @@ export const updateUser = async (req, res) => {
     res.status(401).json({ success: false, msg: "Token is required" });
     return;
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
@@ -148,7 +167,7 @@ export const updateUser = async (req, res) => {
     return;
   }
 
-  res.status(200).json({ success: true, user: updatedUser });
+  res.status(200).json({ success: true, updatedUser });
 };
 
 export { validateUser };

@@ -1,5 +1,15 @@
 .container {
   background-color: #e8b931;
+  display: flex;
+  justify-content: flex-start;
+  overflow: scroll;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* hides scrollbar */
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 .sign-in-up-form {
@@ -90,7 +100,7 @@
   text-align: center;
 }
 
-.form-button {
+.dark-pink-button {
   width: 100%;
   margin-top: 0.5vw;
   padding: 10px;
@@ -103,7 +113,7 @@
   margin-top: 0.9vw;
 }
 
-.form-button:hover {
+.dark-pink-button:hover {
   background-color: #ff4781;
 }
 /* 
@@ -153,5 +163,15 @@
 }
 
 .sign-in-text:hover {
+  color: #ff4781;
+}
+
+.sign-in-up-text {
+  color: #ff1493;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sign-in-up-text:hover {
   color: #ff4781;
 }
