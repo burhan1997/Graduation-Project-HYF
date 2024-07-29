@@ -54,11 +54,9 @@ const UserCard = ({ user }) => {
   const name = user.firstName
     ? user.firstName
     : names[Math.floor(Math.random() * 20)];
-  console.log("name", name);
   const age = user.birthdate
     ? calculateAge(user.birthdate)
     : Math.floor(Math.random() * 80 + 18);
-  console.log(("age", age));
   return (
     <div>
       <div className="usercard-content" onClick={(e) => e.stopPropagation()}>
