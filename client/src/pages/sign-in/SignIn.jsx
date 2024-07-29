@@ -7,10 +7,26 @@ import { PiEyeClosed } from "react-icons/pi";
 import { FaEye } from "react-icons/fa";
 import { FormContext } from "../../context/formContext";
 import Footer from "../footer/Footer";
+import { isUserProfileComplete } from "../../util/isUserProfileComplete";
+import { useUser } from "../../hooks/useUser";
 
 const SignIn = () => {
-  const { profileCreated, isSignIn, setIsSignIn } = useContext(FormContext);
+  const { isSignIn } = useContext(FormContext);
+  const { user } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      const isFilled = isUserProfileComplete(user);
+
+      if (isFilled) {
+        navigate("/");
+      } else {
+        navigate("/create-profile");
+      }
+    }
+  }, [user, navigate]);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -47,14 +63,12 @@ const SignIn = () => {
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
-    //This is a fancy way of checking if email is in string@string.string form, we don't necessarily have to understand it in order to use it as long as it does the job, just like all the npm packages we use yet know not how they work.
   };
 
   const validatePassword = (password) => {
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
-    //Similarly, this checks if the password is minimum 8 characters, and includes uppercase, lowercase, number, and special character.
   };
 
   const handleSubmit = (e) => {
@@ -119,7 +133,6 @@ const SignIn = () => {
             type="submit"
             disabled={isLoading}
             style={{ pointerEvents: isSignIn ? "none" : "auto" }}
-            /* className={`button ${isSignIn ? "disabled" : ""}`} */
           >
             Sign In
           </button>

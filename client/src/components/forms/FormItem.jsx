@@ -62,7 +62,26 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
             />
           );
         }
-
+      case "location":
+        if (isEdit) {
+          return (
+            <select
+              id={name}
+              className={name}
+              {...register(name)}
+              defaultValue={newObje[name]?.city}
+            >
+              <option value="">Select a location</option>
+              {options?.map((option, index) => (
+                <option key={index} value={index}>
+                  {option.city}
+                </option>
+              ))}
+            </select>
+          );
+        } else {
+          return <span className="default-value">{newObje[name]?.city}</span>;
+        }
       case "checkbox":
       case "radio":
         if (isEdit) {
@@ -70,14 +89,13 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
             <div className="options">
               {options?.map((option) => (
                 <div key={option} className="options-label">
-                  <span key={option}>{option} </span>
+                  <span>{option} </span>
                   <input
                     type={type}
                     className={"options-input"}
                     checked={isChecked(option)}
                     value={option}
                     {...register(name)}
-                    disabled={!isEdit}
                   />
                 </div>
               ))}
@@ -105,7 +123,7 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
   };
 
   return (
-    <div className={"Profile-form-input"}>
+    <div className="Profile-form-input">
       {fieldLabel && <label htmlFor={name}>{fieldLabel}</label>}
       {renderField()}
     </div>
