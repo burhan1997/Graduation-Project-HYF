@@ -11,16 +11,22 @@ const userSchema = new mongoose.Schema({
   bio: { type: String, default: "" },
   profile_picture: { type: String, default: "" },
   location: {
-    city: { type: String, required: true },
-    latitude: { type: Number, required: true },
-    longitude: { type: Number, required: true },
+    type: [
+      {
+        city: { type: String, default: "" },
+        lattitude: { type: Number, default: 0 },
+        longitude: { type: Number, default: 0 },
+        _id: false,
+      },
+    ],
+    default: [],
   },
   min_age_preference: { type: Number, default: 18 },
   max_age_preference: { type: Number, default: 99 },
   preferred_gender: {
     type: String,
     enum: ["Male", "Female", "Non-binary"],
-    default: "other",
+    default: "Non-binary",
   },
   max_distance_preference: { type: Number, default: 50 },
   created_at: { type: Date, default: Date.now },
