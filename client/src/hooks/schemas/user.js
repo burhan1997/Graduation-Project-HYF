@@ -1,19 +1,20 @@
 import * as yup from "yup";
+import { locations } from "../../util/locations";
 
 export const useUserSchema = () => {
   return yup.object({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    location: yup.string(),
-    bio: yup.string(),
-    birthday: yup.date(),
-    gender: yup.string(),
-    preferred_gender: yup.string(),
-    min_age_preference: yup.number(),
-    max_age_preference: yup.number(),
-    max_distance_preference: yup.number(),
-    hobbies: yup.array(),
-    languages: yup.array(),
+    location: yup.string().required(),
+    bio: yup.string().required(),
+    birthday: yup.date().required(),
+    gender: yup.string().required(),
+    preferred_gender: yup.string().required(),
+    min_age_preference: yup.number().required(),
+    max_age_preference: yup.number().required(),
+    max_distance_preference: yup.number().required(),
+    hobbies: yup.array().required(),
+    languages: yup.array().required(),
   });
 };
 
@@ -38,8 +39,9 @@ export const userFields = [
   },
   {
     name: "location",
-    type: "text",
+    type: "location",
     placeholder: "Location",
+    options: locations,
     fieldLabel: "Location",
   },
   { name: "bio", type: "textarea", placeholder: "Bio", fieldLabel: "Bio" },

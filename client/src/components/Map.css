@@ -18,3 +18,12 @@
   font-size: 1.2rem;
   box-shadow: 0 0 0px 5px #fff;
 }
+
+.error-message {
+  color: red;
+  padding: 10px;
+  background-color: #fdd;
+  border: 1px solid red;
+  margin: 10px;
+  border-radius: 5px;
+}
