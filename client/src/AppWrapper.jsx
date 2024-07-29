@@ -9,11 +9,11 @@ import { UsersProvider } from "./context/usersContext";
  */
 const AppWrapper = ({ children }) => {
   return (
-    <UsersProvider>
-      <FormProvider>
-        <Router>{children}</Router>
-      </FormProvider>
-    </UsersProvider>
+    <Router>
+      <UsersProvider>
+        <FormProvider>{children}</FormProvider>
+      </UsersProvider>
+    </Router>
   );
 };
 
