@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { locations } from "../../util/locations";
 
 export const useUserSchema = () => {
   return yup.object({
@@ -38,8 +39,9 @@ export const userFields = [
   },
   {
     name: "location",
-    type: "text",
+    type: "location",
     placeholder: "Location",
+    options: locations,
     fieldLabel: "Location",
   },
   { name: "bio", type: "textarea", placeholder: "Bio", fieldLabel: "Bio" },
