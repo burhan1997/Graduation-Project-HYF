@@ -3,6 +3,7 @@ import { logError } from "../util/logging";
 import useFetch from "./useFetch";
 import { jwtDecode } from "jwt-decode";
 import { getToken } from "../config/getToken";
+import { useNavigate } from "react-router-dom";
 
 export const useUser = () => {
   let token = getToken();
@@ -10,6 +11,7 @@ export const useUser = () => {
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
   const [userError, setUserError] = useState(null);
+  const navigate = useNavigate();
 
   const onReceivedUser = (data) => {
     setUser(data.user);
@@ -22,11 +24,12 @@ export const useUser = () => {
   );
 
   useEffect(() => {
-    token = getToken();
-    if (!token) {
+    const currentToken = getToken();
+    if (!currentToken) {
       setUserError("There is no user. You have to sign in or sign up.");
       logError("There is no user. You have to sign in or sign up.");
       setLoading(false);
+      navigate("/sign-in");
       return;
     }
     const decodedToken = jwtDecode(token);
@@ -38,7 +41,7 @@ export const useUser = () => {
       setLoading(false);
       return;
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (userId) {
