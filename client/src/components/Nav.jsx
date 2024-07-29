@@ -11,6 +11,7 @@ const Nav = () => {
   const navigate = useNavigate();
   function handleSignOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("isSignIn");
     setIsSignIn(false);
     navigate("/");
   }

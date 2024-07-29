@@ -21,6 +21,7 @@ const SignIn = () => {
   const onReceived = (data) => {
     localStorage.setItem("token", data.token);
     setIsSignIn(true);
+    localStorage.setItem("isSignIn", "true");
     profileCreated ? navigate("/profile") : navigate("/create-profile");
   };
 
