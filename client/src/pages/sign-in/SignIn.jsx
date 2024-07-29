@@ -11,7 +11,7 @@ import { isUserProfileComplete } from "../../util/isUserProfileComplete";
 import { useUser } from "../../hooks/useUser";
 
 const SignIn = () => {
-  const { isSignIn } = useContext(FormContext);
+  const { isSignIn, setIsSignIn } = useContext(FormContext);
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -35,7 +35,9 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const onReceived = (data) => {
-    localStorage.setItem("token", data?.token);
+    localStorage.setItem("token", data.token);
+    setIsSignIn(true);
+    localStorage.setItem("isSignIn", "true");
   };
 
   const {

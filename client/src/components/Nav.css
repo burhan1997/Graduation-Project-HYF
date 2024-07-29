@@ -2,6 +2,8 @@
   .nav {
     background-color: #e8b931;
     /* background-color: #e8b930; */
+    z-index: 2;
+    height: 100px;
 
     padding: 4rem 2rem 0rem 2rem;
     display: flex;
@@ -23,9 +25,10 @@
     display: none !important;
   }
   .logo {
-    margin-top: -30px;
-    width: 8vw;
+    margin-top: -60px;
+    /* width: 8vw;  */ /*unstable sizing*/
     min-width: 90px;
+    height: 100px;
   }
 }
 
