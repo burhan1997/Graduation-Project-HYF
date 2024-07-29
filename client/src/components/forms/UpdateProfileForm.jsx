@@ -8,6 +8,7 @@ import { useFields } from "../../hooks/useFields";
 import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
 import { useNavigate } from "react-router-dom";
+import { locations } from "../../util/locations";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
@@ -66,8 +67,10 @@ export const UpdateProfileForm = () => {
 
   const onSave = (data) => {
     const method = "PUT";
+    const selectedCityIndex = data.location;
+    const selectedCity = locations[selectedCityIndex];
     const body = {
-      user: data,
+      user: { ...data, location: selectedCity },
     };
     onSubmit(body, method);
   };
