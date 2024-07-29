@@ -6,21 +6,23 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  birthday: { type: Date },
-  gender: { type: String },
+  birthday: { type: Date, default: "" },
+  gender: { type: String, default: "" },
   bio: { type: String, default: "" },
   profile_picture: { type: String, default: "" },
+
   location: {
     type: [
       {
         city: { type: String, default: "" },
-        lattitude: { type: Number, default: 0 },
+        latitude: { type: Number, default: 0 },
         longitude: { type: Number, default: 0 },
         _id: false,
       },
     ],
     default: [],
   },
+
   min_age_preference: { type: Number, default: 18 },
   max_age_preference: { type: Number, default: 99 },
   preferred_gender: {
@@ -30,8 +32,8 @@ const userSchema = new mongoose.Schema({
   },
   max_distance_preference: { type: Number, default: 50 },
   created_at: { type: Date, default: Date.now },
-  hobbies: { type: [String], default: [] }, // Hobbies as array of strings
-  languages: { type: [String], default: [] }, // Languages as array of strings
+  hobbies: { type: [String], default: [] },
+  languages: { type: [String], default: [] },
 });
 
 const User = mongoose.model("User", userSchema);

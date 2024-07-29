@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-
 import TEST_ID from "./Home.testid";
 import { FilterForm } from "../../components/filter/FilterForm";
 import { UsersContext } from "../../context/usersContext";
+import Map from "../../components/Map"; // Adjust the import path based on your project structure
 
 const Home = () => {
   const { setUrl, isLoading, getUsersError, users } = useContext(UsersContext);
@@ -25,6 +25,8 @@ const Home = () => {
           </div>
         ))}
       </div>
+
+      <Map />
     </div>
   );
 };

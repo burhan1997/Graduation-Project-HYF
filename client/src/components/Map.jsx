@@ -100,7 +100,7 @@ CurrentLocation.propTypes = {
 
 export default function Map() {
   const [locations, setLocations] = useState([]);
-  const [error, setError] = useState(null); // Error state
+  const [error, setError] = useState(null);
   const [currentPosition, setCurrentPosition] = useState(null);
 
   useEffect(() => {
@@ -112,17 +112,20 @@ export default function Map() {
         }
         const data = await response.json();
         const users = data.users;
-        const locationArray = users.map((user) => ({
-          name: user.name,
-          city: user.location.city,
-          latitude: user.location.latitude,
-          longitude: user.location.longitude,
-        }));
+        const locationArray = users
+          .filter((user) => user.location && user.location.length > 0)
+          .map((user) => ({
+            name: `${user.firstName} ${user.lastName}`,
+            city: user.location[0].city,
+            latitude: user.location[0].latitude,
+            longitude: user.location[0].longitude,
+          }));
         setLocations(locationArray);
       } catch (error) {
         setError("Failed to load locations. Please try again later.");
       }
     };
+
     fetchUsers();
   }, []);
 
