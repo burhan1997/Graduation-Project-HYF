@@ -7,6 +7,8 @@ import "./UpdateProfileForm.css";
 import { useFields } from "../../hooks/useFields";
 import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
+import { useNavigate } from "react-router-dom";
+import { locations } from "../../util/locations";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
@@ -25,7 +27,9 @@ export const UpdateProfileForm = () => {
     register,
     updateUserError,
     setUserPathName,
+    isSuccessful,
   } = useContext(FormContext);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const pathName =
@@ -45,6 +49,13 @@ export const UpdateProfileForm = () => {
     }
   }, [user, reset]);
 
+  useEffect(() => {
+    if (isSuccessful) {
+      setInfo("Lets go to the home page");
+      navigate("/");
+    }
+  }, [isSuccessful]);
+
   const data = formState.defaultValues;
   if (!data) {
     return <p>Default data loading...</p>;
@@ -56,8 +67,10 @@ export const UpdateProfileForm = () => {
 
   const onSave = (data) => {
     const method = "PUT";
+    const selectedCityIndex = data.location;
+    const selectedCity = locations[selectedCityIndex];
     const body = {
-      user: data,
+      user: { ...data, location: selectedCity },
     };
     onSubmit(body, method);
   };
