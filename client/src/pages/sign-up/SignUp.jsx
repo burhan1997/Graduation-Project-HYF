@@ -126,10 +126,6 @@ const SignUp = () => {
       method: "POST",
       body: JSON.stringify(body),
     });
-    performFetch({
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    });
   };
 
   const togglePasswordVisibility = () => {
