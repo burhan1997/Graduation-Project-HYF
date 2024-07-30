@@ -7,8 +7,7 @@ import { UsersContext } from "../../context/usersContext";
 
 function UserList() {
   const [page, setPage] = useState(0);
-  const { setUrl, isLoading, getUsersError, users } = useContext(UsersContext);
-
+  const { isLoading, getUsersError, users } = useContext(UsersContext);
   const handlePrevPage = () => {
     setPage((prevPage) => Math.max(prevPage - 7, 0));
   };
@@ -21,7 +20,7 @@ function UserList() {
 
   return (
     <>
-      <FilterForm setUrl={setUrl} />
+      <FilterForm />
       <div className="user-list-container">
         <img className="map" src={images.MapView} alt="Map View" />
         <div className="user-slideshow">

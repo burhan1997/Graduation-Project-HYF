@@ -7,10 +7,29 @@ import PropTypes from "prop-types";
 
 export const FilterMenu = ({
   onClose,
-  filterData,
+  hobbies,
+  locations,
   selectedFilters,
   handleOptionChange,
 }) => {
+  const filterData = {
+    filter: [
+      {
+        name: "Hobbies",
+        options: hobbies.map((hobby) => ({
+          value: hobby,
+          name: hobby,
+        })),
+      },
+      {
+        name: "Locations",
+        options: locations.map((location) => ({
+          value: location,
+          name: location,
+        })),
+      },
+    ],
+  };
   return (
     <div className="menu-overlay" onClick={onClose}>
       <div className="menu-content" onClick={(e) => e.stopPropagation()}>
@@ -18,7 +37,7 @@ export const FilterMenu = ({
           <GrClose />
         </span>
         <h2 className="menu-header">Filter Menu </h2>
-        {filterData.filter.map((filterCategory) => (
+        {filterData?.filter.map((filterCategory) => (
           <MenuList
             key={filterCategory.name}
             name={filterCategory.name}
@@ -37,7 +56,8 @@ export const FilterMenu = ({
 
 FilterMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
-  filterData: PropTypes.object.isRequired,
+  hobbies: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   selectedFilters: PropTypes.object.isRequired,
   handleOptionChange: PropTypes.func.isRequired,
 };

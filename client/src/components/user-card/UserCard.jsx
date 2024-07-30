@@ -54,8 +54,8 @@ const UserCard = ({ user }) => {
   const name = user.firstName
     ? user.firstName
     : names[Math.floor(Math.random() * 20)];
-  const age = user.birthdate
-    ? calculateAge(user.birthdate)
+  const age = user.birthday
+    ? calculateAge(user.birthday)
     : Math.floor(Math.random() * 80 + 18);
   return (
     <div>
@@ -79,16 +79,7 @@ const UserCard = ({ user }) => {
 };
 
 UserCard.propTypes = {
-  user: PropTypes.shape({
-    firstName: PropTypes.string.isRequired,
-    birthdate: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    bio: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    profile_picture: PropTypes.string.isRequired,
-    hobbies: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-  }).isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default UserCard;
