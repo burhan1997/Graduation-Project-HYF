@@ -23,6 +23,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  width: fit-content;
 }
 
 .user-slideshow div {
