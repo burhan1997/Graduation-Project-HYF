@@ -9,7 +9,7 @@ import L from "leaflet";
 // Create custom icon
 const customIcon = new L.Icon({
   iconUrl: "assets/placeholder.png",
-  iconSize: [38, 38], // Size of the icon
+  iconSize: [38, 38],
 });
 
 // Custom cluster icon
@@ -53,21 +53,35 @@ export default function Map() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("/api/users");
+        const response = await fetch("http://localhost:3000/api/user");
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error(
+            `Network response was not ok: ${response.statusText}`,
+          );
         }
-        const data = await response.json();
-        const users = data.users;
-        const locationArray = users
-          .filter((user) => user.location && user.location.length > 0)
-          .map((user) => ({
-            name: `${user.firstName} ${user.lastName}`,
-            city: user.location[0].city,
-            latitude: user.location[0].latitude,
-            longitude: user.location[0].longitude,
-          }));
-        setLocations(locationArray);
+
+        const text = await response.text();
+        try {
+          const data = JSON.parse(text);
+
+          const users = data.users;
+          if (!users || users.length === 0) {
+            throw new Error("No users found in the response");
+          }
+
+          const locationArray = users
+            .filter((user) => user.location && user.location.length > 0)
+            .map((user) => ({
+              name: `${user.firstName} ${user.lastName}`,
+              city: user.location[0].city,
+              latitude: user.location[0].latitude,
+              longitude: user.location[0].longitude,
+            }));
+
+          setLocations(locationArray);
+        } catch (jsonError) {
+          throw new Error(`Failed to parse JSON: ${jsonError.message}`);
+        }
       } catch (error) {
         setError("Failed to load locations. Please try again later.");
       }
@@ -77,7 +91,6 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    // Get the current position
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -112,11 +125,10 @@ export default function Map() {
 
   return (
     <>
-      {error && <div className="error-message">{error}</div>}{" "}
-      {/* Display error */}
+      {error && <div className="error-message">{error}</div>}
       <MapContainer
-        center={currentPosition || [0, 0]} // Center the map based on currentPosition or a default
-        zoom={currentPosition ? 13 : 2} // Default zoom if currentPosition is not available
+        center={currentPosition || [0, 0]}
+        zoom={currentPosition ? 13 : 2}
         className="leaflet-container"
       >
         <TileLayer
