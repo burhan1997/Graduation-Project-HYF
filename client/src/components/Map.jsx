@@ -5,10 +5,6 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
-import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
-import "leaflet-routing-machine";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 // Create custom icon
 const customIcon = new L.Icon({
@@ -23,55 +19,6 @@ const createClusterCustomIcon = (cluster) => {
     className: "custom-marker-cluster",
     iconSize: L.point(33, 33, true),
   });
-};
-
-// Geocoder Component
-const LeafletGeocoder = () => {
-  const map = useMap();
-  useEffect(() => {
-    L.Control.geocoder({
-      defaultMarkGeocode: false,
-    })
-      .on("markgeocode", (e) => {
-        const latlng = e.geocode.center;
-        L.marker(latlng).addTo(map).bindPopup(e.geocode.name).openPopup();
-        map.fitBounds(e.geocode.bbox);
-      })
-      .addTo(map);
-  }, [map]);
-  return null;
-};
-
-// Routing Machine Component
-const LeafletRoutingMachine = () => {
-  const map = useMap();
-  useEffect(() => {
-    const handleMapClick = (e) => {
-      L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-      L.Routing.control({
-        waypoints: [
-          L.latLng(map.getCenter().lat, map.getCenter().lng),
-          L.latLng(e.latlng.lat, e.latlng.lng),
-        ],
-        lineOptions: {
-          styles: [{ color: "blue", weight: 4, opacity: 0.7 }],
-        },
-        routeWhileDragging: false,
-        geocoder: L.Control.Geocoder.nominatim(),
-        addWaypoints: false,
-        draggableWaypoints: false,
-        fitSelectedRoutes: true,
-        showAlternatives: true,
-      }).addTo(map);
-    };
-
-    map.on("click", handleMapClick);
-
-    return () => {
-      map.off("click", handleMapClick);
-    };
-  }, [map]);
-  return null;
 };
 
 // Current Location Component
@@ -140,7 +87,6 @@ export default function Map() {
           ]);
         },
         (error) => {
-          // Handling different error cases
           switch (error.code) {
             case error.PERMISSION_DENIED:
               setError("User denied the request for Geolocation.");
@@ -196,8 +142,6 @@ export default function Map() {
         </MarkerClusterGroup>
 
         {currentPosition && <CurrentLocation position={currentPosition} />}
-        <LeafletGeocoder />
-        <LeafletRoutingMachine />
       </MapContainer>
     </>
   );
