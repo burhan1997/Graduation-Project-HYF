@@ -11,7 +11,6 @@ const UserCard = ({ user }) => {
   const navigate = useNavigate();
   const [avatarSvg, setAvatarSvg] = useState("");
   const [avatarError, setAvatarError] = useState(false);
-
   const name =
     user.firstName || names[Math.floor(Math.random() * names.length)];
   const age = user.birthday
@@ -66,12 +65,7 @@ const UserCard = ({ user }) => {
 };
 
 UserCard.propTypes = {
-  user: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    firstName: PropTypes.string,
-    birthday: PropTypes.string,
-    bio: PropTypes.string,
-  }).isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default UserCard;
