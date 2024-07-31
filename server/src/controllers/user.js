@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 dotenv.config();
 import { hash, genSalt } from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -92,82 +91,6 @@ export const createUser = async (req, res) => {
       .status(500)
       .json({ success: false, msg: "Unable to create user, try again later" });
   }
-};
-
-export const getUsers = async (req, res) => {
-  try {
-    const filters = req.query.filters;
-
-    const parsedFilters = filters ? JSON.parse(filters) : [];
-
-    const query = {};
-
-    if (parsedFilters.length > 0) {
-      query.$or = parsedFilters.map((filter) => ({
-        $or: [{ hobbies: filter }, { location: filter }],
-      }));
-    }
-
-    const users = await User.find(query);
-    res.status(200).json({ success: true, users });
-  } catch (error) {
-    logError(error);
-    res.status(500).json({
-      success: false,
-      msg: "Unable to fetch users, try again later",
-    });
-  }
-};
-
-export const updateUser = async (req, res) => {
-  const { id } = req.params;
-  if (!id) {
-    return res.status(400).json({ success: false, msg: "User ID is required" });
-  }
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ success: false, msg: "Invalid User ID" });
-  }
-  const { user } = req.body;
-  const token =
-    req.headers.authorization && req.headers.authorization.split(" ")[1];
-
-  if (!token) {
-    res.status(401).json({ success: false, msg: "Token is required" });
-    return;
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-  } catch (err) {
-    res.status(401).json({ success: false, msg: "Invalid token" });
-    return;
-  }
-
-  if (!id) {
-    res.status(400).json({ success: false, msg: "User ID is required" });
-    return;
-  }
-
-  if (typeof user !== "object") {
-    res.status(400).json({
-      success: false,
-      msg: `You need to provide a 'user' object. Received: ${JSON.stringify(user)}`,
-    });
-    return;
-  }
-
-  const updatedUser = await User.findByIdAndUpdate(id, user, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!updatedUser) {
-    res.status(404).json({ success: false, msg: "User not found" });
-    return;
-  }
-
-  res.status(200).json({ success: true, updatedUser });
 };
 
 export { validateUser };
