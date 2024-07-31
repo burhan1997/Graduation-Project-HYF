@@ -16,12 +16,13 @@
 }
 
 .arrow {
-  width: 50px;
-  background-color: deeppink;
-  height: 50px;
-  font-size: 2rem;
+  font-size: 3rem;
   text-align: center;
   padding: 5px;
+  color: deeppink;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .user-slideshow div {

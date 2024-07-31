@@ -26,13 +26,13 @@ function UserList() {
             {getUsersError && <p>{getUsersError.toString()}</p>}
           </div>
           <button className="arrow left-arrow" onClick={handlePrevPage}>
-            &#x2190;
+            &#x3c; {/*  &#x2190; */}
           </button>
           {users?.slice(page, page + 7).map((user) => (
             <UserCard key={user._id} user={user} />
           ))}
           <button className="arrow right-arrow" onClick={handleNextPage}>
-            &#x2192;
+            &#x3e;{/* &#x2192; */}
           </button>
         </div>
       </div>
