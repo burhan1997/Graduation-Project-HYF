@@ -25,9 +25,6 @@ const Nav = () => {
         <Link to="/about-us">
           <li>About Us</li>
         </Link>
-        <Link to="/user" data-testid={TEST_ID.linkToUsers}>
-          <li>Users</li>
-        </Link>
         <Link
           to="/sign-in"
           data-testid={TEST_ID.linkToSignIn}

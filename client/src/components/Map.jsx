@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FilterForm } from "./filter/FilterForm";
 import PropTypes from "prop-types";
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
@@ -166,11 +167,11 @@ export default function Map() {
 
   return (
     <>
-      {error && <div className="error-message">{error}</div>}{" "}
-      {/* Display error */}
+      {error && <div className="error-message">{error}</div>}
+      <FilterForm />
       <MapContainer
-        center={currentPosition || [0, 0]} // Center the map based on currentPosition or a default
-        zoom={currentPosition ? 13 : 2} // Default zoom if currentPosition is not available
+        center={currentPosition || [0, 0]}
+        zoom={currentPosition ? 13 : 2}
         className="leaflet-container"
       >
         <TileLayer
