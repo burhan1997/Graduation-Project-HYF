@@ -7,12 +7,10 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 
-
 const customIcon = new L.Icon({
   iconUrl: "assets/placeholder.png",
   iconSize: [38, 38],
 });
-
 
 const createClusterCustomIcon = (cluster) => {
   return new L.divIcon({
@@ -21,7 +19,6 @@ const createClusterCustomIcon = (cluster) => {
     iconSize: L.point(33, 33, true),
   });
 };
-
 
 const CurrentLocation = ({ position }) => {
   const map = useMap();
