@@ -11,9 +11,8 @@ const UserCard = ({ user }) => {
   const navigate = useNavigate();
   const [avatarSvg, setAvatarSvg] = useState("");
   const [avatarError, setAvatarError] = useState(false);
-  const name = user.firstName
-    ? user.firstName
-    : names[Math.floor(Math.random() * 20)];
+  const name =
+    user.firstName || names[Math.floor(Math.random() * names.length)];
   const age = user.birthday
     ? calculateAge(user.birthday)
     : Math.floor(Math.random() * 80 + 18);
