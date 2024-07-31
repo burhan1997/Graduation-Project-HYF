@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FaFilter } from "react-icons/fa";
 import { FilterMenu } from "./FilterMenu";
 import filterData from "./filterData.json";
-import PropTypes from "prop-types";
 import "./FilterForm.css";
 import { getActiveFilters } from "../../util/getActiveFilters";
+import { UsersContext } from "../../context/usersContext";
 
-export const FilterForm = ({ setUrl }) => {
+export const FilterForm = () => {
+  const { setUrl, users } = useContext(UsersContext);
+  // Hobbies
+  const hobbies = users?.map((user) => user.hobbies).flat();
+  const uniqueHobbies = [...new Set(hobbies)];
+
+  // Cities
+  const cities = users
+    ?.map((user) => user?.location?.map((location) => location.city))
+    .flat();
+  const uniqueCities = [...new Set(cities)];
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
 
@@ -31,6 +42,8 @@ export const FilterForm = ({ setUrl }) => {
       <FilterMenu
         onClose={() => setIsOpen(false)}
         filterData={filterData}
+        hobbies={uniqueHobbies}
+        locations={uniqueCities}
         handleOptionChange={handleOptionChange}
         selectedFilters={selectedFilters}
       />
@@ -44,7 +57,4 @@ export const FilterForm = ({ setUrl }) => {
       </button>
     </div>
   );
-};
-FilterForm.propTypes = {
-  setUrl: PropTypes.func.isRequired,
 };
