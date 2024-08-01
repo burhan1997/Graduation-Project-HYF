@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { locations } from "../../util/locations";
+import { hobbyIcons } from "../../components/hobby/hobbyIcons";
 
 export const useUserSchema = () => {
   return yup.object({
@@ -85,10 +86,10 @@ export const userFields = [
   },
   {
     name: "hobbies",
-    type: "checkbox",
+    type: "select",
     placeholder: "Hobbies",
     fieldLabel: "Hobbies",
-    options: ["Reading", "Traveling", "Cooking"],
+    options: hobbyIcons.map((icon) => icon),
   },
   {
     name: "languages",

@@ -55,7 +55,6 @@ export const hobbyIcons = [
   { label: "Orange Juice", icon: GiOrangeSlice },
   { label: "Painting", icon: HiOutlinePaintBrush },
   { label: "Drumming", icon: GiDrumKit },
-  { label: "Walking", icon: BsPersonWalking },
   { label: "Climbing", icon: GiMountainClimbing },
   { label: "Art", icon: MdOutlineColorLens },
   { label: "Pirate Adventure", icon: GiPirateCoat },
