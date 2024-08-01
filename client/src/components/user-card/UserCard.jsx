@@ -6,6 +6,7 @@ import calculateAge from "../../util/calculateAge";
 import { images } from "../../../public/assets/images";
 import { names, activityStatuses } from "./fillingData";
 import multiavatar from "@multiavatar/multiavatar/esm";
+import { UserHobbies } from "./UserHobbies";
 
 const UserCard = ({ user }) => {
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ const UserCard = ({ user }) => {
   const handleViewProfileClick = () => {
     navigate(`/user/${user._id}`);
   };
-
   return (
     <div>
       <div className="usercard-content" onClick={(e) => e.stopPropagation()}>
@@ -42,6 +42,7 @@ const UserCard = ({ user }) => {
               ]}
         </p>
 
+        <UserHobbies hobbies={user?.hobbies} />
         <div className="usercard-avatar">
           {avatarError ? (
             <img
