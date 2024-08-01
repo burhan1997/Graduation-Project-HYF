@@ -52,7 +52,6 @@ const createClusterCustomIcon = (cluster) => {
   });
 };
 
-// Current Location Component
 const CurrentLocation = ({ position }) => {
   const map = useMap();
   useEffect(() => {
