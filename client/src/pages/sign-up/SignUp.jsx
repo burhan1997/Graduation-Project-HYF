@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import "./SignUp.css";
@@ -8,9 +8,11 @@ import Modal from "../../components/Modal";
 import "../../../public/index.css";
 import { PiEyeClosed } from "react-icons/pi";
 import Footer from "../footer/Footer";
+import { FormContext } from "../../context/formContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { setIsSignIn } = useContext(FormContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,6 +26,7 @@ const SignUp = () => {
 
   const onReceived = (data) => {
     localStorage.setItem("token", data.token);
+    setIsSignIn(true);
     navigate("/create-profile");
   };
 
