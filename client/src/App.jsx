@@ -11,7 +11,7 @@ import SignUp from "./pages/sign-up/SignUp";
 import Map from "./components/Map";
 import "./index.css";
 import { ShowProfile } from "./components/ShowProfile";
-
+import { MyProfile } from "./components/MyProfile";
 const App = () => {
   return (
     <>
@@ -29,6 +29,7 @@ const App = () => {
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/user/profile" element={<h1>Profile</h1>} />
         <Route path="/user/:id" element={<ShowProfile />} />
+        <Route path="/MyProfile" element={<MyProfile />} />
       </Routes>
     </>
   );
