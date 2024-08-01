@@ -7,10 +7,42 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 
-const customIcon = new L.Icon({
-  iconUrl: "assets/placeholder.png",
-  iconSize: [38, 38],
-});
+const markerUrls = [
+  "/assets/markers/ama-dance.png",
+  "/assets/markers/angel-with-shine.png",
+  "/assets/markers/angel.png",
+  "/assets/markers/blink-bling.png",
+  "/assets/markers/born-to-be-a-star.png",
+  "/assets/markers/bring-it-on.png",
+  "/assets/markers/dancy.png",
+  "/assets/markers/greeny.png",
+  "/assets/markers/greenyta.png",
+  "/assets/markers/hello-woerld.png",
+  "/assets/markers/heyo.png",
+  "/assets/markers/ogmoji.png",
+  "/assets/markers/party-dont-starty-without-me.png",
+  "/assets/markers/purple-nothing-rhymes-with-purple.png",
+  "/assets/markers/purple-party.png",
+  "/assets/markers/ready-for-game.png",
+  "/assets/markers/slay-bay.png",
+  "/assets/markers/top.png",
+  "/assets/markers/worldita.png",
+  "/assets/markers/yellow-happy.png",
+  "/assets/markers/yellow-party-lama.png",
+  "/assets/markers/yellow.png",
+];
+
+const getRandomMarkerUrl = () => {
+  const randomIndex = Math.floor(Math.random() * markerUrls.length);
+  return markerUrls[randomIndex];
+};
+
+// Create custom icon
+const createCustomIcon = (iconUrl) =>
+  new L.Icon({
+    iconUrl: iconUrl,
+    iconSize: [38, 38],
+  });
 
 const createClusterCustomIcon = (cluster) => {
   return new L.divIcon({
@@ -24,16 +56,18 @@ const CurrentLocation = ({ position }) => {
   const map = useMap();
   useEffect(() => {
     if (position) {
+      map.setView(position, 13);
       L.marker(position, {
-        icon: new L.Icon({
-          iconUrl: "assets/placeholder.png",
-          iconSize: [38, 38],
-        }),
+        icon: createCustomIcon("/assets/placeholder.png"),
       })
         .addTo(map)
-        .bindPopup("Your current location")
+        .bindPopup(
+          position[0] === 52.384227814645946 &&
+            position[1] === 4.903017836026885
+            ? "Hack Your Future"
+            : "Your current location",
+        )
         .openPopup();
-      map.setView(position, 13);
     }
   }, [position, map]);
   return null;
@@ -45,8 +79,8 @@ CurrentLocation.propTypes = {
 
 export default function Map() {
   const [locations, setLocations] = useState([]);
-  const [error, setError] = useState(null);
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -74,11 +108,12 @@ export default function Map() {
               city: user.location[0].city,
               latitude: user.location[0].latitude,
               longitude: user.location[0].longitude,
+              markerUrl: getRandomMarkerUrl(),
             }));
 
           setLocations(locationArray);
         } catch (jsonError) {
-          throw new Error(`Failed to parse JSON: ${jsonError.message}`);
+          setError(`Failed to parse JSON: ${jsonError.message}`);
         }
       } catch (error) {
         setError("Failed to load locations. Please try again later.");
@@ -89,6 +124,8 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
+    const defaultPosition = [52.384227814645946, 4.903017836026885]; // Hack Your Future
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -97,27 +134,12 @@ export default function Map() {
             position.coords.longitude,
           ]);
         },
-        (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              setError("User denied the request for Geolocation.");
-              break;
-            case error.POSITION_UNAVAILABLE:
-              setError("Location information is unavailable.");
-              break;
-            case error.TIMEOUT:
-              setError("The request to get user location timed out.");
-              break;
-            case error.UNKNOWN_ERROR:
-              setError("An unknown error occurred.");
-              break;
-            default:
-              setError("Unable to retrieve your location.");
-          }
+        () => {
+          setCurrentPosition(defaultPosition);
         },
       );
     } else {
-      setError("Geolocation is not supported by this browser.");
+      setCurrentPosition(defaultPosition);
     }
   }, []);
 
@@ -126,8 +148,8 @@ export default function Map() {
       {error && <div className="error-message">{error}</div>}
       <FilterForm />
       <MapContainer
-        center={currentPosition || [0, 0]}
-        zoom={currentPosition ? 13 : 2}
+        center={currentPosition || [52.384227814645946, 4.903017836026885]}
+        zoom={currentPosition ? 13 : 13}
         className="leaflet-container"
       >
         <TileLayer
@@ -143,7 +165,7 @@ export default function Map() {
             <Marker
               key={index}
               position={[location.latitude, location.longitude]}
-              icon={customIcon}
+              icon={createCustomIcon(location.markerUrl)}
             >
               <Popup>
                 {location.name} - {location.city}
