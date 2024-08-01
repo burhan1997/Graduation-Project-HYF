@@ -1,0 +1,39 @@
+.user-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.map {
+  width: auto;
+  height: 50vh;
+}
+
+.user-slideshow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: auto;
+}
+
+.arrow {
+  font-size: 3rem;
+  text-align: center;
+  padding: 5px;
+  color: deeppink;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.user-slideshow div {
+  flex: 0 1 auto;
+}
+
+.left-arrow {
+  left: 5px;
+}
+
+.right-arrow {
+  left: 5px;
+}
