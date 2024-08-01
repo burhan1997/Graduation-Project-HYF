@@ -13,7 +13,6 @@ export const UsersProvider = ({ children }) => {
     error: getUsersError,
     filteredUser: users,
   } = useUsers();
-
   return (
     <UsersContext.Provider
       value={{

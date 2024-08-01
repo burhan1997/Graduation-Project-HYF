@@ -6,6 +6,7 @@ import { UsersContext } from "../../context/usersContext";
 function UserList() {
   const [page, setPage] = useState(0);
   const { isLoading, getUsersError, users } = useContext(UsersContext);
+
   const handlePrevPage = () => {
     setPage((prevPage) => Math.max(prevPage - 7, 0));
   };
