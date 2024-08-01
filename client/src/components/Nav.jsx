@@ -11,6 +11,7 @@ const Nav = () => {
   const navigate = useNavigate();
   function handleSignOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("isSignIn");
     setIsSignIn(false);
     navigate("/");
   }
@@ -23,9 +24,6 @@ const Nav = () => {
         </Link>
         <Link to="/about-us">
           <li>About Us</li>
-        </Link>
-        <Link to="/user" data-testid={TEST_ID.linkToUsers}>
-          <li>Users</li>
         </Link>
         <Link
           to="/sign-in"

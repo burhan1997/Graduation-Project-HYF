@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FilterForm } from "./filter/FilterForm";
 import PropTypes from "prop-types";
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
@@ -43,7 +44,6 @@ const createCustomIcon = (iconUrl) =>
     iconSize: [38, 38],
   });
 
-// Custom cluster icon
 const createClusterCustomIcon = (cluster) => {
   return new L.divIcon({
     html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
@@ -52,7 +52,6 @@ const createClusterCustomIcon = (cluster) => {
   });
 };
 
-// Current Location Component
 const CurrentLocation = ({ position }) => {
   const map = useMap();
   useEffect(() => {
@@ -147,6 +146,7 @@ export default function Map() {
   return (
     <>
       {error && <div className="error-message">{error}</div>}
+      <FilterForm />
       <MapContainer
         center={currentPosition || [52.384227814645946, 4.903017836026885]}
         zoom={currentPosition ? 13 : 13}

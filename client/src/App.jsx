@@ -8,8 +8,6 @@ import UserList from "./pages/user/UserList";
 import SignIn from "./pages/sign-in/SignIn";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
-import Map from "./components/Map";
-import UserCard from "./components/user-card/UserCard";
 import "./index.css";
 import { ShowProfile } from "./components/ShowProfile";
 
@@ -25,8 +23,7 @@ const App = () => {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/create-profile" element={<UpdateProfileForm />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/usercard" element={<UserCard />} />
+        <Route path="/profile" element={<ShowProfile />} />
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/user/profile" element={<h1>Profile</h1>} />
         <Route path="/user/:id" element={<ShowProfile />} />

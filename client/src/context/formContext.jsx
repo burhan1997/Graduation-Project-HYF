@@ -20,7 +20,9 @@ export const FormProvider = ({ children }) => {
   });
   //check profile created
   const [profileCreated, setProfileCreated] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(false);
+  const signInState = localStorage.getItem("isSignIn");
+
+  const [isSignIn, setIsSignIn] = useState(signInState ? true : false);
 
   useEffect(() => {
     return () => cancelFetch();
