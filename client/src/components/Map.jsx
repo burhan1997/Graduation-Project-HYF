@@ -26,16 +26,18 @@ const CurrentLocation = ({ position }) => {
   const map = useMap();
   useEffect(() => {
     if (position) {
+      map.setView(position, 13);
       L.marker(position, {
-        icon: new L.Icon({
-          iconUrl: "assets/placeholder.png",
-          iconSize: [38, 38],
-        }),
+        icon: customIcon,
       })
         .addTo(map)
-        .bindPopup("Your current location")
+        .bindPopup(
+          position[0] === 52.384227814645946 &&
+            position[1] === 4.903017836026885
+            ? "Hack Your Future"
+            : "Your current location",
+        )
         .openPopup();
-      map.setView(position, 13);
     }
   }, [position, map]);
   return null;
@@ -47,8 +49,8 @@ CurrentLocation.propTypes = {
 
 export default function Map() {
   const [locations, setLocations] = useState([]);
-  const [error, setError] = useState(null);
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -80,7 +82,7 @@ export default function Map() {
 
           setLocations(locationArray);
         } catch (jsonError) {
-          throw new Error(`Failed to parse JSON: ${jsonError.message}`);
+          setError(`Failed to parse JSON: ${jsonError.message}`);
         }
       } catch (error) {
         setError("Failed to load locations. Please try again later.");
@@ -91,6 +93,8 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
+    const defaultPosition = [52.384227814645946, 4.903017836026885]; // Hack Your Future
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -99,27 +103,12 @@ export default function Map() {
             position.coords.longitude,
           ]);
         },
-        (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              setError("User denied the request for Geolocation.");
-              break;
-            case error.POSITION_UNAVAILABLE:
-              setError("Location information is unavailable.");
-              break;
-            case error.TIMEOUT:
-              setError("The request to get user location timed out.");
-              break;
-            case error.UNKNOWN_ERROR:
-              setError("An unknown error occurred.");
-              break;
-            default:
-              setError("Unable to retrieve your location.");
-          }
+        () => {
+          setCurrentPosition(defaultPosition);
         },
       );
     } else {
-      setError("Geolocation is not supported by this browser.");
+      setCurrentPosition(defaultPosition);
     }
   }, []);
 
@@ -127,8 +116,8 @@ export default function Map() {
     <>
       {error && <div className="error-message">{error}</div>}
       <MapContainer
-        center={currentPosition || [0, 0]}
-        zoom={currentPosition ? 13 : 2}
+        center={currentPosition || [52.384227814645946, 4.903017836026885]}
+        zoom={currentPosition ? 13 : 13}
         className="leaflet-container"
       >
         <TileLayer
