@@ -6,11 +6,42 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 
+const markerUrls = [
+  "/assets/markers/ama-dance.png",
+  "/assets/markers/angel-with-shine.png",
+  "/assets/markers/angel.png",
+  "/assets/markers/blink-bling.png",
+  "/assets/markers/born-to-be-a-star.png",
+  "/assets/markers/bring-it-on.png",
+  "/assets/markers/dancy.png",
+  "/assets/markers/greeny.png",
+  "/assets/markers/greenyta.png",
+  "/assets/markers/hello-woerld.png",
+  "/assets/markers/heyo.png",
+  "/assets/markers/ogmoji.png",
+  "/assets/markers/party-dont-starty-without-me.png",
+  "/assets/markers/purple-nothing-rhymes-with-purple.png",
+  "/assets/markers/purple-party.png",
+  "/assets/markers/ready-for-game.png",
+  "/assets/markers/slay-bay.png",
+  "/assets/markers/top.png",
+  "/assets/markers/worldita.png",
+  "/assets/markers/yellow-happy.png",
+  "/assets/markers/yellow-party-lama.png",
+  "/assets/markers/yellow.png",
+];
+
+const getRandomMarkerUrl = () => {
+  const randomIndex = Math.floor(Math.random() * markerUrls.length);
+  return markerUrls[randomIndex];
+};
+
 // Create custom icon
-const customIcon = new L.Icon({
-  iconUrl: "assets/placeholder.png",
-  iconSize: [38, 38],
-});
+const createCustomIcon = (iconUrl) =>
+  new L.Icon({
+    iconUrl: iconUrl,
+    iconSize: [38, 38],
+  });
 
 // Custom cluster icon
 const createClusterCustomIcon = (cluster) => {
@@ -28,7 +59,7 @@ const CurrentLocation = ({ position }) => {
     if (position) {
       map.setView(position, 13);
       L.marker(position, {
-        icon: customIcon,
+        icon: createCustomIcon("/assets/placeholder.png"),
       })
         .addTo(map)
         .bindPopup(
@@ -78,6 +109,7 @@ export default function Map() {
               city: user.location[0].city,
               latitude: user.location[0].latitude,
               longitude: user.location[0].longitude,
+              markerUrl: getRandomMarkerUrl(),
             }));
 
           setLocations(locationArray);
@@ -133,7 +165,7 @@ export default function Map() {
             <Marker
               key={index}
               position={[location.latitude, location.longitude]}
-              icon={customIcon}
+              icon={createCustomIcon(location.markerUrl)}
             >
               <Popup>
                 {location.name} - {location.city}
