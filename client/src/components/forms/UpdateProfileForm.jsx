@@ -90,7 +90,7 @@ export const UpdateProfileForm = () => {
   return (
     <div className="Profile-form">
       <header>
-        <h1> My Profile</h1>
+        <h1> {pathName} Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
         {Object.values(fields || {})?.map((field, index) => (

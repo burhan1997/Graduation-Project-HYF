@@ -9,8 +9,7 @@ import { useUser } from "../hooks/useUser";
 
 const Nav = () => {
   const { isSignIn, setIsSignIn } = useContext(FormContext);
-  const {user} = useUser();
-  console.log(user)
+  const { user } = useUser();
   const navigate = useNavigate();
   function handleSignOut() {
     localStorage.removeItem("token");
@@ -45,10 +44,19 @@ const Nav = () => {
         >
           Sign out
         </li>
-          <li>
-            <img src={user?.profile_picture} className="li-img" alt="My Profile" />{" "}
-          </li>
-          <button  className="nav-button" onClick={()=> navigate("/create-profile")}>My Profile </button>
+        <li>
+          <img
+            src={user?.profile_picture}
+            className="li-img"
+            alt="My Profile"
+          />{" "}
+        </li>
+        <button
+          className="nav-button"
+          onClick={() => navigate("/create-profile")}
+        >
+          My Profile{" "}
+        </button>
       </ul>
       <ul className="ul-img">
         <Link to="/home">

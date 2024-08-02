@@ -106,7 +106,6 @@ input[type="number"] {
   background-color: transparent;
   outline: none;
   box-shadow: none;
-  
 }
 
 .Profile-form-input input[readonly]:focus,
@@ -132,36 +131,35 @@ input[type="number"] {
   margin-top: 20px;
 }
 
-.Profile-form-input-text{
-  width: 460px ;
+.Profile-form-input-text {
+  width: 500px;
   padding: 10px;
   font-size: 20px;
   border-radius: 10px;
-  }
+}
 
-
-.Profile-form-input-bio{
-  width: 460px ;
+.Profile-form-input-bio {
+  width: 500px;
   padding: 10px;
   font-size: 20px;
   border-radius: 10px;
-  }
-  .Profile-form-button{
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #77757d ;
-      color: white;
-      cursor: pointer;
-      width: 200px;
-      margin-bottom: 100px;
-      margin-top: 80px;
-      margin-left: 90px;
-      margin-right: 100px;
-      font-size: 20px
-  }
-  .Profile-form-button:hover {
-    background-color: #49454F ;
+}
+.Profile-form-button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #77757d;
+  color: white;
+  cursor: pointer;
+  width: 200px;
+  margin-bottom: 100px;
+  margin-top: 80px;
+  margin-left: 90px;
+  margin-right: 100px;
+  font-size: 20px;
+}
+.Profile-form-button:hover {
+  background-color: #49454f;
 }
 
 @media screen and (max-width: 600px) {

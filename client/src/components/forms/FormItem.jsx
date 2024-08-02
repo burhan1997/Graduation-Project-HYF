@@ -29,6 +29,7 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
             type={type}
             placeholder={placeholder}
             {...register(name)}
+            className={"Profile-form-input"}
             value={
               type === "date" && !isEdit
                 ? formatDate(newObje[name])
@@ -41,9 +42,9 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
         return (
           <textarea
             id={name}
-            className={name}
             placeholder={placeholder}
             {...register(name)}
+            className={"Profile-form-input-bio"}
             readOnly={!isEdit}
           />
         );

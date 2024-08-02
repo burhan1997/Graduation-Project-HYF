@@ -46,11 +46,10 @@
   background-color: #49454f;
 }
 
-.Profile-form-input-text{
-width: 460px ;
-padding: 10px;
-font-size: 20px;
-
+.Profile-form-input-text {
+  width: 460px;
+  padding: 10px;
+  font-size: 20px;
 }
 
 @media screen and (max-width: 768px) {
