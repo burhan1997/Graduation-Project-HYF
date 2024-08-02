@@ -28,6 +28,7 @@ export const UpdateProfileForm = () => {
     updateUserError,
     setUserPathName,
     isSuccessful,
+    setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
 
@@ -100,6 +101,7 @@ export const UpdateProfileForm = () => {
             field={field}
             watch={watch}
             isEdit={isEdit}
+            setValue={setValue}
             register={register}
             defaultValue={formState.defaultValues[field.name]}
           />
