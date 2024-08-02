@@ -34,7 +34,6 @@ export const UpdateProfileForm = () => {
   const location = useLocation();
   const pathName =
     location.pathname === "/create-profile" ? "Create" : "Update";
-
   useEffect(() => {
     if (user) {
       const fields = useFields();
@@ -91,7 +90,7 @@ export const UpdateProfileForm = () => {
   return (
     <div className="Profile-form">
       <header>
-        <h1>{pathName} Profile</h1>
+        <h1> My Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
         {Object.values(fields || {})?.map((field, index) => (
@@ -111,7 +110,12 @@ export const UpdateProfileForm = () => {
         )}
         {isEdit ? (
           <div className="Button-group">
-            <button onClick={() => setIsEdit(false)}>Cancel</button>
+            <button
+              className="Profile-form-button"
+              onClick={() => setIsEdit(false)}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="Profile-form-button"
@@ -121,7 +125,12 @@ export const UpdateProfileForm = () => {
             </button>
           </div>
         ) : (
-          <button onClick={() => setIsEdit(true)}>Edit</button>
+          <button
+            className="Profile-form-button"
+            onClick={() => setIsEdit(true)}
+          >
+            Edit
+          </button>
         )}
         <div>
           {updateUserError && (

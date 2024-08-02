@@ -76,3 +76,12 @@
     max-width: 45px;
   }
 }
+
+.nav-button {
+  font-size: 16px;
+  background-color: #e8b931 ;
+  color: black;
+  border: none;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
