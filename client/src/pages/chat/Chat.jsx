@@ -3,13 +3,10 @@ import React, { useState } from "react";
 import SBConversation from "@sendbird/uikit-react/GroupChannel";
 import SBChannelList from "@sendbird/uikit-react/GroupChannelList";
 import SBChannelSettings from "@sendbird/uikit-react/ChannelSettings";
-//import SBCreateChannel from "@sendbird/uikit-react/CreateChannel"
 
 import "./Chat.css";
 
 export const Chat = () => {
-  // useState
-  //const [targetUserId, setTargetUserID] = useState("targetUserID")
   const [currentChannelUrl, setCurrentChannelUrl] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
 

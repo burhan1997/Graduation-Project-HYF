@@ -4,8 +4,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { FormProvider } from "./context/formContext";
 import { UsersProvider } from "./context/usersContext";
 import { UserProvider } from "./context/userContext";
-import { SendBirdProvider } from "@sendbird/uikit-react";
 import "@sendbird/uikit-react/dist/index.css";
+import { CustomSendBirdProvider } from "./CustomSendBirdProvider";
 
 /**
  * This component wraps our App with the providers we do not want to have in our tests
@@ -18,16 +18,7 @@ const AppWrapper = ({ children }) => {
       <UsersProvider>
         <FormProvider>
           <UserProvider>
-            <SendBirdProvider
-              appId={process.env.REACT_APP_SENDBIRD_APP_ID}
-              userId={"new_user_id_123"}
-              nickname={"123"}
-              theme="dark"
-              //             onUserLeaveChannel={() => console.log('User left the channel')}
-              // onSendUserMessage={(message) => console.log('Sent message:', message)}
-            >
-              {children}
-            </SendBirdProvider>
+            <CustomSendBirdProvider>{children}</CustomSendBirdProvider>
           </UserProvider>
         </FormProvider>
       </UsersProvider>
