@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 dotenv.config();
 import { hash, genSalt } from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -96,6 +95,7 @@ export const createUser = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 export const getUsers = async (req, res) => {
   try {
     const filters = req.query.filters;
@@ -177,4 +177,6 @@ export const updateUser = async (req, res) => {
   }
 };
 
+=======
+>>>>>>> 282c48bb2b26d05d2f92be87769c6ffeeb96a69f
 export { validateUser };

@@ -54,6 +54,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@maptiler/leaflet-maptilersdk": "^2.0.0",
+    "@multiavatar/multiavatar": "^1.0.7",
     "bcryptjs": "^2.4.3",
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",

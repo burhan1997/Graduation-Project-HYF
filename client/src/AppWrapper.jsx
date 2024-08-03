@@ -4,16 +4,22 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { FormProvider } from "./context/formContext";
 import { UsersProvider } from "./context/usersContext";
 import { UserProvider } from "./context/userContext";
+import "@sendbird/uikit-react/dist/index.css";
+import { CustomSendBirdProvider } from "./CustomSendBirdProvider";
 
 /**
  * This component wraps our App with the providers we do not want to have in our tests
  */
+//  <SelectBirdProvider>
+
 const AppWrapper = ({ children }) => {
   return (
     <Router>
       <UsersProvider>
         <FormProvider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            <CustomSendBirdProvider>{children}</CustomSendBirdProvider>
+          </UserProvider>
         </FormProvider>
       </UsersProvider>
     </Router>

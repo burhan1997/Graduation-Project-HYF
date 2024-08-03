@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./FormItem.css";
 import { formatDate } from "../../util/formatData";
+import { ProfileHobbies } from "./ProfileHobbies";
 
-export const FormItem = ({ field, register, watch, isEdit }) => {
+export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
   const { type, placeholder, name, fieldLabel, options } = field;
-
   const newObje = watch();
 
   const isChecked = (option) => {
@@ -69,7 +69,7 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
               id={name}
               className={name}
               {...register(name)}
-              defaultValue={newObje[name]?.city}
+              defaultValue={newObje?.[name][0]?.city}
             >
               <option value="">Select a location</option>
               {options?.map((option, index) => (
@@ -80,7 +80,21 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
             </select>
           );
         } else {
-          return <span className="default-value">{newObje[name]?.city}</span>;
+          return (
+            <span className="default-value">{newObje?.[name][0].city}</span>
+          );
+        }
+      case "select":
+        if (isEdit) {
+          return (
+            <ProfileHobbies
+              options={options}
+              register={register}
+              setValue={setValue}
+            />
+          );
+        } else {
+          return <span className="default-value">{newObje[name]}</span>;
         }
       case "checkbox":
       case "radio":
@@ -123,7 +137,9 @@ export const FormItem = ({ field, register, watch, isEdit }) => {
   };
 
   return (
-    <div className="Profile-form-input">
+    <div
+      className={`Profile-form-input ${fieldLabel === "Hobbies" && "hobbies-container"}`}
+    >
       {fieldLabel && <label htmlFor={name}>{fieldLabel}</label>}
       {renderField()}
     </div>
@@ -141,4 +157,5 @@ FormItem.propTypes = {
   register: PropTypes.func.isRequired,
   watch: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
+  setValue: PropTypes.func.isRequired,
 };

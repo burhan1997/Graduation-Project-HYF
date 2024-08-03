@@ -1,7 +1,7 @@
 // hobbyIcons.js
 import { BiCoffee } from "react-icons/bi";
 import { GiRollerSkate } from "react-icons/gi";
-import { MdStroller } from "react-icons/md";
+import { MdCardTravel, MdStroller } from "react-icons/md";
 import { BsController } from "react-icons/bs";
 import { TbRollercoaster } from "react-icons/tb";
 import { MdLocalMovies } from "react-icons/md";
@@ -29,8 +29,12 @@ import { CiPizza } from "react-icons/ci";
 import { FaWater } from "react-icons/fa";
 import { FaWaterLadder } from "react-icons/fa6";
 import { FaBottleWater } from "react-icons/fa6";
+import { FcReading } from "react-icons/fc";
 
 export const hobbyIcons = [
+  { label: "Walking", icon: BsPersonWalking },
+  { label: "Traveling", icon: MdCardTravel },
+  { label: "Reading", icon: FcReading },
   { label: "Coffee", icon: BiCoffee },
   { label: "Roller Skating", icon: GiRollerSkate },
   { label: "Stroller", icon: MdStroller },
@@ -51,7 +55,6 @@ export const hobbyIcons = [
   { label: "Orange Juice", icon: GiOrangeSlice },
   { label: "Painting", icon: HiOutlinePaintBrush },
   { label: "Drumming", icon: GiDrumKit },
-  { label: "Walking", icon: BsPersonWalking },
   { label: "Climbing", icon: GiMountainClimbing },
   { label: "Art", icon: MdOutlineColorLens },
   { label: "Pirate Adventure", icon: GiPirateCoat },
