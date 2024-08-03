@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
+import { createOrUpdateSendbirdUser } from "./addUserToSendBird.js";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET;
 // Function that converts the given string id to ObjectId
@@ -67,6 +68,7 @@ export const createUser = async (req, res) => {
     });
     // Save the user to MongoDB
     await newUser.save();
+    await createOrUpdateSendbirdUser(newUser);
 
     // Create JWT token synchronously
     if (!JWT_SECRET_KEY) {
@@ -156,18 +158,23 @@ export const updateUser = async (req, res) => {
     });
     return;
   }
-
-  const updatedUser = await User.findByIdAndUpdate(id, user, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!updatedUser) {
-    res.status(404).json({ success: false, msg: "User not found" });
-    return;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, user, {
+      new: true,
+      runValidators: true,
+    });
+    if (!updatedUser) {
+      res.status(404).json({ success: false, msg: "User not found" });
+      return;
+    }
+    await createOrUpdateSendbirdUser(updatedUser);
+    res.status(200).json({ success: true, updatedUser });
+  } catch (error) {
+    logError(error);
+    res
+      .status(500)
+      .json({ success: false, msg: "Unable to update user, try again later" });
   }
-
-  res.status(200).json({ success: true, updatedUser });
 };
 
 export { validateUser };

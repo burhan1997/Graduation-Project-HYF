@@ -19,7 +19,11 @@ const Nav = () => {
     <div className="nav">
       <img src={images.LogoPurple} alt="Logo" className="logo" />
       <ul className="ul-text poppins-bold">
-        <Link to="/" data-testid={TEST_ID.linkToHome}>
+        <Link
+          to="/"
+          data-testid={TEST_ID.linkToHome}
+          style={{ display: isSignIn ? "inline" : "none" }}
+        >
           <li>Home</li>
         </Link>
         <Link to="/about-us">

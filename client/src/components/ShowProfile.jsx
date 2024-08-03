@@ -63,8 +63,9 @@ export const ShowProfile = () => {
     <div className="Profile-form">
       {isLoading && <div>Loading...</div>}
 
-      <header>
+      <header className="show-profile-header">
         <h1>{user?.firstName} Profile</h1>
+        <button className="chat-button"> Chat </button>
       </header>
       <form>
         {Object.values(fields || {})?.map((field, index) => (
@@ -79,7 +80,6 @@ export const ShowProfile = () => {
         ))}
         <div>{error && <div className="error">{error.toString()}</div>}</div>
       </form>
-      <button className="chat-button"> Chat </button>
     </div>
   );
 };
