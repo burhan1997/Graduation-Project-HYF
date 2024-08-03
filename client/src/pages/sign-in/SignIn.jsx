@@ -22,7 +22,7 @@ const SignIn = () => {
       if (isFilled) {
         navigate("/");
       } else {
-        //navigate("/create-profile");
+        navigate("/create-profile");
       }
     }
   }, [user, navigate]);
