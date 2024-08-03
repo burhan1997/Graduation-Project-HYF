@@ -65,9 +65,7 @@ export const ShowProfile = () => {
   return (
     <div className="Profile-form">
       {isLoading && <div>Loading...</div>}
-      <div>
-        <button onClick={() => navigate(-1)}>Back</button>
-      </div>
+
       <header>
         <h1>{user?.firstName} Profile</h1>
       </header>
@@ -84,6 +82,7 @@ export const ShowProfile = () => {
         ))}
         <div>{error && <div className="error">{error.toString()}</div>}</div>
       </form>
+      <button className="chat-button"> Chat </button>
     </div>
   );
 };

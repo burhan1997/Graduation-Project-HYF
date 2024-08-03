@@ -28,6 +28,7 @@ export const UpdateProfileForm = () => {
     updateUserError,
     setUserPathName,
     isSuccessful,
+    setProfileCreated,
   } = useContext(FormContext);
   const navigate = useNavigate();
 
@@ -67,6 +68,7 @@ export const UpdateProfileForm = () => {
 
   const onSave = (data) => {
     const method = "PUT";
+    setProfileCreated(true);
     const selectedCityIndex = data.location;
     const selectedCity = locations[selectedCityIndex];
     const body = {

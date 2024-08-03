@@ -11,7 +11,7 @@ import { isUserProfileComplete } from "../../util/isUserProfileComplete";
 import { useUser } from "../../hooks/useUser";
 
 const SignIn = () => {
-  const { isSignIn, setIsSignIn } = useContext(FormContext);
+  const { isSignIn, setIsSignIn, profileCreated } = useContext(FormContext);
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const SignIn = () => {
       if (isFilled) {
         navigate("/");
       } else {
-        navigate("/create-profile");
+        //navigate("/create-profile");
       }
     }
   }, [user, navigate]);
@@ -38,6 +38,7 @@ const SignIn = () => {
     localStorage.setItem("token", data.token);
     setIsSignIn(true);
     localStorage.setItem("isSignIn", "true");
+    profileCreated ? navigate("/") : navigate("/create-profile");
   };
 
   const {
