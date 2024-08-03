@@ -8,7 +8,7 @@
 }
 
 .Profile-form header {
-  background-color: #fff; /* soft yellow */
+  background-color: #fff;
   padding: 20px;
   border-radius: 10px 10px 0 0;
   text-align: center;
@@ -17,7 +17,7 @@
 
 .Profile-form header h1 {
   margin: 0;
-  color: #d7007f; /* deep pink */
+  color: #d7007f;
 }
 
 .Profile-form form {
@@ -40,12 +40,12 @@
 }
 
 .Profile-form-button {
-  background-color: #d7007f; /* deep pink */
+  background-color: #d7007f;
   color: #fff;
 }
 
 .Profile-form-button:disabled {
-  background-color: #ffc0cb; /* light pink */
+  background-color: #ffc0cb;
 }
 
 .Button-group button:hover:not(:disabled) {
@@ -55,7 +55,7 @@
 .info {
   margin: 20px 0;
   text-align: center;
-  color: #d7007f; /* deep pink */
+  color: #d7007f;
 }
 
 .error {

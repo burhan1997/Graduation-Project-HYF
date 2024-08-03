@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { FormContext } from "../context/formContext";
-import { useNavigate } from "react-router-dom";
 import { FormItem } from "./forms/FormItem";
 import "./forms/UpdateProfileForm.css";
 import { useFields } from "../hooks/useFields";
@@ -15,8 +14,6 @@ export const ShowProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState([]);
   const [fields, setFields] = useState();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     return () => cancelFetch();
