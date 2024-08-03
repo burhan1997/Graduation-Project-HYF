@@ -69,7 +69,7 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
               id={name}
               className={name}
               {...register(name)}
-              defaultValue={newObje[name]?.city}
+              defaultValue={newObje?.[name][0]?.city}
             >
               <option value="">Select a location</option>
               {options?.map((option, index) => (
@@ -80,7 +80,9 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
             </select>
           );
         } else {
-          return <span className="default-value">{newObje[name]?.city}</span>;
+          return (
+            <span className="default-value">{newObje?.[name][0].city}</span>
+          );
         }
       case "select":
         if (isEdit) {
