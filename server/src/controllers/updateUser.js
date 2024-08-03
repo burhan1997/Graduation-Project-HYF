@@ -4,6 +4,7 @@ dotenv.config();
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { logError } from "../util/logging.js";
+import { createOrUpdateSendbirdUser } from "./addUserToSendBird.js";
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
@@ -47,7 +48,11 @@ export const updateUser = async (req, res) => {
     new: true,
     runValidators: true,
   });
-
+  try {
+    await createOrUpdateSendbirdUser(updatedUser);
+  } catch (error) {
+    logError(error);
+  }
   if (!updatedUser) {
     logError("User not found");
     res.status(404).json({ success: false, msg: "User not found" });

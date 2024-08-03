@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./AboutUs.css";
 import { images } from "../../../public/assets/images";
 import Footer from "../footer/Footer";
 import { useNavigate } from "react-router-dom";
+import { FormContext } from "../../context/formContext";
 
 const AboutUs = () => {
   const navigate = useNavigate();
+  const { isSignIn } = useContext(FormContext);
   return (
     <div className="container-about-us">
       <div className="about-us">
@@ -23,7 +25,11 @@ const AboutUs = () => {
             interests, and start conversations.If you wish, you can even arrange
             to meet in person and share your experiences through reviews.
           </p>
-          <button className="about-us-btn" onClick={() => navigate("/sign-in")}>
+          <button
+            className="about-us-btn"
+            onClick={() => navigate("/sign-in")}
+            style={{ display: isSignIn ? "none" : "inline-block" }}
+          >
             Sign in
           </button>
           <p className="about-us-description">

@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { FormContext } from "../context/formContext";
-import { useNavigate } from "react-router-dom";
 import { FormItem } from "./forms/FormItem";
 import "./forms/UpdateProfileForm.css";
 import { useFields } from "../hooks/useFields";
@@ -15,8 +14,6 @@ export const ShowProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState([]);
   const [fields, setFields] = useState();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     return () => cancelFetch();
@@ -65,11 +62,10 @@ export const ShowProfile = () => {
   return (
     <div className="Profile-form">
       {isLoading && <div>Loading...</div>}
-      <div>
-        <button onClick={() => navigate(-1)}>Back</button>
-      </div>
-      <header>
+
+      <header className="show-profile-header">
         <h1>{user?.firstName} Profile</h1>
+        <button className="chat-button"> Chat </button>
       </header>
       <form>
         {Object.values(fields || {})?.map((field, index) => (

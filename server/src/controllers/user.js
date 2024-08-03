@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
+import { createOrUpdateSendbirdUser } from "./addUserToSendBird.js";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET;
 // Function that converts the given string id to ObjectId
@@ -66,6 +67,7 @@ export const createUser = async (req, res) => {
     });
     // Save the user to MongoDB
     await newUser.save();
+    await createOrUpdateSendbirdUser(newUser);
 
     // Create JWT token synchronously
     if (!JWT_SECRET_KEY) {

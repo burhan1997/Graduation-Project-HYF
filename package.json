@@ -45,7 +45,7 @@
   },
   "homepage": "https://github.com/HackYourFuture/final-project-template#readme",
   "devDependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.3",
     "css-loader": "^7.1.2",
     "cypress": "^13.8.1",
     "husky": "^7.0.0",
