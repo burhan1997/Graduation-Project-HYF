@@ -54,6 +54,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@multiavatar/multiavatar": "^1.0.7",
+    "@sendbird/uikit-react": "^3.14.14",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "prop-types": "^15.7.2",
@@ -64,6 +65,7 @@
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
     "react-router-dom": "^6.0.2",
+    "sendbird": "^3.1.33",
     "yargs": "^17.7.2",
     "yup": "^1.4.0"
   }
