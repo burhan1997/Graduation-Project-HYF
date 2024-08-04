@@ -1,49 +1,71 @@
 .Profile-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-  padding: 1rem;
-  gap: 1rem;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.Profile-form header {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  color: #fff;
+}
+
+.show-profile-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.show-profile-header h1 {
+  white-space: nowrap;
+  font-size: 1.8rem;
+}
+
+.Profile-form header h1 {
+  margin: 0;
+  color: #d7007f;
+}
+
 .Profile-form form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 80%;
 }
-.Profile-form h1 {
-  background-color: white;
+
+.Button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
-.save-button {
-  padding: 10px;
+
+.Button-group button {
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #5e5c62;
-  color: white;
   cursor: pointer;
-  width: 260px;
-  margin-right: 70px;
-  margin-left: 300px;
-  margin-bottom: 100px;
-  margin-top: 80px;
-  font-size: 20px;
+  font-size: 16px;
 }
-.info {
-  display: flex;
-  justify-content: center;
-  color: #14e818;
-  font-size: 20px;
+
+.Profile-form-button {
+  background-color: #d7007f;
+  color: #fff;
 }
-.save-button:hover {
-  background-color: #49454f;
+
+.Profile-form-button:disabled {
+  background-color: #ffc0cb;
+}
+
+.Button-group button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.info {-
+  margin: 20px 0;
+  text-align: center;
+  color: #d7007f;
 }
 
 .Profile-form-input-text {
@@ -51,14 +73,24 @@
   padding: 10px;
   font-size: 20px;
 }
-
 @media screen and (max-width: 768px) {
   .Profile-form form {
     width: 90%;
   }
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
-@media screen and (max-width: 480px) {
-  .Profile-form form {
-    width: 100%;
-  }
+.chat-button {
+  margin-top: 10px;
+  margin-left: 250px;
+  padding: 0px 20px;
+  text-emphasis: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  background-color: #ff1493;
+  color: #fff;
 }

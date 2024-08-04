@@ -1,4 +1,4 @@
-import React from "react";
+-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Home from "./pages/home/Home";
@@ -10,6 +10,8 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
 import { ShowProfile } from "./components/ShowProfile";
+import { Chat } from "./pages/chat/Chat
+
 const App = () => {
   return (
     <>
@@ -26,6 +28,7 @@ const App = () => {
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/user/profile" element={<h1>Profile</h1>} />
         <Route path="/user/:id" element={<ShowProfile />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </>
   );

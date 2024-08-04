@@ -8,6 +8,5 @@
   flex-direction: column;
   gap: 10px;
   overflow-x: auto;
-  /* TODO check height for UX*/
-  height: 90%;
+  max-height: 450px;
 }

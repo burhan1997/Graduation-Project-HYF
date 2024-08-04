@@ -15,9 +15,11 @@ export const FormProvider = ({ children }) => {
   const { setUser } = useUser();
   //form info
   const [schema, setSchema] = useState();
-  const { register, watch, reset, formState, handleSubmit } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const { register, watch, reset, formState, handleSubmit, setValue } = useForm(
+    {
+      resolver: yupResolver(schema),
+    },
+  );
   //check profile created
   const [profileCreated, setProfileCreated] = useState(false);
   const signInState = localStorage.getItem("isSignIn");
@@ -73,6 +75,7 @@ export const FormProvider = ({ children }) => {
         isSignIn,
         setIsSignIn,
         isSuccessful,
+        setValue,
       }}
     >
       {children}
