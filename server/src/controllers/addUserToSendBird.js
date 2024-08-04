@@ -1,12 +1,9 @@
-//import mongoose from "mongoose";
-import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 import { logError } from "../util/logging.js";
 
 const SENDBIRD_API_TOKEN = process.env.REACT_APP_SENDBIRD_ACCESS_TOKEN;
 const SENDBIRD_APP_ID = process.env.REACT_APP_SENDBIRD_APP_ID;
-//const MONGODB_URL = process.env.MONGODB_URL;
 
 export const createOrUpdateSendbirdUser = async (user) => {
   const url = `https://api-${SENDBIRD_APP_ID}.sendbird.com/v3/users`;
@@ -21,24 +18,19 @@ export const createOrUpdateSendbirdUser = async (user) => {
   };
 
   try {
-    const response = await axios.post(url, data, { headers });
-    return response.data;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     logError(error);
   }
 };
-
-//const migrateUsersToSendbird = async () => {
-/*  await mongoose.connect(MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }); */
-//We will use this ontime to migrate existing users to sendbird.
-/* const users = await User.find();
-  for (const user of users) {
-    await createOrUpdateSendbirdUser(user);
-  } */
-//mongoose.connection.close();
-//}
-
-//migrateUsersToSendbird().catch((error) => logError(error));
