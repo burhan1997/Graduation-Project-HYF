@@ -1,4 +1,4 @@
--import React from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Home from "./pages/home/Home";
@@ -10,7 +10,7 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
 import { ShowProfile } from "./components/ShowProfile";
-import { Chat } from "./pages/chat/Chat
+import { Chat } from "./pages/chat/Chat";
 
 const App = () => {
   return (
