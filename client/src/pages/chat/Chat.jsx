@@ -1,14 +1,76 @@
-import React, { useState } from "react";
-
+import React, { useContext, useState, useEffect } from "react";
 import SBConversation from "@sendbird/uikit-react/GroupChannel";
 import SBChannelList from "@sendbird/uikit-react/GroupChannelList";
 import SBChannelSettings from "@sendbird/uikit-react/ChannelSettings";
-
+import SendBird from "sendbird";
 import "./Chat.css";
+import { UserContext } from "../../context/userContext";
+import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import { createOrGetChannelWithUser } from "../../util/createOrGetChannelWithUser";
 
 export const Chat = () => {
+  const { user } = useContext(UserContext);
+  const [userId, setUserId] = useState(null);
   const [currentChannelUrl, setCurrentChannelUrl] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
+  const appId = process.env.REACT_APP_SENDBIRD_APP_ID;
+  const [sb, setSb] = useState(null);
+  const [targetedUserId, setTargetedUserId] = useState(null);
+  const [targetedUserName, setTargetedUserName] = useState(null);
+  const { id } = useParams();
+
+  //set the targeted user id
+  useEffect(() => {
+    if (id) {
+      setTargetedUserId(id);
+    }
+  }, [id]);
+
+  const onReceived = (data) => {
+    setTargetedUserName(data?.user?.firstName);
+  };
+
+  const { performFetch } = useFetch(`/user/${targetedUserId}`, onReceived);
+
+  useEffect(() => {
+    if (targetedUserId) {
+      performFetch({ method: "GET" });
+    }
+  }, [targetedUserId]);
+
+  //get current user id
+  useEffect(() => {
+    if (user) {
+      setUserId(user._id);
+    }
+  }, [user]);
+  //connect to the sendbird
+  useEffect(() => {
+    if (userId) {
+      const sbInstance = new SendBird({ appId });
+      sbInstance.connect(targetedUserId, (connectedUser, error) => {
+        if (error) {
+          return;
+        }
+
+        setSb(sbInstance);
+      });
+    }
+  }, [userId, appId]);
+
+  //create channel with the targeted user
+  useEffect(() => {
+    if (sb && targetedUserId) {
+      createOrGetChannelWithUser({
+        sb,
+        userId,
+        targetedUserId,
+        name: targetedUserName,
+        setCurrentChannelUrl,
+      });
+    }
+  }, [sb, targetedUserId]);
 
   return (
     <div className="customized-app">
