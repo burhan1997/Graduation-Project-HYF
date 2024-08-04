@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useUser } from "../../hooks/useUser";
 import { FormContext } from "../../context/formContext";
-import { useLocation } from "react-router-dom";
 import { FormItem } from "./FormItem";
 import "./UpdateProfileForm.css";
 import { useFields } from "../../hooks/useFields";
@@ -31,10 +30,6 @@ export const UpdateProfileForm = () => {
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
-
-  const location = useLocation();
-  const pathName =
-    location.pathname === "/create-profile" ? "Create" : "Update";
   useEffect(() => {
     if (user) {
       const fields = useFields();
@@ -91,7 +86,7 @@ export const UpdateProfileForm = () => {
   return (
     <div className="Profile-form">
       <header>
-        <h1> {pathName} Profile</h1>
+        <h1> My Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
         {Object.values(fields || {})?.map((field, index) => (
