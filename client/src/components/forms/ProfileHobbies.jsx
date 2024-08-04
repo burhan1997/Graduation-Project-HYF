@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import { hobbyIcons } from "../hobby/hobbyIcons";
 import "./ProfileHobbies.css";
 
-export const ProfileHobbies = ({
-  options,
-  selected: defaultSelected,
-  setValue,
-}) => {
-  const [selected, setSelected] = useState(defaultSelected || []);
+export const ProfileHobbies = ({ options, setValue, defaultValues }) => {
+  const [selected, setSelected] = useState(defaultValues || []);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (option) => {
@@ -23,7 +19,6 @@ export const ProfileHobbies = ({
       }
     });
   };
-
   // Update form value whenever selected changes
   useEffect(() => {
     setValue("hobbies", selected);
@@ -32,7 +27,7 @@ export const ProfileHobbies = ({
   return (
     <div className="custom-dropdown">
       <div className="selected-option" onClick={() => setIsOpen(!isOpen)}>
-        {selected.length > 0 ? (
+        {isOpen && selected.length > 0 ? (
           <>
             {selected.map((label) => {
               const hobbyIconData = hobbyIcons.find(
@@ -45,7 +40,21 @@ export const ProfileHobbies = ({
             })}
           </>
         ) : (
-          "Select up to 3 hobbies"
+          <>
+            {defaultValues.length > 0 ? (
+              defaultValues?.map((label) => {
+                const hobbyIconData = hobbyIcons.find(
+                  (item) => item.label === label,
+                );
+                const IconComponent = hobbyIconData ? hobbyIconData.icon : null;
+                return (
+                  <span key={label}>{IconComponent && <IconComponent />}</span>
+                );
+              })
+            ) : (
+              <p>Select three hobbies</p>
+            )}
+          </>
         )}
       </div>
       {isOpen && (
@@ -79,4 +88,5 @@ ProfileHobbies.propTypes = {
   options: PropTypes.array.isRequired,
   selected: PropTypes.array,
   setValue: PropTypes.func.isRequired,
+  defaultValues: PropTypes.array,
 };

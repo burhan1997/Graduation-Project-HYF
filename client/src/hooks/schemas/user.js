@@ -4,9 +4,10 @@ import { hobbyIcons } from "../../components/hobby/hobbyIcons";
 
 export const useUserSchema = () => {
   return yup.object({
+    profile_picture: yup.string().url().required(),
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    location: yup.string().required(),
+    location: yup.array().required(),
     bio: yup.string().required(),
     birthday: yup.date().required(),
     gender: yup.string().required(),
