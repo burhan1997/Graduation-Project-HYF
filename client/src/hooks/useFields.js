@@ -1,4 +1,4 @@
-import { userFields } from "./schemas/user";
+import { userFields } from "./fields/userFields";
 
 export const useFields = () => {
   return { user: userFields };
