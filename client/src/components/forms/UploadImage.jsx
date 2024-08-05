@@ -31,7 +31,10 @@ export const UploadImage = ({ setValue, defaultImage }) => {
 
   const handleSubmitFile = (e) => {
     e.preventDefault();
-    if (!selectedFile) return;
+    if (!selectedFile) {
+      setErrMsg("Please upload an image");
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
     reader.onloadend = () => {
@@ -43,7 +46,6 @@ export const UploadImage = ({ setValue, defaultImage }) => {
   };
   const handleCancel = () => {
     setPreviewSource("");
-
     setIsChangeImage(false);
     setFileInputState("");
   };
@@ -79,11 +81,25 @@ export const UploadImage = ({ setValue, defaultImage }) => {
     }
   }, [uploadedImage]);
 
+  const imageUrl =
+    defaultImage && !isChangeImage
+      ? defaultImage
+      : previewSource
+        ? previewSource
+        : defaultImage;
+
   return (
     <div className="upload-image">
       {errMsg && <Alert msg={errMsg} type="danger" />}
+      {error && <Alert msg={error?.toString()} type="danger" />}
       {successMsg && <Alert msg={successMsg} type="success" />}
-      {isChangeImage && (
+      <img
+        className="pro-img avatar"
+        src={imageUrl}
+        alt="chosen"
+        style={{ height: "300px" }}
+      />
+      {isChangeImage ? (
         <>
           <input
             id="fileInput"
@@ -94,46 +110,23 @@ export const UploadImage = ({ setValue, defaultImage }) => {
             className="form-input"
           />
           <div className="button-group">
-            <button className="btn" onClick={handleSubmitFile}>
-              Submit
+            <button
+              disabled={!selectedFile || !previewSource}
+              className="btn upload-image-btn"
+              onClick={handleSubmitFile}
+            >
+              Upload Image
             </button>
             <button className="btn" onClick={handleCancel}>
               Cancel
             </button>
           </div>
         </>
-      )}
-      {!isChangeImage && (
+      ) : (
         <button className="btn" onClick={() => setIsChangeImage(true)}>
           Change Image
         </button>
       )}
-
-      {uploadedImage && !isChangeImage && (
-        <img
-          src={uploadedImage}
-          className="pro-img"
-          alt={"Profile picture is not available"}
-        />
-      )}
-
-      {defaultImage && !isChangeImage && (
-        <img
-          className="pro-img"
-          src={defaultImage}
-          alt="chosen"
-          style={{ height: "300px" }}
-        />
-      )}
-      {previewSource && (
-        <img
-          className="pro-img"
-          src={previewSource}
-          alt="chosen"
-          style={{ height: "300px" }}
-        />
-      )}
-      {error && <Alert msg={error} type="danger" />}
     </div>
   );
 };

@@ -75,7 +75,7 @@ export const FormItem = ({
             <img
               src={newObje[name]}
               {...register(name)}
-              className="pro-img"
+              className="pro-img avatar"
               alt={"Profile picture is not available"}
             />
           );
