@@ -47,7 +47,9 @@ export const updateUser = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(id, user, {
     new: true,
     runValidators: true,
+    select: "-password",
   });
+
   try {
     await createOrUpdateSendbirdUser(updatedUser);
   } catch (error) {
