@@ -5,7 +5,14 @@ import { formatDate } from "../../util/formatData";
 import { ProfileHobbies } from "./ProfileHobbies";
 import { UploadImage } from "./UploadImage";
 
-export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
+export const FormItem = ({
+  field,
+  register,
+  watch,
+  isEdit,
+  setValue,
+  errors,
+}) => {
   const { type, placeholder, name, fieldLabel, options } = field;
   const newObje = watch();
 
@@ -18,34 +25,45 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
       return newObje?.[name] === option;
     }
   };
+
+  const renderError = () => {
+    if (errors[name]) {
+      return <span className="error-message">{errors[name].message}</span>;
+    }
+    return null;
+  };
   const renderField = () => {
     switch (type) {
       case "text":
       case "number":
       case "date":
         return (
-          <input
-            id={name}
-            type={type}
-            placeholder={placeholder}
-            {...register(name)}
-            value={
-              type === "date" && !isEdit
-                ? formatDate(newObje[name])
-                : newObje[name]
-            }
-            readOnly={!isEdit}
-          />
+          <>
+            <input
+              id={name}
+              type={type}
+              placeholder={placeholder}
+              {...register(name)}
+              value={
+                type === "date" ? formatDate(newObje[name]) : newObje[name]
+              }
+              readOnly={!isEdit}
+            />
+            {renderError()}
+          </>
         );
       case "textarea":
         return (
-          <textarea
-            id={name}
-            className={name}
-            placeholder={placeholder}
-            {...register(name)}
-            readOnly={!isEdit}
-          />
+          <>
+            <textarea
+              id={name}
+              className={name}
+              placeholder={placeholder}
+              {...register(name)}
+              readOnly={!isEdit}
+            />
+            {renderError()}
+          </>
         );
       case "image":
         if (isEdit) {
@@ -64,20 +82,27 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
         }
       case "location":
         if (isEdit) {
+          const defaultValue =
+            Array.isArray(newObje["location"]) && newObje["location"].length > 0
+              ? newObje["location"][0].city
+              : watch("location");
           return (
-            <select
-              id={name}
-              className={name}
-              {...register(name)}
-              defaultValue={newObje?.[name][0]?.city}
-            >
-              <option value="">Select a location</option>
-              {options?.map((option, index) => (
-                <option key={index} value={index}>
-                  {option.city}
-                </option>
-              ))}
-            </select>
+            <>
+              <select
+                id={name}
+                className={name}
+                {...register(name)}
+                value={defaultValue}
+              >
+                <option value={""}>Select a location</option>
+                {options?.map((option, index) => (
+                  <option key={index} value={option.city}>
+                    {option.city}
+                  </option>
+                ))}
+              </select>
+              {renderError()}
+            </>
           );
         } else {
           return (
@@ -90,30 +115,43 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
             <ProfileHobbies
               options={options}
               register={register}
+              defaultValues={newObje[name]}
               setValue={setValue}
+              errors={errors}
             />
           );
         } else {
-          return <span className="default-value">{newObje[name]}</span>;
+          return (
+            <div className="default-values">
+              {newObje[name]?.map((value) => (
+                <span key={value} className="default-value">
+                  {value}
+                </span>
+              ))}
+            </div>
+          );
         }
       case "checkbox":
       case "radio":
         if (isEdit) {
           return (
-            <div className="options">
-              {options?.map((option) => (
-                <div key={option} className="options-label">
-                  <span>{option} </span>
-                  <input
-                    type={type}
-                    className={"options-input"}
-                    checked={isChecked(option)}
-                    value={option}
-                    {...register(name)}
-                  />
-                </div>
-              ))}
-            </div>
+            <>
+              <div className="options">
+                {options?.map((option) => (
+                  <div key={option} className="options-label">
+                    <span>{option} </span>
+                    <input
+                      type={type}
+                      className={"options-input"}
+                      checked={isChecked(option)}
+                      value={option}
+                      {...register(name)}
+                    />
+                  </div>
+                ))}
+              </div>
+              {renderError()}
+            </>
           );
         } else {
           const defaultValue = newObje?.[name];
@@ -158,4 +196,5 @@ FormItem.propTypes = {
   watch: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
+  errors: PropTypes.object,
 };

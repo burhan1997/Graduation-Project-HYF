@@ -67,8 +67,10 @@ export const UpdateProfileForm = () => {
 
   const onSave = (data) => {
     const method = "PUT";
-    const selectedCityIndex = data.location;
-    const selectedCity = locations[selectedCityIndex];
+    const selectedCityName = data.location;
+    const selectedCity = locations.find(
+      (location) => location.city === selectedCityName,
+    );
     const body = {
       user: { ...data, location: selectedCity },
     };
@@ -101,6 +103,7 @@ export const UpdateProfileForm = () => {
             watch={watch}
             isEdit={isEdit}
             setValue={setValue}
+            errors={formState.errors}
             register={register}
             defaultValue={formState.defaultValues[field.name]}
           />
