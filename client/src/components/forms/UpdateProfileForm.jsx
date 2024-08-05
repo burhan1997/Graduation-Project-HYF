@@ -9,14 +9,13 @@ import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
 import { useNavigate } from "react-router-dom";
 import { locations } from "../../util/locations";
-import { Image } from "cloudinary-react";
+//import { Image } from "cloudinary-react";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
   const [isEdit, setIsEdit] = useState(true);
   const [info, setInfo] = useState("");
-  const [imageIds, setImageIds] = useState([]);
-  const [imageError, setImageError] = useState("");
+  //const [imageIds, setImageIds] = useState([]);
 
   const [fields, setFields] = useState([]);
   const {
@@ -59,18 +58,18 @@ export const UpdateProfileForm = () => {
     }
   }, [isSuccessful]);
 
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const res = await fetch("/api/images");
-        const data = await res.json();
-        setImageIds(data);
-      } catch (err) {
-        setImageError(err);
-      }
-    };
-    loadImages();
-  }, []);
+  // useEffect(() => {
+  //   const loadImages = async () => {
+  //     try {
+  //       const res = await fetch("/api/images");
+  //       const data = await res.json();
+  //       setImageIds(data);
+  //     } catch (err) {
+  //    //   console.log(err);
+  //     }
+  //   };
+  //   loadImages();
+  // }, []);
 
   const data = formState.defaultValues;
   if (!data) {
@@ -107,7 +106,6 @@ export const UpdateProfileForm = () => {
   return (
     <div className="Profile-form">
       <header>
-        {imageError && <span>{imageError}</span>}
         <h1>{pathName} Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
@@ -148,7 +146,7 @@ export const UpdateProfileForm = () => {
         </div>
       </form>
 
-      {/* Cloudinary Gallery */}
+      {/* Cloudinary Gallery
       <div>
         <h1 className="title">Cloudinary Gallery</h1>
         <div className="gallery">
@@ -166,7 +164,7 @@ export const UpdateProfileForm = () => {
             <p>No images available</p>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

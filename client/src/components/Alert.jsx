@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-export default function Alert({ msg, type }) {
+export const Alert = ({ msg, type }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Alert({ msg, type }) {
   }, [msg]);
 
   return show ? <div className={`alert alert-${type}`}>{msg}</div> : null;
-}
+};
 
 Alert.propTypes = {
   type: PropTypes.oneOf(["success", "danger"]).isRequired,

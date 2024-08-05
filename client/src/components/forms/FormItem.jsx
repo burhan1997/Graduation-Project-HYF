@@ -1,63 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Alert from "../Alert";
 import "./FormItem.css";
 import { formatDate } from "../../util/formatData";
 import { ProfileHobbies } from "./ProfileHobbies";
+import { UploadImage } from "./UploadImage";
 
 export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
   const { type, placeholder, name, fieldLabel, options } = field;
   const newObje = watch();
-
-  //  for image upload
-  const [fileInputState, setFileInputState] = useState("");
-  const [previewSource, setPreviewSource] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [successMsg, setSuccessMsg] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-
-  const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
-    previewFile(file);
-    setSelectedFile(file);
-    setFileInputState(e.target.value);
-  };
-
-  const previewFile = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setPreviewSource(reader.result);
-    };
-  };
-
-  const handleSubmitFile = (e) => {
-    e.preventDefault();
-    if (!selectedFile) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedFile);
-    reader.onloadend = () => {
-      uploadImage(reader.result);
-    };
-    reader.onerror = () => {
-      setErrMsg("Something went wrong!");
-    };
-  };
-
-  const uploadImage = async (base64EncodedImage) => {
-    try {
-      await fetch("/api/upload", {
-        method: "POST",
-        body: JSON.stringify({ data: base64EncodedImage }),
-        headers: { "Content-Type": "application/json" },
-      });
-      setFileInputState("");
-      setPreviewSource("");
-      setSuccessMsg("Image uploaded successfully");
-    } catch (err) {
-      setErrMsg("Something went wrong!");
-    }
-  };
 
   const isChecked = (option) => {
     const newArray = newObje?.[name];
@@ -68,7 +18,6 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
       return newObje?.[name] === option;
     }
   };
-
   const renderField = () => {
     switch (type) {
       case "text":
@@ -101,31 +50,7 @@ export const FormItem = ({ field, register, watch, isEdit, setValue }) => {
       case "image":
         if (isEdit) {
           return (
-            <div>
-              <h1 className="title">Upload an Image</h1>
-              {errMsg && <Alert msg={errMsg} type="danger" />}
-              {successMsg && <Alert msg={successMsg} type="success" />}
-              <form onSubmit={handleSubmitFile} className="form">
-                <input
-                  id="fileInput"
-                  type="file"
-                  name="image"
-                  onChange={handleFileInputChange}
-                  value={fileInputState}
-                  className="form-input"
-                />
-                <button className="btn" type="submit">
-                  Submit
-                </button>
-              </form>
-              {previewSource && (
-                <img
-                  src={previewSource}
-                  alt="chosen"
-                  style={{ height: "300px" }}
-                />
-              )}
-            </div>
+            <UploadImage setValue={setValue} defaultImage={newObje[name]} />
           );
         } else {
           return (

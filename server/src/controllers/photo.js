@@ -6,10 +6,10 @@ export const populatePhoto = async (req, res) => {
     const uploadResponse = await cloudinary.uploader.upload(fileStr, {
       upload_preset: "dev_setups",
     });
-    console.log(uploadResponse);
-    res.json({ msg: "Upload successful", data: uploadResponse });
+    res
+      .status(201)
+      .json({ success: true, msg: "Upload successful", data: uploadResponse });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Something went wrong" });
   }
 };
