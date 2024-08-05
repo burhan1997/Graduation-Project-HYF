@@ -9,13 +9,11 @@ import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
 import { useNavigate } from "react-router-dom";
 import { locations } from "../../util/locations";
-//import { Image } from "cloudinary-react";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
   const [isEdit, setIsEdit] = useState(true);
   const [info, setInfo] = useState("");
-  //const [imageIds, setImageIds] = useState([]);
 
   const [fields, setFields] = useState([]);
   const {
@@ -57,19 +55,6 @@ export const UpdateProfileForm = () => {
       navigate("/");
     }
   }, [isSuccessful]);
-
-  // useEffect(() => {
-  //   const loadImages = async () => {
-  //     try {
-  //       const res = await fetch("/api/images");
-  //       const data = await res.json();
-  //       setImageIds(data);
-  //     } catch (err) {
-  //    //   console.log(err);
-  //     }
-  //   };
-  //   loadImages();
-  // }, []);
 
   const data = formState.defaultValues;
   if (!data) {
@@ -145,26 +130,6 @@ export const UpdateProfileForm = () => {
           )}
         </div>
       </form>
-
-      {/* Cloudinary Gallery
-      <div>
-        <h1 className="title">Cloudinary Gallery</h1>
-        <div className="gallery">
-          {imageIds.length > 0 ? (
-            imageIds.map((imageId, index) => (
-              <Image
-                key={index}
-                cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
-                publicId={imageId}
-                width="300"
-                crop="scale"
-              />
-            ))
-          ) : (
-            <p>No images available</p>
-          )}
-        </div>
-      </div> */}
     </div>
   );
 };
