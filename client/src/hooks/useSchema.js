@@ -1,5 +1,5 @@
-import { useUserSchema } from "./schemas/user";
+import { userSchema } from "./schemas/userSchema";
 
 export const useSchema = () => {
-  return { user: useUserSchema() };
+  return { user: userSchema() };
 };
