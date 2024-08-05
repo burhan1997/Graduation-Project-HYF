@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useUser } from "../../hooks/useUser";
 import { FormContext } from "../../context/formContext";
 import { useLocation } from "react-router-dom";
@@ -9,13 +9,16 @@ import { useDefaultValues } from "../../hooks/useDefaultValues";
 import { useSchema } from "../../hooks/useSchema";
 import { useNavigate } from "react-router-dom";
 import { locations } from "../../util/locations";
+import { Image } from "cloudinary-react";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
   const [isEdit, setIsEdit] = useState(true);
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState("");
+  const [imageIds, setImageIds] = useState([]);
+  const [imageError, setImageError] = useState("");
 
-  const [fields, setFields] = useState();
+  const [fields, setFields] = useState([]);
   const {
     reset,
     watch,
@@ -31,7 +34,6 @@ export const UpdateProfileForm = () => {
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
-
   const location = useLocation();
   const pathName =
     location.pathname === "/create-profile" ? "Create" : "Update";
@@ -56,6 +58,19 @@ export const UpdateProfileForm = () => {
       navigate("/");
     }
   }, [isSuccessful]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const res = await fetch("/api/images");
+        const data = await res.json();
+        setImageIds(data);
+      } catch (err) {
+        setImageError(err);
+      }
+    };
+    loadImages();
+  }, []);
 
   const data = formState.defaultValues;
   if (!data) {
@@ -92,10 +107,11 @@ export const UpdateProfileForm = () => {
   return (
     <div className="Profile-form">
       <header>
+        {imageError && <span>{imageError}</span>}
         <h1>{pathName} Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
-        {Object.values(fields || {})?.map((field, index) => (
+        {fields.map((field, index) => (
           <FormItem
             key={index}
             field={field}
@@ -131,6 +147,26 @@ export const UpdateProfileForm = () => {
           )}
         </div>
       </form>
+
+      {/* Cloudinary Gallery */}
+      <div>
+        <h1 className="title">Cloudinary Gallery</h1>
+        <div className="gallery">
+          {imageIds.length > 0 ? (
+            imageIds.map((imageId, index) => (
+              <Image
+                key={index}
+                cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
+                publicId={imageId}
+                width="300"
+                crop="scale"
+              />
+            ))
+          ) : (
+            <p>No images available</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
