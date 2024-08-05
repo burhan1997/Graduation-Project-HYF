@@ -11,14 +11,13 @@ import { isUserProfileComplete } from "../../util/isUserProfileComplete";
 import { useUser } from "../../hooks/useUser";
 
 const SignIn = () => {
-  const { isSignIn, setIsSignIn, profileCreated } = useContext(FormContext);
+  const { isSignIn, setIsSignIn } = useContext(FormContext);
   const { user } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
       const isFilled = isUserProfileComplete(user);
-
       if (isFilled) {
         navigate("/");
       } else {
@@ -38,7 +37,6 @@ const SignIn = () => {
     localStorage.setItem("token", data.token);
     setIsSignIn(true);
     localStorage.setItem("isSignIn", "true");
-    profileCreated ? navigate("/") : navigate("/create-profile");
   };
 
   const {

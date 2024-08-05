@@ -18,7 +18,7 @@ export const getUsers = async (req, res) => {
       }));
     }
 
-    const users = await User.find(query);
+    const users = await User.find(query).select("-password");
     res.status(200).json({ success: true, users });
   } catch (error) {
     logError(error);
