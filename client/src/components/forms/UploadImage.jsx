@@ -41,7 +41,12 @@ export const UploadImage = ({ setValue, defaultImage }) => {
       setErrMsg("Something went wrong!");
     };
   };
+  const handleCancel = () => {
+    setPreviewSource("");
 
+    setIsChangeImage(false);
+    setFileInputState("");
+  };
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
@@ -92,7 +97,7 @@ export const UploadImage = ({ setValue, defaultImage }) => {
             <button className="btn" onClick={handleSubmitFile}>
               Submit
             </button>
-            <button className="btn" onClick={() => setIsChangeImage(false)}>
+            <button className="btn" onClick={handleCancel}>
               Cancel
             </button>
           </div>
