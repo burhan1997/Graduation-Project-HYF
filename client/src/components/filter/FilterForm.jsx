@@ -49,14 +49,15 @@ export const FilterForm = () => {
     setSelectedFilters((prevFilters) => {
       const newFilters = { ...prevFilters, [value]: checked };
 
+      const userFilters = getActiveFilters(newFilters);
+      const queryString = new URLSearchParams({
+        filters: JSON.stringify(userFilters),
+      }).toString();
+      const newUrl = `/user?${queryString}`;
+      setUrl(newUrl);
+
       return newFilters;
     });
-    const userFilters = getActiveFilters(selectedFilters);
-    const queryString = new URLSearchParams({
-      filters: JSON.stringify(userFilters),
-    }).toString();
-    const newUrl = `/user?${queryString}`;
-    setUrl(newUrl);
   };
 
   if (isOpen) {

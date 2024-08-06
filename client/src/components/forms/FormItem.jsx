@@ -26,11 +26,12 @@ export const FormItem = ({
   };
 
   const renderError = () => {
-    if (errors[name]) {
-      return <span className="error-message">{errors[name].message}</span>;
+    if (errors?.[name]) {
+      return <span className="error-message">{errors[name]?.message}</span>;
     }
     return null;
   };
+
   const renderField = () => {
     switch (type) {
       case "text":
@@ -44,7 +45,7 @@ export const FormItem = ({
               placeholder={placeholder}
               {...register(name)}
               value={
-                type === "date" ? formatDate(newObje[name]) : newObje[name]
+                type === "date" ? formatDate(newObje?.[name]) : newObje?.[name]
               }
               readOnly={!isEdit}
             />
@@ -79,7 +80,7 @@ export const FormItem = ({
         } else {
           return (
             <img
-              src={newObje[name]}
+              src={newObje?.[name]}
               {...register(name)}
               className="pro-img"
               alt={"Profile picture is not available"}
@@ -89,8 +90,9 @@ export const FormItem = ({
       case "location":
         if (isEdit) {
           const defaultValue =
-            Array.isArray(newObje["location"]) && newObje["location"].length > 0
-              ? newObje["location"][0].city
+            Array.isArray(newObje?.["location"]) &&
+            newObje?.["location"]?.length > 0
+              ? newObje?.["location"]?.[0]?.city
               : watch("location");
           return (
             <>
@@ -112,7 +114,9 @@ export const FormItem = ({
           );
         } else {
           return (
-            <span className="default-value">{newObje?.[name][0].city}</span>
+            <span className="default-value">
+              {newObje?.[name]?.[0]?.city || "N/A"}
+            </span>
           );
         }
       case "select":
@@ -121,7 +125,7 @@ export const FormItem = ({
             <ProfileHobbies
               options={options}
               register={register}
-              defaultValues={newObje[name]}
+              defaultValues={newObje?.[name]}
               setValue={setValue}
               errors={errors}
             />
@@ -129,8 +133,8 @@ export const FormItem = ({
         } else {
           return (
             <div className="default-values">
-              {newObje[name]?.map((value) => (
-                <span key={value} className="default-value">
+              {newObje?.[name]?.map((value, index) => (
+                <span key={index} className="default-value">
                   {value}
                 </span>
               ))}
@@ -143,8 +147,8 @@ export const FormItem = ({
           return (
             <>
               <div className="options">
-                {options?.map((option) => (
-                  <div key={option} className="options-label">
+                {options?.map((option, index) => (
+                  <div key={index} className="options-label">
                     <span>{option} </span>
                     <input
                       type={type}
@@ -164,8 +168,8 @@ export const FormItem = ({
           if (Array.isArray(defaultValue)) {
             return (
               <div className="default-values">
-                {defaultValue.map((value) => (
-                  <span key={value} className="default-value">
+                {defaultValue.map((value, index) => (
+                  <span key={index} className="default-value">
                     {value}
                   </span>
                 ))}
@@ -182,7 +186,9 @@ export const FormItem = ({
 
   return (
     <div
-      className={`Profile-form-input ${fieldLabel === "Hobbies" && "hobbies-container"}`}
+      className={`Profile-form-input ${
+        fieldLabel === "Hobbies" && "hobbies-container"
+      }`}
     >
       {fieldLabel && <label htmlFor={name}>{fieldLabel}</label>}
       {renderField()}
