@@ -30,9 +30,6 @@ export const UpdateProfileForm = () => {
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
-  const location = useLocation();
-  const pathName =
-    location.pathname === "/create-profile" ? "Create" : "Update";
 
   useEffect(() => {
     if (user) {
