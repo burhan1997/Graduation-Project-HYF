@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useUser } from "../../hooks/useUser";
 import { FormContext } from "../../context/formContext";
-import { useLocation } from "react-router-dom";
 import { FormItem } from "./FormItem";
 import "./UpdateProfileForm.css";
 import { useFields } from "../../hooks/useFields";
@@ -31,9 +30,6 @@ export const UpdateProfileForm = () => {
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
-  const location = useLocation();
-  const pathName =
-    location.pathname === "/create-profile" ? "Create" : "Update";
 
   useEffect(() => {
     if (user) {
@@ -93,7 +89,7 @@ export const UpdateProfileForm = () => {
   return (
     <div className="Profile-form">
       <header>
-        <h1>{pathName} Profile</h1>
+        <h1> My Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
         {fields.map((field, index) => (
@@ -115,7 +111,12 @@ export const UpdateProfileForm = () => {
         )}
         {isEdit ? (
           <div className="Button-group">
-            <button onClick={() => setIsEdit(false)}>Cancel</button>
+            <button
+              className="Profile-form-button"
+              onClick={() => setIsEdit(false)}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="Profile-form-button"
@@ -125,7 +126,12 @@ export const UpdateProfileForm = () => {
             </button>
           </div>
         ) : (
-          <button onClick={() => setIsEdit(true)}>Edit</button>
+          <button
+            className="Profile-form-button"
+            onClick={() => setIsEdit(true)}
+          >
+            Edit
+          </button>
         )}
         <div>
           {updateUserError && (

@@ -5,9 +5,11 @@ import "../../public/index.css";
 import TEST_ID from "./Nav.testid";
 import { FormContext } from "../context/formContext";
 import { images } from "../../public/assets/images";
+import { useUser } from "../hooks/useUser";
 
 const Nav = () => {
   const { isSignIn, setIsSignIn } = useContext(FormContext);
+  const { user } = useUser();
   const navigate = useNavigate();
   function handleSignOut() {
     localStorage.removeItem("token");
@@ -46,6 +48,19 @@ const Nav = () => {
         >
           Sign out
         </li>
+        <li>
+          <img
+            src={user?.profile_picture}
+            className="li-img"
+            alt="My Profile"
+          />{" "}
+        </li>
+        <button
+          className="nav-button"
+          onClick={() => navigate("/create-profile")}
+        >
+          My Profile{" "}
+        </button>
       </ul>
       <ul className="ul-img">
         <Link to="/home">

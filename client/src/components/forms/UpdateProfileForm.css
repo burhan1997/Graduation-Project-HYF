@@ -68,12 +68,21 @@
   color: #d7007f;
 }
 
+.Profile-form-input-text {
+  width: 460px;
+  padding: 10px;
+  font-size: 20px;
+}
+@media screen and (max-width: 768px) {
+  .Profile-form form {
+    width: 90%;
+  }
+}
 .error {
   color: red;
   text-align: center;
   margin-top: 10px;
 }
-
 .chat-button {
   margin-top: 10px;
   margin-left: 250px;
