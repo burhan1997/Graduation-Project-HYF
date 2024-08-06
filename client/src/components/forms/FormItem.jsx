@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./FormItem.css";
 import { formatDate } from "../../util/formatData";
 import { ProfileHobbies } from "./ProfileHobbies";
+import { UploadImage } from "./UploadImage";
 
 export const FormItem = ({
   field,
@@ -67,21 +68,14 @@ export const FormItem = ({
       case "image":
         if (isEdit) {
           return (
-            <>
-              <input
-                type="text"
-                placeholder={placeholder}
-                {...register(name)}
-              />
-              {renderError()}
-            </>
+            <UploadImage setValue={setValue} defaultImage={newObje[name]} />
           );
         } else {
           return (
             <img
               src={newObje[name]}
               {...register(name)}
-              className="pro-img"
+              className="pro-img avatar"
               alt={"Profile picture is not available"}
             />
           );
@@ -112,7 +106,7 @@ export const FormItem = ({
           );
         } else {
           return (
-            <span className="default-value">{newObje?.[name][0].city}</span>
+            <span className="default-value">{newObje?.[name][0]?.city}</span>
           );
         }
       case "select":

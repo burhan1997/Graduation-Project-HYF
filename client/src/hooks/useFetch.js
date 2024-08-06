@@ -43,9 +43,7 @@ const useFetch = (route, onReceived) => {
 
       try {
         const res = await fetch(url, { ...baseOptions, ...options, signal });
-
         const jsonResult = await res.json();
-
         if (!res.ok) {
           setError(`${jsonResult.msg}`);
         } else if (jsonResult.success === true) {

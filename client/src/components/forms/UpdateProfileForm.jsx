@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useUser } from "../../hooks/useUser";
 import { FormContext } from "../../context/formContext";
 import { useLocation } from "react-router-dom";
@@ -13,9 +13,9 @@ import { locations } from "../../util/locations";
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
   const [isEdit, setIsEdit] = useState(true);
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState("");
 
-  const [fields, setFields] = useState();
+  const [fields, setFields] = useState([]);
   const {
     reset,
     watch,
@@ -31,7 +31,6 @@ export const UpdateProfileForm = () => {
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
-
   const location = useLocation();
   const pathName =
     location.pathname === "/create-profile" ? "Create" : "Update";
@@ -97,7 +96,7 @@ export const UpdateProfileForm = () => {
         <h1>{pathName} Profile</h1>
       </header>
       <form onSubmit={handleSubmit(onSave)}>
-        {Object.values(fields || {})?.map((field, index) => (
+        {fields.map((field, index) => (
           <FormItem
             key={index}
             field={field}
