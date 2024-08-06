@@ -9,7 +9,7 @@ import SignIn from "./pages/sign-in/SignIn";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
-import { ShowProfile } from "./components/ShowProfile";
+import { ShowProfile } from "./pages/show-profile/ShowProfile";
 import { Chat } from "./pages/chat/Chat";
 
 const App = () => {
