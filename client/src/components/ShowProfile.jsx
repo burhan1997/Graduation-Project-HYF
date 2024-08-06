@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FormContext } from "../context/formContext";
 import { FormItem } from "./forms/FormItem";
 import "./forms/UpdateProfileForm.css";
@@ -14,6 +15,7 @@ export const ShowProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState([]);
   const [fields, setFields] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => cancelFetch();
@@ -51,12 +53,15 @@ export const ShowProfile = () => {
     }
   }, [user]);
 
-  const data = formState.defaultValues;
+  const data = formState?.defaultValues;
   if (!data) {
     return <p>loading...</p>;
   }
   if (error) {
     return <p>No user we found. You can sign in or sign up</p>;
+  }
+  function handleChatClick() {
+    navigate(`/chat/${id}`);
   }
 
   return (
@@ -64,8 +69,10 @@ export const ShowProfile = () => {
       {isLoading && <div>Loading...</div>}
 
       <header className="show-profile-header">
-        <h1>{user?.firstName} Profile</h1>
-        <button className="chat-button"> Chat </button>
+        <h1>{user?.firstName}</h1>
+        <button className="chat-button" onClick={handleChatClick}>
+          Chat
+        </button>
       </header>
       <form>
         {Object.values(fields || {})?.map((field, index) => (
