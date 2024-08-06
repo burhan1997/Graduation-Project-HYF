@@ -8,5 +8,10 @@
   flex-direction: column;
   gap: 10px;
   overflow-x: auto;
+  overflow-y: auto;
   max-height: 450px;
+}
+
+.menu-list h3 {
+  cursor: pointer;
 }
