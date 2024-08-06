@@ -1,20 +1,33 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Nav.css";
 import "../../public/index.css";
 import TEST_ID from "./Nav.testid";
 import { FormContext } from "../context/formContext";
 import { images } from "../../public/assets/images";
+import { useUser } from "../hooks/useUser";
 
 const Nav = () => {
   const { isSignIn, setIsSignIn } = useContext(FormContext);
+  const { user } = useUser();
   const navigate = useNavigate();
+  const [isProfileMenuVisible, setProfileMenuVisible] = useState(false);
+
   function handleSignOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("isSignIn");
     setIsSignIn(false);
+    setProfileMenuVisible((prevVisible) => !prevVisible);
     navigate("/");
   }
+
+  const handleAvatar = () => {
+    setProfileMenuVisible((prevVisible) => !prevVisible);
+  };
+  const goMyProfile = () => {
+    navigate("/create-profile");
+    setProfileMenuVisible((prevVisible) => !prevVisible);
+  };
   return (
     <div className="nav">
       <img src={images.LogoPurple} alt="Logo" className="logo" />
@@ -39,28 +52,39 @@ const Nav = () => {
         <Link to="/sign-up" style={{ display: isSignIn ? "none" : "inline" }}>
           <li>Sign up</li>
         </Link>
-
-        <li
-          onClick={handleSignOut}
-          style={{ display: isSignIn ? "inline" : "none", cursor: "ponter" }}
-        >
-          Sign out
-        </li>
+        {isSignIn && (
+          <li className="avatar-container">
+            <div className="header-avatar" onClick={handleAvatar}>
+              <img
+                src={user?.profile_picture}
+                className="li-img avatar"
+                alt="My Profile"
+              />
+              <span>{user?.firstName}</span>
+            </div>
+            {isProfileMenuVisible && (
+              <div className="profile-menu">
+                <button onClick={goMyProfile}>My profile</button>
+                <button onClick={handleSignOut}>Sign out</button>
+              </div>
+            )}
+          </li>
+        )}
       </ul>
       <ul className="ul-img">
         <Link to="/home">
           <li>
-            <img src={images.Globe} className="li-img" alt="Map" />{" "}
+            <img src={images.Globe} className="li-img" alt="Map" />
           </li>
         </Link>
         <Link to="/inbox">
           <li>
-            <img src={images.Mail} className="li-img" alt="Messages" />{" "}
+            <img src={images.Mail} className="li-img" alt="Messages" />
           </li>
         </Link>
         <Link to="/settings">
           <li>
-            <img src={images.Settings} className="li-img" alt="Settings" />{" "}
+            <img src={images.Settings} className="li-img" alt="Settings" />
           </li>
         </Link>
         <Link to="/profile">

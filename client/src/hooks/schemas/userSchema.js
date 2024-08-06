@@ -2,6 +2,7 @@ import * as yup from "yup";
 
 export const userSchema = () => {
   return yup.object({
+    profile_picture: yup.string().required(),
     firstName: yup.string().required(),
     lastName: yup.string().required(),
     location: yup.array().required(),
