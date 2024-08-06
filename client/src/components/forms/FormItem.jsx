@@ -32,7 +32,6 @@ export const FormItem = ({
     }
     return null;
   };
-
   const renderField = () => {
     switch (type) {
       case "text":
@@ -83,18 +82,13 @@ export const FormItem = ({
         }
       case "location":
         if (isEdit) {
-          const defaultValue =
-            Array.isArray(newObje?.["location"]) &&
-            newObje?.["location"]?.length > 0
-              ? newObje?.["location"]?.[0]?.city
-              : watch("location");
           return (
             <>
               <select
                 id={name}
                 className={name}
                 {...register(name)}
-                value={defaultValue}
+                defaultValue={newObje?.location || ""}
               >
                 <option value={""}>Select a location</option>
                 {options?.map((option, index) => (
@@ -108,9 +102,7 @@ export const FormItem = ({
           );
         } else {
           return (
-            <span className="default-value">
-              {newObje?.[name]?.[0]?.city || "N/A"}
-            </span>
+            <span className="default-value">{newObje?.location || "N/A"}</span>
           );
         }
       case "select":
