@@ -18,7 +18,6 @@ export const FormItem = ({
 
   const isChecked = (option) => {
     const newArray = newObje?.[name];
-
     if (Array.isArray(newArray)) {
       return newArray.includes(option);
     } else {
@@ -46,7 +45,9 @@ export const FormItem = ({
               placeholder={placeholder}
               {...register(name)}
               value={
-                type === "date" ? formatDate(newObje?.[name]) : newObje?.[name]
+                type === "date"
+                  ? formatDate(newObje?.[name])
+                  : newObje?.[name] || ""
               }
               readOnly={!isEdit}
             />
@@ -61,6 +62,7 @@ export const FormItem = ({
               className={name}
               placeholder={placeholder}
               {...register(name)}
+              value={newObje?.[name] || ""}
               readOnly={!isEdit}
             />
             {renderError()}
@@ -74,7 +76,7 @@ export const FormItem = ({
         } else {
           return (
             <img
-              src={newObje?.[name]}
+              src={newObje?.[name] || ""}
               {...register(name)}
               className="pro-img avatar"
               alt={"Profile picture is not available"}
@@ -83,23 +85,18 @@ export const FormItem = ({
         }
       case "location":
         if (isEdit) {
-          const defaultValue =
-            Array.isArray(newObje?.["location"]) &&
-            newObje?.["location"]?.length > 0
-              ? newObje?.["location"]?.[0]?.city
-              : watch("location");
           return (
             <>
               <select
                 id={name}
                 className={name}
                 {...register(name)}
-                value={defaultValue}
+                defaultValue={newObje?.location || ""}
               >
                 <option value={""}>Select a location</option>
                 {options?.map((option, index) => (
-                  <option key={index} value={option.city}>
-                    {option.city}
+                  <option key={index} value={option?.city}>
+                    {option?.city}
                   </option>
                 ))}
               </select>
@@ -108,9 +105,7 @@ export const FormItem = ({
           );
         } else {
           return (
-            <span className="default-value">
-              {newObje?.[name]?.[0]?.city || "N/A"}
-            </span>
+            <span className="default-value">{newObje?.location || "N/A"}</span>
           );
         }
       case "select":

@@ -46,9 +46,9 @@ export const FilterMenu = ({
             handleOptionChange={handleOptionChange}
           />
         ))}
-        <button className="menu-button-2" onClick={onClose}>
+        {/*  <button className="menu-button-2" onClick={onClose}>
           Close
-        </button>
+        </button> */}
       </div>
     </div>
   );

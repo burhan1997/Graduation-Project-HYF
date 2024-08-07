@@ -31,6 +31,7 @@ const Nav = () => {
     navigate("/create-profile");
     setProfileMenuVisible((prevVisible) => !prevVisible);
   };
+
   return (
     <div className="nav">
       <img src={images.LogoPurple} alt="Logo" className="logo" />
@@ -42,7 +43,6 @@ const Nav = () => {
         >
           <li>Home</li>
         </Link>
-
         <Link to="/about-us">
           <li>About Us</li>
         </Link>

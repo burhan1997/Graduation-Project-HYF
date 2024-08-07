@@ -9,6 +9,7 @@ import { MessageContext } from "../../context/messageContext"; // Import context
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { createOrGetChannelWithUser } from "../../util/createOrGetChannelWithUser";
+import "@sendbird/uikit-react/dist/index.css";
 
 export const Chat = () => {
   const { user } = useContext(UserContext);
@@ -50,33 +51,38 @@ export const Chat = () => {
   useEffect(() => {
     if (userId) {
       const sbInstance = new SendBird({ appId });
-      sbInstance.connect(userId, (connectedUser, error) => {
+      const connectUserId = targetedUserId
+        ? targetedUserId.toString()
+        : userId.toString();
+
+      sbInstance.connect(connectUserId, (connectedUser, error) => {
         if (error) {
           setError(error);
           return;
         }
-
         setSb(sbInstance);
-
-        const HANDLER_ID = `chat_handler_${userId}`;
-        const channelHandler = new sbInstance.ChannelHandler();
-
-        channelHandler.onMessageReceived = (channel) => {
-          if (channel.url !== currentChannelUrl) {
-            setNewMessageCount((prevCount) => prevCount + 1);
-          }
-        };
-        sbInstance.addChannelHandler(HANDLER_ID, channelHandler);
       });
+    }
+  }, [userId, targetedUserId, appId]);
 
-      return () => {
-        if (sbInstance) {
-          const HANDLER_ID = `chat_handler_${userId}`;
-          sbInstance.removeChannelHandler(HANDLER_ID);
+  useEffect(() => {
+    if (sb && userId && currentChannelUrl) {
+      const HANDLER_ID = `chat_handler_${userId}`;
+      const channelHandler = new sb.ChannelHandler();
+
+      channelHandler.onMessageReceived = (channel) => {
+        if (channel.url !== currentChannelUrl) {
+          setNewMessageCount((prevCount) => prevCount + 1);
         }
       };
+
+      sb.addChannelHandler(HANDLER_ID, channelHandler);
+
+      return () => {
+        sb.removeChannelHandler(HANDLER_ID);
+      };
     }
-  }, [userId, appId, currentChannelUrl]);
+  }, [sb, userId, currentChannelUrl]);
 
   useEffect(() => {
     if (sb && targetedUserId) {
@@ -94,7 +100,6 @@ export const Chat = () => {
     <div className="customized-app">
       <div className="sendbird-app__wrap">
         <div className="sendbird-app__channellist-wrap">
-          {/* error handling */}
           {error && <div className="error">{error.toString()}</div>}
           <SBChannelList
             selectedChannelUrl={currentChannelUrl}
