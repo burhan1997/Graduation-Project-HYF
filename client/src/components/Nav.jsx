@@ -6,9 +6,12 @@ import TEST_ID from "./Nav.testid";
 import { FormContext } from "../context/formContext";
 import { images } from "../../public/assets/images";
 import { useUser } from "../hooks/useUser";
+import { AiFillWechat } from "react-icons/ai";
+import { MessageContext } from "../context/messageContext";
 
 const Nav = () => {
   const { isSignIn, setIsSignIn } = useContext(FormContext);
+  const { newMessageCount } = useContext(MessageContext);
   const { user } = useUser();
   const navigate = useNavigate();
   const [isProfileMenuVisible, setProfileMenuVisible] = useState(false);
@@ -38,6 +41,17 @@ const Nav = () => {
           style={{ display: isSignIn ? "inline" : "none" }}
         >
           <li>Home</li>
+        </Link>
+        <Link to="/chat">
+          <li
+            className="chat-icon-container"
+            style={{ display: isSignIn ? "inline" : "none" }}
+          >
+            <AiFillWechat className="chat-icon" />
+            {newMessageCount > 0 && (
+              <div className="chat-notification">{newMessageCount}</div>
+            )}
+          </li>
         </Link>
         <Link to="/about-us">
           <li>About Us</li>

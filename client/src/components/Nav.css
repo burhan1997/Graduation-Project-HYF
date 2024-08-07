@@ -75,6 +75,25 @@
   width: 40px;
   height: 40px !important;
 }
+.chat-icon-container {
+  position: relative;
+}
+
+.chat-icon {
+  font-size: 24px;
+}
+
+.chat-notification {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
 
 @media only screen and (max-width: 600px) {
   .nav {

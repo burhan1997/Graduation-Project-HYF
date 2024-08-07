@@ -6,6 +6,7 @@ import { UsersProvider } from "./context/usersContext";
 import { UserProvider } from "./context/userContext";
 import "@sendbird/uikit-react/dist/index.css";
 import { CustomSendBirdProvider } from "./CustomSendBirdProvider";
+import { MessageProvider } from "./context/messageContext";
 
 /**
  * This component wraps our App with the providers we do not want to have in our tests
@@ -18,7 +19,9 @@ const AppWrapper = ({ children }) => {
       <UsersProvider>
         <FormProvider>
           <UserProvider>
-            <CustomSendBirdProvider>{children}</CustomSendBirdProvider>
+            <CustomSendBirdProvider>
+              <MessageProvider>{children}</MessageProvider>
+            </CustomSendBirdProvider>
           </UserProvider>
         </FormProvider>
       </UsersProvider>
