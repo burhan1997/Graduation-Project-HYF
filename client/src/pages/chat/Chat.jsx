@@ -49,13 +49,23 @@ export const Chat = () => {
   useEffect(() => {
     if (userId) {
       const sbInstance = new SendBird({ appId });
-      sbInstance.connect(targetedUserId, (connectedUser, error) => {
-        if (error) {
-          return;
-        }
+      if (targetedUserId) {
+        sbInstance.connect(targetedUserId, (connectedUser, error) => {
+          if (error) {
+            return;
+          }
 
-        setSb(sbInstance);
-      });
+          setSb(sbInstance);
+        });
+      } else {
+        sbInstance.connect(userId, (connectedUser, error) => {
+          if (error) {
+            return;
+          }
+
+          setSb(sbInstance);
+        });
+      }
     }
   }, [userId, appId]);
 
