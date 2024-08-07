@@ -9,8 +9,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const [isSuccessful, setIsSuccessful] = useState(false);
-
   const [userPathName, setUserPathName] = useState("");
   const { setUser } = useUser();
   //form info
@@ -33,7 +31,6 @@ export const FormProvider = ({ children }) => {
   const onReceived = (data) => {
     if (data?.success) {
       setUser(data.user);
-      setIsSuccessful(true);
     }
   };
   //fetch modal
@@ -74,7 +71,6 @@ export const FormProvider = ({ children }) => {
         setProfileCreated,
         isSignIn,
         setIsSignIn,
-        isSuccessful,
         setValue,
       }}
     >

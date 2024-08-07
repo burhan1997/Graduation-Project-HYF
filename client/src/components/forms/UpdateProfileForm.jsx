@@ -26,7 +26,6 @@ export const UpdateProfileForm = () => {
     register,
     updateUserError,
     setUserPathName,
-    isSuccessful,
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
@@ -45,13 +44,6 @@ export const UpdateProfileForm = () => {
       setUserPathName(pathName);
     }
   }, [user, reset]);
-
-  useEffect(() => {
-    if (isSuccessful) {
-      setInfo("Lets go to the home page");
-      navigate("/");
-    }
-  }, [isSuccessful]);
 
   const data = formState.defaultValues;
   if (!data) {
@@ -72,6 +64,7 @@ export const UpdateProfileForm = () => {
       user: { ...data, location: selectedCity },
     };
     onSubmit(body, method);
+    navigate("/");
   };
 
   if (isLoading) {
