@@ -11,7 +11,7 @@ import { locations } from "../../util/locations";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const [info, setInfo] = useState("");
 
   const [fields, setFields] = useState([]);

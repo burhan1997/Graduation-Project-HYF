@@ -48,7 +48,14 @@ export const ShowProfile = () => {
       const schema = useSchema();
       setSchema(schema["user"]);
       setFields(fields["user"]);
-      const defaultValues = useDefaultValues(user, fields["user"]);
+      const defaultValues =
+        user.length > 0 ? useDefaultValues(user, fields["user"]) : {};
+
+      defaultValues.location =
+        typeof user?.location === "object" && user?.location.length > 0
+          ? user.location[0].city
+          : user?.location || "";
+
       reset(defaultValues);
     }
   }, [user]);
@@ -82,7 +89,7 @@ export const ShowProfile = () => {
             watch={watch}
             isEdit={false}
             register={register}
-            defaultValue={formState.defaultValues[field.name]}
+            defaultValue={formState.defaultValues[field.name] || ""}
           />
         ))}
         <div>{error && <div className="error">{error.toString()}</div>}</div>

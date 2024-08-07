@@ -18,7 +18,6 @@ export const FormItem = ({
 
   const isChecked = (option) => {
     const newArray = newObje?.[name];
-
     if (Array.isArray(newArray)) {
       return newArray.includes(option);
     } else {
@@ -32,6 +31,7 @@ export const FormItem = ({
     }
     return null;
   };
+
   const renderField = () => {
     switch (type) {
       case "text":
@@ -45,7 +45,9 @@ export const FormItem = ({
               placeholder={placeholder}
               {...register(name)}
               value={
-                type === "date" ? formatDate(newObje?.[name]) : newObje?.[name]
+                type === "date"
+                  ? formatDate(newObje?.[name])
+                  : newObje?.[name] || ""
               }
               readOnly={!isEdit}
             />
@@ -60,6 +62,7 @@ export const FormItem = ({
               className={name}
               placeholder={placeholder}
               {...register(name)}
+              value={newObje?.[name] || ""}
               readOnly={!isEdit}
             />
             {renderError()}
@@ -73,7 +76,7 @@ export const FormItem = ({
         } else {
           return (
             <img
-              src={newObje?.[name]}
+              src={newObje?.[name] || ""}
               {...register(name)}
               className="pro-img avatar"
               alt={"Profile picture is not available"}
@@ -92,8 +95,8 @@ export const FormItem = ({
               >
                 <option value={""}>Select a location</option>
                 {options?.map((option, index) => (
-                  <option key={index} value={option.city}>
-                    {option.city}
+                  <option key={index} value={option?.city}>
+                    {option?.city}
                   </option>
                 ))}
               </select>
