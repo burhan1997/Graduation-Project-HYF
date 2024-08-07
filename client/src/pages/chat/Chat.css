@@ -1,15 +1,10 @@
 .customized-app {
-  height: calc(100vh - 20px);
+  height: 100%;
 }
 
-/* will be duplicated */
-.sendbird-channel-preview__avatar .sendbird-chat-header__avatar {
-  width: 56px !important;
-  height: 56px !important;
-}
-.sendbird-channel-preview__avatar
-  .sendbird-chat-header__avatar
-  .sendbird-image-renderer.sendbird-avatar-img {
-  width: 56px !important;
-  height: 56px !important;
+.sendbird-app__wrap .sendbird-app__conversation-wrap {
+  flex: 1;
+  position: relative;
+  width: calc(100% - 320px);
+  height: 820px;
 }

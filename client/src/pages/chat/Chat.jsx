@@ -8,6 +8,7 @@ import { UserContext } from "../../context/userContext";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { createOrGetChannelWithUser } from "../../util/createOrGetChannelWithUser";
+//import '@sendbird/uikit-react/dist/index.css';
 
 export const Chat = () => {
   const { user } = useContext(UserContext);
