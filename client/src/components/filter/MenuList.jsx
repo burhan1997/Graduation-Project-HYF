@@ -12,7 +12,11 @@ export const MenuList = ({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="menu-list">
-      <h3 onClick={() => setIsOpen(!isOpen)}>{name}</h3>
+      <div className="filter-dropdown" onClick={() => setIsOpen(!isOpen)}>
+        <h3>{name}</h3>
+        <span className={`filterArrow ${isOpen ? "open" : ""}`}></span>
+      </div>
+
       {isOpen && (
         <div className="menu-list-options-container">
           {options.map((option) => (
