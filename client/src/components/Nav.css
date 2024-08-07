@@ -19,7 +19,7 @@
   .nav ul {
     list-style: none;
     display: flex;
-    gap: 4rem;
+    gap: 2rem;
     align-items: center;
     padding: 5px;
   }
@@ -80,12 +80,13 @@
 }
 
 .chat-icon {
-  font-size: 24px;
+  font-size: 2.5rem;
+  color: white;
 }
 
 .chat-notification {
   position: absolute;
-  top: -8px;
+  top: -2rem;
   right: -8px;
   background-color: red;
   color: white;

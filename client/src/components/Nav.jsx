@@ -42,17 +42,7 @@ const Nav = () => {
         >
           <li>Home</li>
         </Link>
-        <Link to="/chat">
-          <li
-            className="chat-icon-container"
-            style={{ display: isSignIn ? "inline" : "none" }}
-          >
-            <AiFillWechat className="chat-icon" />
-            {newMessageCount > 0 && (
-              <div className="chat-notification">{newMessageCount}</div>
-            )}
-          </li>
-        </Link>
+
         <Link to="/about-us">
           <li>About Us</li>
         </Link>
@@ -67,22 +57,35 @@ const Nav = () => {
           <li>Sign up</li>
         </Link>
         {isSignIn && (
-          <li className="avatar-container">
-            <div className="header-avatar" onClick={handleAvatar}>
-              <img
-                src={user?.profile_picture}
-                className="li-img avatar"
-                alt="My Profile"
-              />
-              <span>{user?.firstName}</span>
-            </div>
-            {isProfileMenuVisible && (
-              <div className="profile-menu">
-                <button onClick={goMyProfile}>My profile</button>
-                <button onClick={handleSignOut}>Sign out</button>
+          <>
+            <Link to="/chat">
+              <li
+                className="chat-icon-container"
+                style={{ display: isSignIn ? "inline" : "none" }}
+              >
+                <AiFillWechat className="chat-icon" />
+                {newMessageCount > 0 && (
+                  <div className="chat-notification">{newMessageCount}</div>
+                )}
+              </li>
+            </Link>
+            <li className="avatar-container">
+              <div className="header-avatar" onClick={handleAvatar}>
+                <img
+                  src={user?.profile_picture}
+                  className="li-img avatar"
+                  alt="My Profile"
+                />
+                <span>{user?.firstName}</span>
               </div>
-            )}
-          </li>
+              {isProfileMenuVisible && (
+                <div className="profile-menu">
+                  <button onClick={goMyProfile}>My profile</button>
+                  <button onClick={handleSignOut}>Sign out</button>
+                </div>
+              )}
+            </li>
+          </>
         )}
       </ul>
       <ul className="ul-img">
