@@ -41,6 +41,21 @@ const Nav = () => {
         >
           <li>Home</li>
         </Link>
+        <Link
+          to="/"
+          data-testid={TEST_ID.linkToHome}
+          style={{ display: isSignIn ? "inline" : "none" }}
+        >
+          <li>Home</li>
+        </Link>
+        <Link to="/chat">
+          <li
+            className="chat-icon-container"
+            style={{ display: isSignIn ? "inline" : "none" }}
+          >
+            <AiFillWechat className="chat-icon" />
+          </li>
+        </Link>
         <Link to="/about-us">
           <li>About Us</li>
         </Link>
@@ -82,12 +97,6 @@ const Nav = () => {
         <Link to="/inbox">
           <li>
             <img src={images.Mail} className="li-img" alt="Messages" />
-          </li>
-        </Link>
-        <Link to="/chat">
-          <li>
-            {" "}
-            <AiFillWechat className="chat-icon" />
           </li>
         </Link>
         <Link to="/settings">
