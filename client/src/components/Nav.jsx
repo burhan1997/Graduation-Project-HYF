@@ -6,6 +6,7 @@ import TEST_ID from "./Nav.testid";
 import { FormContext } from "../context/formContext";
 import { images } from "../../public/assets/images";
 import { useUser } from "../hooks/useUser";
+import { AiFillWechat } from "react-icons/ai";
 
 const Nav = () => {
   const { isSignIn, setIsSignIn } = useContext(FormContext);
@@ -28,6 +29,7 @@ const Nav = () => {
     navigate("/create-profile");
     setProfileMenuVisible((prevVisible) => !prevVisible);
   };
+
   return (
     <div className="nav">
       <img src={images.LogoPurple} alt="Logo" className="logo" />
@@ -80,6 +82,11 @@ const Nav = () => {
         <Link to="/inbox">
           <li>
             <img src={images.Mail} className="li-img" alt="Messages" />
+          </li>
+        </Link>
+        <Link to="/chat/:id">
+          <li>
+            <AiFillWechat className="chat-icon" />
           </li>
         </Link>
         <Link to="/settings">
