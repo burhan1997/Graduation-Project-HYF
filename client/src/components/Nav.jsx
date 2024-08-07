@@ -84,8 +84,9 @@ const Nav = () => {
             <img src={images.Mail} className="li-img" alt="Messages" />
           </li>
         </Link>
-        <Link to="/chat/:id">
+        <Link to="/chat">
           <li>
+            {" "}
             <AiFillWechat className="chat-icon" />
           </li>
         </Link>
