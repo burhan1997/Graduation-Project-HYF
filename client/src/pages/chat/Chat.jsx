@@ -83,6 +83,7 @@ export const Chat = () => {
       };
     }
   }, [sb, userId, currentChannelUrl, setNewMessageCount]);
+
   useEffect(() => {
     if (sb) {
       createOrGetChannelWithUser({
