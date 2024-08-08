@@ -10,15 +10,15 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { createOrGetChannelWithUser } from "../../util/createOrGetChannelWithUser";
 import "@sendbird/uikit-react/dist/index.css";
+import { appId } from "../../config/config";
 
 export const Chat = () => {
   const { user } = useContext(UserContext);
-  const { setNewMessageCount } = useContext(MessageContext);
-  const [error, setError] = useState(null);
+  const { setNewMessageCount, error, setError } = useContext(MessageContext);
   const [userId, setUserId] = useState(null);
+  const [currentUsername, setCurrentUsername] = useState(null);
   const [currentChannelUrl, setCurrentChannelUrl] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
-  const appId = process.env.REACT_APP_SENDBIRD_APP_ID;
   const [sb, setSb] = useState(null);
   const [targetedUserId, setTargetedUserId] = useState(null);
   const [targetedUserName, setTargetedUserName] = useState(null);
@@ -45,6 +45,7 @@ export const Chat = () => {
   useEffect(() => {
     if (user) {
       setUserId(user._id);
+      setCurrentUsername(user.firstName);
     }
   }, [user]);
 
@@ -75,22 +76,22 @@ export const Chat = () => {
           setNewMessageCount((prevCount) => prevCount + 1);
         }
       };
-
       sb.addChannelHandler(HANDLER_ID, channelHandler);
 
       return () => {
         sb.removeChannelHandler(HANDLER_ID);
       };
     }
-  }, [sb, userId, currentChannelUrl]);
-
+  }, [sb, userId, currentChannelUrl, setNewMessageCount]);
   useEffect(() => {
-    if (sb && targetedUserId) {
+    if (sb) {
       createOrGetChannelWithUser({
         sb,
         userId,
         targetedUserId,
         name: targetedUserName,
+        setError,
+        currentUsername,
         setCurrentChannelUrl,
       });
     }
