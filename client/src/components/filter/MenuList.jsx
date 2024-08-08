@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./MenuList.css";
 import { MenuItem } from "./MenuItem";
@@ -9,20 +9,27 @@ export const MenuList = ({
   selectedOptions,
   handleOptionChange,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="menu-list">
-      <h3>{name}</h3>
-      <div className="menu-list-options-container">
-        {options.map((option) => (
-          <MenuItem
-            key={option.value}
-            name={option.name}
-            value={option.value}
-            checked={!!selectedOptions[option.value]}
-            handleChange={handleOptionChange}
-          />
-        ))}
+      <div className="filter-dropdown" onClick={() => setIsOpen(!isOpen)}>
+        <h3>{name}</h3>
+        <span className={`filterArrow ${isOpen ? "open" : ""}`}></span>
       </div>
+
+      {isOpen && (
+        <div className="menu-list-options-container">
+          {options.map((option) => (
+            <MenuItem
+              key={option.value}
+              name={option.name}
+              value={option.value}
+              checked={!!selectedOptions[option.value]}
+              handleChange={handleOptionChange}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

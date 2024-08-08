@@ -5,7 +5,7 @@ export const userSchema = () => {
     profile_picture: yup.string().required(),
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    location: yup.array().required(),
+    location: yup.string().required(),
     bio: yup.string().required(),
     birthday: yup.date().required(),
     gender: yup.string().required(),

@@ -11,7 +11,7 @@ import { locations } from "../../util/locations";
 
 export const UpdateProfileForm = () => {
   const { user, userError } = useUser();
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const [info, setInfo] = useState("");
 
   const [fields, setFields] = useState([]);
@@ -26,7 +26,6 @@ export const UpdateProfileForm = () => {
     register,
     updateUserError,
     setUserPathName,
-    isSuccessful,
     setValue,
   } = useContext(FormContext);
   const navigate = useNavigate();
@@ -38,19 +37,13 @@ export const UpdateProfileForm = () => {
       setSchema(schema["user"]);
       setFields(fields["user"]);
       const defaultValues = useDefaultValues(user, fields["user"]);
+      defaultValues.location = user?.location[0].city;
       reset(defaultValues);
       const id = user._id;
       const pathName = `/user/update/${id}`;
       setUserPathName(pathName);
     }
   }, [user, reset]);
-
-  useEffect(() => {
-    if (isSuccessful) {
-      setInfo("Lets go to the home page");
-      navigate("/");
-    }
-  }, [isSuccessful]);
 
   const data = formState.defaultValues;
   if (!data) {
@@ -71,6 +64,7 @@ export const UpdateProfileForm = () => {
       user: { ...data, location: selectedCity },
     };
     onSubmit(body, method);
+    navigate("/");
   };
 
   if (isLoading) {

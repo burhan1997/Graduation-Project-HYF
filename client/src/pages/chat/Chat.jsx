@@ -8,6 +8,7 @@ import { UserContext } from "../../context/userContext";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { createOrGetChannelWithUser } from "../../util/createOrGetChannelWithUser";
+//import '@sendbird/uikit-react/dist/index.css';
 
 export const Chat = () => {
   const { user } = useContext(UserContext);
@@ -49,13 +50,23 @@ export const Chat = () => {
   useEffect(() => {
     if (userId) {
       const sbInstance = new SendBird({ appId });
-      sbInstance.connect(targetedUserId, (connectedUser, error) => {
-        if (error) {
-          return;
-        }
+      if (targetedUserId) {
+        sbInstance.connect(targetedUserId, (connectedUser, error) => {
+          if (error) {
+            return;
+          }
 
-        setSb(sbInstance);
-      });
+          setSb(sbInstance);
+        });
+      } else {
+        sbInstance.connect(userId, (connectedUser, error) => {
+          if (error) {
+            return;
+          }
+
+          setSb(sbInstance);
+        });
+      }
     }
   }, [userId, appId]);
 

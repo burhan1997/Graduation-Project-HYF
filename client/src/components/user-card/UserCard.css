@@ -2,14 +2,11 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* justify-content: center; */
   background: #424242;
-
   border-radius: 15px;
   width: 180px;
   height: 300px;
   overflow: hidden;
-
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -17,12 +14,14 @@
   transform: scale(1.05);
   cursor: pointer;
 }
+
 .usercard-h {
   display: flex;
   color: white;
   font-size: 18px;
   padding-top: 10px;
 }
+
 .usercard-p {
   min-height: 45px;
   display: flex;
@@ -35,6 +34,10 @@
 
 .usercard-avatar {
   width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .usercard2-content {
@@ -47,7 +50,6 @@
   border-radius: 15px;
   width: 205px;
   overflow: hidden;
-
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -58,4 +60,18 @@
   padding: 5px;
   border-radius: 5px;
   color: white;
+}
+
+.avatar-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: auto;
+}
+
+.avatar-svg {
+  width: 100%;
+  height: auto;
 }

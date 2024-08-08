@@ -16,7 +16,6 @@ function UserList() {
       Math.min(prevPage + 7, Math.floor(users.length / 7) * 7),
     );
   };
-
   return (
     <>
       <div className="user-list-container">

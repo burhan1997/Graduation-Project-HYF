@@ -19,17 +19,22 @@ const UserCard = ({ user }) => {
     : Math.floor(Math.random() * 80 + 18);
 
   useEffect(() => {
-    try {
-      const svg = multiavatar(name);
-      setAvatarSvg(svg);
-    } catch (error) {
-      setAvatarError(true);
+    if (user.profile_picture) {
+      setAvatarSvg(null);
+    } else {
+      try {
+        const svg = multiavatar(name);
+        setAvatarSvg(svg);
+      } catch (error) {
+        setAvatarError(true);
+      }
     }
-  }, [name]);
+  }, [name, user.profile_picture]);
 
   const handleViewProfileClick = () => {
     navigate(`/user/${user._id}`);
   };
+
   return (
     <div>
       <div className="usercard-content" onClick={(e) => e.stopPropagation()}>
@@ -51,10 +56,20 @@ const UserCard = ({ user }) => {
               className="fallback-avatar"
             />
           ) : (
-            <div
-              dangerouslySetInnerHTML={{ __html: avatarSvg }}
-              className="avatar-svg"
-            />
+            <>
+              {user.profile_picture ? (
+                <img
+                  src={user.profile_picture}
+                  alt="User Avatar"
+                  className="avatar-img"
+                />
+              ) : (
+                <div
+                  dangerouslySetInnerHTML={{ __html: avatarSvg }}
+                  className="avatar-svg"
+                />
+              )}
+            </>
           )}
         </div>
         <button className="usercard-button-2" onClick={handleViewProfileClick}>
