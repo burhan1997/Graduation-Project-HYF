@@ -37,7 +37,7 @@ export const UpdateProfileForm = () => {
       setSchema(schema["user"]);
       setFields(fields["user"]);
       const defaultValues = useDefaultValues(user, fields["user"]);
-      defaultValues.location = user?.location[0].city;
+      defaultValues.location = user?.location[0]?.city;
       reset(defaultValues);
       const id = user._id;
       const pathName = `/user/update/${id}`;
@@ -58,7 +58,7 @@ export const UpdateProfileForm = () => {
     const method = "PUT";
     const selectedCityName = data.location;
     const selectedCity = locations.find(
-      (location) => location.city === selectedCityName,
+      (location) => location?.city === selectedCityName,
     );
     const body = {
       user: { ...data, location: selectedCity },
