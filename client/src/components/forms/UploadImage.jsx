@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import "./UploadImage.css";
 
 export const UploadImage = ({ setValue, defaultImage }) => {
-  //  for image upload
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -16,9 +15,21 @@ export const UploadImage = ({ setValue, defaultImage }) => {
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
-    previewFile(file);
-    setSelectedFile(file);
-    setFileInputState(e.target.value);
+
+    if (file) {
+      //  (10 MB = 10 * 1024 * 1024 bayt)
+      if (file.size > 10 * 1024 * 1024) {
+        setErrMsg("File size exceeds 10 MB limit.");
+        setSelectedFile(null);
+        setPreviewSource("");
+        return;
+      }
+
+      previewFile(file);
+      setSelectedFile(file);
+      setFileInputState(e.target.value);
+      setErrMsg("");
+    }
   };
 
   const previewFile = (file) => {
@@ -44,11 +55,13 @@ export const UploadImage = ({ setValue, defaultImage }) => {
       setErrMsg("Something went wrong!");
     };
   };
+
   const handleCancel = () => {
     setPreviewSource("");
     setIsChangeImage(false);
     setFileInputState("");
   };
+
   useEffect(() => {
     return () => cancelFetch();
   }, [cancelFetch]);
@@ -90,7 +103,7 @@ export const UploadImage = ({ setValue, defaultImage }) => {
 
   return (
     <div className="upload-image">
-      {errMsg && <Alert msg={errMsg} type="danger" />}
+      {errMsg && <div className="error-message">{errMsg}</div>}
       {error && <Alert msg={error?.toString()} type="danger" />}
       {successMsg && <Alert msg={successMsg} type="success" />}
       <img
