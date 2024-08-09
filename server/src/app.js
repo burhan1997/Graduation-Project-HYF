@@ -6,7 +6,9 @@ import photoRouter from "./routes/photo.js";
 const app = express();
 
 // Tell express to use the json middleware
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+
 // Allow everyone to access our API. In a real application, we would need to restrict this!
 app.use(cors());
 
