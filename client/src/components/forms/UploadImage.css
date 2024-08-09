@@ -51,3 +51,10 @@
   object-fit: cover;
   margin-bottom: 10px;
 }
+
+.error-message {
+  color: red;
+  font-size: 0.875rem; /* 14px */
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
