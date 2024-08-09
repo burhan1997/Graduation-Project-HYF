@@ -59,7 +59,6 @@ export const ShowProfile = () => {
             <div className="pic-and-status-box">
               <div className="user-avatar-box-shprofile">
                 <div className="status-box-shprofile">Hello yoll</div>
-                <div className="avatar-background-circle-shprof"></div>
                 {/* <div className="avatar-background-shprof"></div>
       <img src={images.GoldFrame} alt="Frame" className="frame" /> */}
 
