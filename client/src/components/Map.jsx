@@ -39,7 +39,6 @@ const getRandomMarkerUrl = () => {
   return markerUrls[randomIndex];
 };
 
-// Create custom icon
 const createCustomIcon = (iconUrl) =>
   new L.Icon({
     iconUrl: iconUrl,
@@ -83,6 +82,7 @@ export default function Map() {
   const [locations, setLocations] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -106,8 +106,7 @@ export default function Map() {
           const locationArray = users
             .filter((user) => user.location && user.location.length > 0)
             .map((user) => ({
-              name: `${user.firstName} ${user.lastName}`,
-              city: user.location[0].city,
+              user,
               latitude: user.location[0].latitude,
               longitude: user.location[0].longitude,
               markerUrl: getRandomMarkerUrl(),
@@ -145,10 +144,13 @@ export default function Map() {
     }
   }, []);
 
+  const handleChatClick = (userId) => {
+    navigate(`/chat/${userId}`);
+  };
+
   return (
     <>
       {error && <div className="error-message">{error}</div>}
-
       <MapContainer
         center={currentPosition || [52.384227814645946, 4.903017836026885]}
         zoom={currentPosition ? 13 : 13}
@@ -170,7 +172,13 @@ export default function Map() {
               icon={createCustomIcon(location.markerUrl)}
             >
               <Popup>
-                {location.name} - {location.city}
+                <UserCardSmall
+                  user={location.user}
+                  onViewProfileClick={() =>
+                    navigate(`/user/${location.user._id}`)
+                  }
+                  onChatClick={() => handleChatClick(location.user._id)}
+                />
               </Popup>
             </Marker>
           ))}
