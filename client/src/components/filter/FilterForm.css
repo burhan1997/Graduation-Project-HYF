@@ -1,9 +1,7 @@
 .filter-form {
   display: flex;
   flex-direction: row;
-
   margin-top: 0;
-
   z-index: 230;
   width: 90%;
 }
