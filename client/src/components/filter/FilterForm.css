@@ -5,7 +5,6 @@
   z-index: 230;
   width: 90%;
 }
-
 .filter-form button {
   right: 5%;
   position: absolute;
@@ -22,7 +21,6 @@
   justify-content: center;
   align-items: center;
 }
-
 .filter-form button:hover {
   color: white;
   background-color: #ff1493;
