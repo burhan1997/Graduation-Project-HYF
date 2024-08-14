@@ -11,10 +11,12 @@ import SignUp from "./pages/sign-up/SignUp";
 import "./index.css";
 import { ShowProfile } from "./pages/show-profile/ShowProfile";
 import { Chat } from "./pages/chat/Chat";
+import Icon1 from "../public/assets/icon1.png";
 
 const App = () => {
   return (
     <>
+      <link rel="icon" href={Icon1} type="image/png" />
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />

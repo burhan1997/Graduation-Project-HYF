@@ -9,6 +9,7 @@ import Meeting3 from "./meeting3.jpg";
 import Settings from "./Settings.png";
 import Xlogo from "./xlogo.png";
 import Ogmoji from "./markers/ogmoji.png";
+import Icon1 from "./icon1.png";
 
 export const images = {
   AccountCircle,
@@ -22,4 +23,5 @@ export const images = {
   Settings,
   Xlogo,
   Ogmoji,
+  Icon1,
 };

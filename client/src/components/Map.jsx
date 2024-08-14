@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FilterForm } from "./filter/FilterForm";
+
 import PropTypes from "prop-types";
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
-import { useNavigate } from "react-router-dom";
-import UserCardSmall from "./UserCardSmall";
 
 const markerUrls = [
   "/assets/markers/ama-dance.png",
@@ -39,6 +37,7 @@ const getRandomMarkerUrl = () => {
   return markerUrls[randomIndex];
 };
 
+// Create custom icon
 const createCustomIcon = (iconUrl) =>
   new L.Icon({
     iconUrl: iconUrl,
@@ -82,7 +81,6 @@ export default function Map() {
   const [locations, setLocations] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -106,7 +104,8 @@ export default function Map() {
           const locationArray = users
             .filter((user) => user.location && user.location.length > 0)
             .map((user) => ({
-              user,
+              name: `${user.firstName} ${user.lastName}`,
+              city: user.location[0].city,
               latitude: user.location[0].latitude,
               longitude: user.location[0].longitude,
               markerUrl: getRandomMarkerUrl(),
@@ -144,14 +143,10 @@ export default function Map() {
     }
   }, []);
 
-  const handleChatClick = (userId) => {
-    navigate(`/chat/${userId}`);
-  };
-
   return (
     <>
       {error && <div className="error-message">{error}</div>}
-      <FilterForm />
+
       <MapContainer
         center={currentPosition || [52.384227814645946, 4.903017836026885]}
         zoom={currentPosition ? 13 : 13}
@@ -173,13 +168,7 @@ export default function Map() {
               icon={createCustomIcon(location.markerUrl)}
             >
               <Popup>
-                <UserCardSmall
-                  user={location.user}
-                  onViewProfileClick={() =>
-                    navigate(`/user/${location.user._id}`)
-                  }
-                  onChatClick={() => handleChatClick(location.user._id)}
-                />
+                {location.name} - {location.city}
               </Popup>
             </Marker>
           ))}
