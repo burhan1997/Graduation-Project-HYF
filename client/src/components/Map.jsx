@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import PropTypes from "prop-types";
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
@@ -8,30 +7,30 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import { useNavigate } from "react-router-dom";
 import UserCardSmall from "./UserCardSmall";
+import { images } from "../../public/assets/images";
 
 const markerUrls = [
-  "/assets/markers/ama-dance.png",
-  "/assets/markers/angel-with-shine.png",
-  "/assets/markers/angel.png",
-  "/assets/markers/blink-bling.png",
-  "/assets/markers/born-to-be-a-star.png",
-  "/assets/markers/bring-it-on.png",
-  "/assets/markers/dancy.png",
-  "/assets/markers/greeny.png",
-  "/assets/markers/greenyta.png",
-  "/assets/markers/hello-woerld.png",
-  "/assets/markers/heyo.png",
-  "/assets/markers/ogmoji.png",
-  "/assets/markers/party-dont-starty-without-me.png",
-  "/assets/markers/purple-nothing-rhymes-with-purple.png",
-  "/assets/markers/purple-party.png",
-  "/assets/markers/ready-for-game.png",
-  "/assets/markers/slay-bay.png",
-  "/assets/markers/top.png",
-  "/assets/markers/worldita.png",
-  "/assets/markers/yellow-happy.png",
-  "/assets/markers/yellow-party-lama.png",
-  "/assets/markers/yellow.png",
+  images.AmaDance,
+  images.AngelWithShine,
+  images.Angel,
+  images.BlinkBling,
+  images.BornToBeAStar,
+  images.BringItOn,
+  images.Dancy,
+  images.Greeny,
+  images.Greenyta,
+  images.HelloWorld,
+  images.Heyo,
+  images.PartyDontStartWithoutMe,
+  images.PurpleNothingRhymesWithPurple,
+  images.PurpleParty,
+  images.ReadyForGame,
+  images.SlayBay,
+  images.Top,
+  images.Worldita,
+  images.YellowHappy,
+  images.YellowPartyLama,
+  images.Yellow,
 ];
 
 const getRandomMarkerUrl = () => {
