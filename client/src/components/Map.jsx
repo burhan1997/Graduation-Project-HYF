@@ -149,7 +149,7 @@ export default function Map() {
   };
 
   return (
-    <>
+    <div className="map-container">
       {error && <div className="error-message">{error}</div>}
       <MapContainer
         center={currentPosition || [52.384227814645946, 4.903017836026885]}
@@ -186,6 +186,6 @@ export default function Map() {
 
         {currentPosition && <CurrentLocation position={currentPosition} />}
       </MapContainer>
-    </>
+    </div>
   );
 }

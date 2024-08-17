@@ -1,3 +1,7 @@
+.map-container {
+  display: flex;
+  justify-content: center;
+}
 .leaflet-container {
   height: 70vh;
   width: 90%;
@@ -21,6 +25,8 @@
 }
 
 .error-message {
+  position: absolute;
+  z-index: 1000;
   color: red;
   padding: 10px;
   background-color: #fdd;
