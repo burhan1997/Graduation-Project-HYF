@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { FaFilter } from "react-icons/fa";
 import { FilterMenu } from "./FilterMenu";
 import filterData from "./filterData.json";
 import "./FilterForm.css";
 import { getActiveFilters } from "../../util/getActiveFilters";
 import { UsersContext } from "../../context/usersContext";
 import useFetch from "../../hooks/useFetch";
+import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 
 export const FilterForm = () => {
   const { setUrl } = useContext(UsersContext);
@@ -76,7 +76,7 @@ export const FilterForm = () => {
   return (
     <div className="filter-form">
       <button onClick={() => setIsOpen(true)}>
-        <FaFilter />
+        <HiAdjustmentsHorizontal />
       </button>
     </div>
   );

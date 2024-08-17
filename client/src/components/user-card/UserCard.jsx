@@ -37,7 +37,7 @@ const UserCard = ({ user }) => {
 
   return (
     <div>
-      <div className="usercard-content" onClick={(e) => e.stopPropagation()}>
+      <div className="usercard-content" onClick={handleViewProfileClick}>
         <p className="usercard-h">{`${name}, ${age}`}</p>
         <p className="usercard-p">
           {user.bio
@@ -72,9 +72,6 @@ const UserCard = ({ user }) => {
             </>
           )}
         </div>
-        <button className="usercard-button-2" onClick={handleViewProfileClick}>
-          View full profile
-        </button>
       </div>
     </div>
   );

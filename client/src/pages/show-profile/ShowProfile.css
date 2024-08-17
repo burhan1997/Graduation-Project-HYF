@@ -116,16 +116,16 @@
 
 .contact-btn-shprof {
   width: 150px;
-  background-color: white;
+  background-color: #e8b930;
   border: 2px solid #e8b930;
   font-size: 13px;
   border-radius: 20px;
-  padding: 7px 4px;
+  padding: 5px 4px;
   margin-top: 15px;
   cursor: pointer;
   position: relative;
   left: -20px;
-  color: #555;
+  color: #424242;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.2s ease-in-out;
 }

@@ -76,7 +76,7 @@ const Nav = () => {
                   className="li-img avatar"
                   alt="My Profile"
                 />
-                <span>{user?.firstName}</span>
+                <span className="">{user?.firstName}</span>
               </div>
               {isProfileMenuVisible && (
                 <div className="profile-menu">
