@@ -68,6 +68,9 @@
 }
 
 .avatar-svg {
-  width: 100%;
-  height: auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }
