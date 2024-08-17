@@ -58,7 +58,7 @@ const CurrentLocation = ({ position }) => {
     if (position) {
       map.setView(position, 13);
       L.marker(position, {
-        icon: createCustomIcon("/assets/placeholder.png"),
+        icon: createCustomIcon(images.Placeholder),
       })
         .addTo(map)
         .bindPopup(

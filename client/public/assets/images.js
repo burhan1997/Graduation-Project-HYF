@@ -31,6 +31,7 @@ import Worldita from "./markers/worldita.png";
 import YellowHappy from "./markers/yellow-happy.png";
 import YellowPartyLama from "./markers/yellow-party-lama.png";
 import Yellow from "./markers/yellow.png";
+import Placeholder from "./placeholder.png";
 
 export const images = {
   AccountCircle,
@@ -66,4 +67,5 @@ export const images = {
   YellowHappy,
   YellowPartyLama,
   Yellow,
+  Placeholder,
 };
