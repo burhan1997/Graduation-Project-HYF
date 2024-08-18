@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
@@ -7,6 +7,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import { useNavigate } from "react-router-dom";
 import UserCardSmall from "./UserCardSmall";
+import { UsersContext } from "../context/usersContext";
 import { images } from "../../public/assets/images";
 
 const markerUrls = [
@@ -77,51 +78,49 @@ CurrentLocation.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default function Map() {
-  const [locations, setLocations] = useState([]);
+export default function Map({ filters = { Location: [], Hobbies: [] } }) {
   const [currentPosition, setCurrentPosition] = useState(null);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { users, getUsersError } = useContext(UsersContext);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/user");
-        if (!response.ok) {
-          throw new Error(
-            `Network response was not ok: ${response.statusText}`,
-          );
-        }
+  const filterUsers = (users, filters) => {
+    if (!users || !Array.isArray(users)) {
+      return [];
+    }
 
-        const text = await response.text();
-        try {
-          const data = JSON.parse(text);
+    // if the filtering is empty
+    if (!filters.Location.length && !filters.Hobbies.length) {
+      return users
+        .filter((user) => user.location && user.location.length > 0)
+        .map((user) => ({
+          user,
+          latitude: user.location[0].latitude,
+          longitude: user.location[0].longitude,
+          markerUrl: getRandomMarkerUrl(),
+        }));
+    }
 
-          const users = data.users;
-          if (!users || users.length === 0) {
-            throw new Error("No users found in the response");
-          }
+    // filtering
+    return users
+      .filter((user) => user.location && user.location.length > 0)
+      .filter((user) => {
+        const locationMatch = filters.Location.length
+          ? user.location.some((loc) => filters.Location.includes(loc.city))
+          : true;
+        const hobbyMatch = filters.Hobbies.length
+          ? user.hobbies.some((hobby) => filters.Hobbies.includes(hobby))
+          : true;
+        return locationMatch && hobbyMatch;
+      })
+      .map((user) => ({
+        user,
+        latitude: user.location[0].latitude,
+        longitude: user.location[0].longitude,
+        markerUrl: getRandomMarkerUrl(),
+      }));
+  };
 
-          const locationArray = users
-            .filter((user) => user.location && user.location.length > 0)
-            .map((user) => ({
-              user,
-              latitude: user.location[0].latitude,
-              longitude: user.location[0].longitude,
-              markerUrl: getRandomMarkerUrl(),
-            }));
-
-          setLocations(locationArray);
-        } catch (jsonError) {
-          setError(`Failed to parse JSON: ${jsonError.message}`);
-        }
-      } catch (error) {
-        setError("Failed to load locations. Please try again later.");
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  const locations = filterUsers(users, filters);
 
   useEffect(() => {
     const defaultPosition = [52.384227814645946, 4.903017836026885]; // Hack Your Future
@@ -149,7 +148,7 @@ export default function Map() {
 
   return (
     <div className="map-container">
-      {error && <div className="error-message">{error}</div>}
+      {getUsersError && <div className="error-message">{getUsersError}</div>}
       <MapContainer
         center={currentPosition || [52.384227814645946, 4.903017836026885]}
         zoom={currentPosition ? 13 : 13}
@@ -188,3 +187,10 @@ export default function Map() {
     </div>
   );
 }
+
+Map.propTypes = {
+  filters: PropTypes.shape({
+    Location: PropTypes.arrayOf(PropTypes.string),
+    Hobbies: PropTypes.arrayOf(PropTypes.string),
+  }),
+};
