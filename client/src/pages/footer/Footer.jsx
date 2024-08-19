@@ -18,7 +18,7 @@ const Footer = () => {
       <div className="footer-slogan">Connecting People</div>
 
       <div className="footer-contact">
-        <p>Email: contact@ourapp.com</p>
+        <p>Email: info@closer.com</p>
         <p>Phone: 123-456-7890</p>
       </div>
 
