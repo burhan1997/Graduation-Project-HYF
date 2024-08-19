@@ -12,7 +12,7 @@ const AboutUs = () => {
     <div className="container-about-us">
       <div className="about-us">
         <header className="about-us-header">
-          <h1>Gezelschap</h1>
+          <h1>Closer</h1>
         </header>
         <section className="about-us-content">
           <p className="about-us-description-big">

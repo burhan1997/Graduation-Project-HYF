@@ -1,0 +1,18 @@
+.homepage-slideshow-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.homepage-slideshow-image {
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+}
+
+.homepage-slideshow-image.active {
+  opacity: 1;
+}
